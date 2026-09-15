@@ -19,6 +19,8 @@ module.exports = async (req, res) => {
     }
 
     const appToken = process.env.EITAA_APP_TOKEN;
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY;
 
     if (!appToken) {
       return res.status(500).json({
@@ -26,6 +28,17 @@ module.exports = async (req, res) => {
         error: "EITAA_APP_TOKEN تنظیم نشده است"
       });
     }
+
+    if (!supabaseUrl || !supabaseSecretKey) {
+      return res.status(500).json({
+        ok: false,
+        error: "تنظیمات Supabase کامل نیست"
+      });
+    }
+
+    // =========================
+    // بررسی اعتبار اطلاعات ایتا
+    // =========================
 
     const params = new URLSearchParams(initData);
 
@@ -62,6 +75,10 @@ module.exports = async (req, res) => {
       });
     }
 
+    // =========================
+    // بررسی تاریخ ورود
+    // =========================
+
     const authDate = Number(params.get("auth_date"));
 
     if (!authDate) {
@@ -80,6 +97,10 @@ module.exports = async (req, res) => {
       });
     }
 
+    // =========================
+    // دریافت اطلاعات کاربر
+    // =========================
+
     const userData = params.get("user");
 
     if (!userData) {
@@ -91,18 +112,71 @@ module.exports = async (req, res) => {
 
     const user = JSON.parse(userData);
 
+    // =========================
+    // بررسی هنرجو در Supabase
+    // =========================
+
+    const studentUrl =
+      `${supabaseUrl}/rest/v1/students` +
+      `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
+      `&select=id,eitaa_user_id,first_name,last_name,username,is_active,has_access`;
+
+    const studentResponse = await fetch(studentUrl, {
+      method: "GET",
+      headers: {
+        "apikey": supabaseSecretKey,
+        "Authorization": `Bearer ${supabaseSecretKey}`
+      }
+    });
+
+    if (!studentResponse.ok) {
+      console.error(
+        "Supabase Error:",
+        await studentResponse.text()
+      );
+
+      return res.status(500).json({
+        ok: false,
+        error: "خطا در بررسی اطلاعات هنرجو"
+      });
+    }
+
+    const students = await studentResponse.json();
+
+    const student = students[0] || null;
+
+    // =========================
+    // پاسخ نهایی
+    // =========================
+
+    if (!student) {
+      return res.status(200).json({
+        ok: true,
+        registered: false,
+        hasAccess: false,
+        user: {
+          id: user.id,
+          first_name: user.first_name || "",
+          last_name: user.last_name || "",
+          username: user.username || ""
+        }
+      });
+    }
+
     return res.status(200).json({
       ok: true,
+      registered: true,
+      hasAccess: student.is_active && student.has_access,
       user: {
         id: user.id,
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
-        username: user.username || ""
+        first_name: student.first_name || user.first_name || "",
+        last_name: student.last_name || user.last_name || "",
+        username: student.username || user.username || ""
       }
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Auth Error:", error);
 
     return res.status(500).json({
       ok: false,
