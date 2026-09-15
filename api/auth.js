@@ -21,16 +21,17 @@ module.exports = async (req, res) => {
     }
 
     const appToken = process.env.EITAA_APP_TOKEN;
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY;
 
-    if (!appToken) {
+    if (!appToken || !supabaseUrl || !supabaseSecretKey) {
       return res.status(500).json({
         ok: false,
-        error: "EITAA_APP_TOKEN تنظیم نشده است"
+        error: "تنظیمات سرور کامل نیست"
       });
     }
 
     const params = new URLSearchParams(initData);
-
     const receivedHash = params.get("hash");
 
     if (!receivedHash) {
@@ -75,15 +76,42 @@ module.exports = async (req, res) => {
 
     const user = JSON.parse(userData);
 
+    // فقط تست خواندن جدول admins
+    const adminUrl =
+      `${supabaseUrl}/rest/v1/admins` +
+      `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
+      `&is_active=eq.true` +
+      `&select=id,eitaa_user_id,is_active`;
+
+    const adminResponse = await fetch(adminUrl, {
+      method: "GET",
+      headers: {
+        "apikey": supabaseSecretKey,
+        "Authorization": `Bearer ${supabaseSecretKey}`
+      }
+    });
+
+    if (!adminResponse.ok) {
+
+      const errorText = await adminResponse.text();
+
+      console.error("Supabase Admin Error:", errorText);
+
+      return res.status(500).json({
+        ok: false,
+        error: "خواندن جدول admins ناموفق بود",
+        details: errorText
+      });
+    }
+
+    const admins = await adminResponse.json();
+
     return res.status(200).json({
       ok: true,
-      message: "احراز هویت ایتا موفق بود ✅",
-      user: {
-        id: user.id,
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
-        username: user.username || ""
-      }
+      message: "خواندن جدول admins موفق بود ✅",
+      userId: user.id,
+      adminsFound: admins.length,
+      admins: admins
     });
 
   } catch (error) {
@@ -92,7 +120,8 @@ module.exports = async (req, res) => {
 
     return res.status(500).json({
       ok: false,
-      error: "خطای داخلی سرور"
+      error: "خطای داخلی سرور",
+      details: error.message
     });
 
   }
