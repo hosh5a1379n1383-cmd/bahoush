@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Eitaa Web App SDK -->
   <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
 
   <title>باهوش | دستیار دوره</title>
@@ -57,7 +56,7 @@
     .user-box {
       background: white;
       border-radius: 18px;
-      padding: 20px;
+      padding: 22px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
     }
 
@@ -73,9 +72,20 @@
     }
 
     .status {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13px;
+    }
+
+    .success {
       color: #16a34a;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
+    .loading {
+      color: #6b7280;
     }
   </style>
 </head>
@@ -96,15 +106,15 @@
     <div class="user-box">
 
       <div class="user-title">
-        خوش اومدی 👋🏻
+        وضعیت ورود
       </div>
 
       <div id="userName">
-        در حال دریافت اطلاعات...
+        در حال بررسی...
       </div>
 
-      <div class="status">
-        اتصال به ایتا برقرار است ✅
+      <div id="status" class="status loading">
+        در حال تأیید هویت شما توسط سرور...
       </div>
 
     </div>
@@ -114,30 +124,79 @@
   <script>
     const webApp = window.Eitaa.WebApp;
 
-    // آماده‌سازی Mini App
     webApp.ready();
     webApp.expand();
 
-    // دریافت اطلاعات کاربر
-    const user = webApp.initDataUnsafe?.user;
-
     const userNameElement = document.getElementById("userName");
+    const statusElement = document.getElementById("status");
 
-    if (user) {
-      const firstName = user.first_name || "";
-      const lastName = user.last_name || "";
+    async function authenticateUser() {
 
-      const fullName = `${firstName} ${lastName}`.trim();
+      const initData = webApp.initData;
 
-      userNameElement.textContent =
-        fullName || "کاربر باهوش";
+      if (!initData) {
+        userNameElement.textContent = "کاربر شناسایی نشد";
 
-      console.log("اطلاعات کاربر ایتا:", user);
+        statusElement.textContent =
+          "اطلاعات ورود ایتا دریافت نشد.";
 
-    } else {
-      userNameElement.textContent =
-        "کاربر ایتا شناسایی نشد";
+        statusElement.className = "status error";
+
+        return;
+      }
+
+      try {
+
+        const response = await fetch("/api/auth", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            initData: initData
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          throw new Error(
+            result.error || "احراز هویت ناموفق بود"
+          );
+        }
+
+        const user = result.user;
+
+        const fullName =
+          `${user.first_name || ""} ${user.last_name || ""}`.trim();
+
+        userNameElement.textContent =
+          fullName || "کاربر باهوش";
+
+        statusElement.textContent =
+          "هویت شما با موفقیت توسط سرور تأیید شد ✅";
+
+        statusElement.className =
+          "status success";
+
+        console.log("کاربر تأییدشده:", user);
+
+      } catch (error) {
+
+        console.error("خطای احراز هویت:", error);
+
+        userNameElement.textContent =
+          "احراز هویت ناموفق بود";
+
+        statusElement.textContent =
+          error.message || "خطایی در ارتباط با سرور رخ داد.";
+
+        statusElement.className =
+          "status error";
+      }
     }
+
+    authenticateUser();
   </script>
 
 </body>
