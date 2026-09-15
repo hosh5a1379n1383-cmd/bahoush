@@ -71,6 +71,16 @@
       font-weight: bold;
     }
 
+    .user-id {
+      margin-top: 12px;
+      padding: 10px;
+      background: #f3f4f6;
+      border-radius: 10px;
+      font-size: 14px;
+      direction: ltr;
+      word-break: break-all;
+    }
+
     .status {
       margin-top: 14px;
       font-size: 13px;
@@ -113,6 +123,10 @@
         در حال بررسی...
       </div>
 
+      <div id="userId" class="user-id">
+        شناسه در حال دریافت...
+      </div>
+
       <div id="status" class="status loading">
         در حال تأیید هویت شما توسط سرور...
       </div>
@@ -128,6 +142,7 @@
     webApp.expand();
 
     const userNameElement = document.getElementById("userName");
+    const userIdElement = document.getElementById("userId");
     const statusElement = document.getElementById("status");
 
     async function authenticateUser() {
@@ -136,6 +151,9 @@
 
       if (!initData) {
         userNameElement.textContent = "کاربر شناسایی نشد";
+
+        userIdElement.textContent =
+          "شناسه دریافت نشد";
 
         statusElement.textContent =
           "اطلاعات ورود ایتا دریافت نشد.";
@@ -173,13 +191,16 @@
         userNameElement.textContent =
           fullName || "کاربر باهوش";
 
+        userIdElement.textContent =
+          `Eitaa User ID: ${user.id}`;
+
         statusElement.textContent =
           "هویت شما با موفقیت توسط سرور تأیید شد ✅";
 
         statusElement.className =
           "status success";
 
-        console.log("کاربر تأییدشده:", user);
+        console.log("Eitaa User ID:", user.id);
 
       } catch (error) {
 
@@ -188,11 +209,13 @@
         userNameElement.textContent =
           "احراز هویت ناموفق بود";
 
+        userIdElement.textContent =
+          "شناسه دریافت نشد";
+
         statusElement.textContent =
           error.message || "خطایی در ارتباط با سرور رخ داد.";
 
-        statusElement.className =
-          "status error";
+        statusElement.className = "status error";
       }
     }
 
