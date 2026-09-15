@@ -24,70 +24,88 @@
       width: 100%;
       max-width: 520px;
       margin: 0 auto;
-      padding: 50px 20px;
-      text-align: center;
+      padding: 40px 20px;
     }
 
     .logo {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 22px;
-      border-radius: 25px;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      border-radius: 22px;
       background: #111827;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 45px;
+      font-size: 40px;
     }
 
     h1 {
       margin: 0;
-      font-size: 30px;
+      text-align: center;
+      font-size: 28px;
       font-weight: 800;
     }
 
     .subtitle {
-      margin: 12px 0 30px;
+      margin: 10px 0 28px;
       color: #6b7280;
       line-height: 1.9;
-      font-size: 15px;
+      font-size: 14px;
+      text-align: center;
     }
 
-    .user-box {
+    .card {
       background: white;
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 22px;
+      margin-bottom: 15px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
     }
 
-    .user-title {
-      font-size: 14px;
-      color: #6b7280;
+    .welcome {
+      font-size: 20px;
+      font-weight: bold;
       margin-bottom: 8px;
     }
 
-    #userName {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .user-id {
-      margin-top: 12px;
-      padding: 10px;
-      background: #f3f4f6;
-      border-radius: 10px;
-      font-size: 14px;
-      direction: ltr;
-      word-break: break-all;
-    }
-
     .status {
-      margin-top: 14px;
-      font-size: 13px;
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.8;
     }
 
-    .success {
-      color: #16a34a;
+    .admin-panel {
+      display: none;
+    }
+
+    .admin-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .admin-subtitle {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .admin-button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 10px;
+      background: #111827;
+      color: white;
+      font-size: 15px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .admin-button:active {
+      transform: scale(0.98);
     }
 
     .error {
@@ -113,22 +131,49 @@
       همراه شما در مسیر یادگیری هوش مصنوعی
     </div>
 
-    <div class="user-box">
+    <!-- صفحه ورود -->
+    <div id="userCard" class="card">
 
-      <div class="user-title">
-        وضعیت ورود
-      </div>
-
-      <div id="userName">
+      <div id="userName" class="welcome">
         در حال بررسی...
-      </div>
-
-      <div id="userId" class="user-id">
-        شناسه در حال دریافت...
       </div>
 
       <div id="status" class="status loading">
         در حال تأیید هویت شما توسط سرور...
+      </div>
+
+    </div>
+
+    <!-- پنل ادمین -->
+    <div id="adminPanel" class="admin-panel">
+
+      <div class="card">
+
+        <div class="admin-title">
+          پنل مدیریت 👑
+        </div>
+
+        <div class="admin-subtitle">
+          به پنل مدیریت دوره باهوش خوش آمدید.
+          از این قسمت می‌توانید محتوای دوره و هنرجویان را مدیریت کنید.
+        </div>
+
+        <button class="admin-button">
+          📚 مدیریت فصل‌ها
+        </button>
+
+        <button class="admin-button">
+          🎬 مدیریت جلسات و ویدئوها
+        </button>
+
+        <button class="admin-button">
+          👨‍🎓 مدیریت هنرجویان
+        </button>
+
+        <button class="admin-button">
+          📊 مشاهده پیشرفت هنرجویان
+        </button>
+
       </div>
 
     </div>
@@ -141,24 +186,24 @@
     webApp.ready();
     webApp.expand();
 
+    const userCard = document.getElementById("userCard");
     const userNameElement = document.getElementById("userName");
-    const userIdElement = document.getElementById("userId");
     const statusElement = document.getElementById("status");
+    const adminPanel = document.getElementById("adminPanel");
 
     async function authenticateUser() {
 
       const initData = webApp.initData;
 
       if (!initData) {
-        userNameElement.textContent = "کاربر شناسایی نشد";
-
-        userIdElement.textContent =
-          "شناسه دریافت نشد";
+        userNameElement.textContent =
+          "کاربر شناسایی نشد";
 
         statusElement.textContent =
           "اطلاعات ورود ایتا دریافت نشد.";
 
-        statusElement.className = "status error";
+        statusElement.className =
+          "status error";
 
         return;
       }
@@ -191,16 +236,25 @@
         userNameElement.textContent =
           fullName || "کاربر باهوش";
 
-        userIdElement.textContent =
-          `Eitaa User ID: ${user.id}`;
+        if (result.isAdmin === true) {
 
-        statusElement.textContent =
-          "هویت شما با موفقیت توسط سرور تأیید شد ✅";
+          statusElement.textContent =
+            "شما به عنوان مدیر باهوش شناسایی شدید ✅";
 
-        statusElement.className =
-          "status success";
+          statusElement.className =
+            "status";
 
-        console.log("Eitaa User ID:", user.id);
+          adminPanel.style.display = "block";
+
+        } else {
+
+          statusElement.textContent =
+            "ورود شما با موفقیت انجام شد.";
+
+          statusElement.className =
+            "status";
+
+        }
 
       } catch (error) {
 
@@ -209,13 +263,11 @@
         userNameElement.textContent =
           "احراز هویت ناموفق بود";
 
-        userIdElement.textContent =
-          "شناسه دریافت نشد";
-
         statusElement.textContent =
           error.message || "خطایی در ارتباط با سرور رخ داد.";
 
-        statusElement.className = "status error";
+        statusElement.className =
+          "status error";
       }
     }
 
