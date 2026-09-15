@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,19 @@
 
 <body>
 
-  <div style="text-align:center; padding:50px 20px; font-family:Tahoma;">
+  <div style="
+    text-align:center;
+    padding:50px 20px;
+    font-family:Tahoma;
+  ">
 
     <h1>باهوش 🤖</h1>
 
     <p id="status">
-      در حال اتصال به سرور...
+      در حال بررسی اطلاعات شما...
     </p>
+
+    <div id="userInfo"></div>
 
   </div>
 
@@ -29,16 +36,23 @@
     webApp.expand();
 
     const status = document.getElementById("status");
+    const userInfo = document.getElementById("userInfo");
 
-    async function testServer() {
+    async function authenticate() {
 
       try {
 
+        if (!webApp.initData) {
+          throw new Error("اطلاعات ورود ایتا دریافت نشد");
+        }
+
         const response = await fetch("/api/auth", {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json"
           },
+
           body: JSON.stringify({
             initData: webApp.initData
           })
@@ -50,23 +64,82 @@
           throw new Error(result.error || "خطای سرور");
         }
 
-        status.textContent =
-          result.message;
+        const user = result.user || {};
+
+        const fullName =
+          `${user.first_name || ""} ${user.last_name || ""}`.trim();
+
+        userInfo.innerHTML = `
+          <div style="
+            margin-top:25px;
+            padding:20px;
+            border-radius:15px;
+            background:#f5f5f5;
+          ">
+
+            <p>
+              👤 ${fullName || "کاربر"}
+            </p>
+
+            <p>
+              🆔 شناسه ایتا: ${user.id}
+            </p>
+
+            <p>
+              👑 ادمین:
+              ${result.isAdmin ? "بله ✅" : "خیر"}
+            </p>
+
+            <p>
+              📝 ثبت‌نام:
+              ${result.registered ? "بله ✅" : "خیر"}
+            </p>
+
+            <p>
+              🔐 دسترسی دوره:
+              ${result.hasAccess ? "فعال ✅" : "غیرفعال ❌"}
+            </p>
+
+          </div>
+        `;
+
+        if (result.isAdmin) {
+
+          status.textContent =
+            "ورود موفق بود — پنل مدیریت آماده است 👑";
+
+        } else if (result.hasAccess) {
+
+          status.textContent =
+            "ورود موفق بود — خوش آمدید 🌱";
+
+        } else if (result.registered) {
+
+          status.textContent =
+            "ثبت‌نام شما انجام شده، اما دسترسی دوره فعال نیست.";
+
+        } else {
+
+          status.textContent =
+            "شما هنوز در دوره ثبت‌نام نکرده‌اید.";
+
+        }
 
       } catch (error) {
 
         console.error(error);
 
         status.textContent =
-          "ارتباط با سرور برقرار نشد ❌";
+          error.message || "ارتباط با سرور برقرار نشد ❌";
 
       }
 
     }
 
-    testServer();
+    authenticate();
 
   </script>
 
 </body>
+
 </html>
