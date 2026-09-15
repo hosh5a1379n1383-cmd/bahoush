@@ -4,49 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Eitaa Web App SDK -->
   <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
 
   <title>باهوش | دستیار دوره</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: sans-serif;
+      font-family: Tahoma, Arial, sans-serif;
       background: #f5f7fb;
-      color: #222;
-      text-align: center;
+      color: #1f2937;
     }
 
     .container {
-      max-width: 500px;
+      width: 100%;
+      max-width: 520px;
       margin: 0 auto;
-      padding: 60px 20px;
+      padding: 50px 20px;
+      text-align: center;
     }
 
     .logo {
-      font-size: 70px;
-      margin-bottom: 20px;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 22px;
+      border-radius: 25px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
     }
 
     h1 {
-      margin: 0 0 10px;
+      margin: 0;
       font-size: 30px;
+      font-weight: 800;
     }
 
-    p {
-      color: #666;
-      line-height: 1.8;
-      margin-bottom: 35px;
+    .subtitle {
+      margin: 12px 0 30px;
+      color: #6b7280;
+      line-height: 1.9;
+      font-size: 15px;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 15px 35px;
-      background: #111;
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 17px;
+    .user-box {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .user-title {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    #userName {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #16a34a;
     }
   </style>
 </head>
@@ -59,16 +88,57 @@
 
     <h1>باهوش</h1>
 
-    <p>
+    <div class="subtitle">
       دستیار هوشمند دوره باهوش<br>
       همراه شما در مسیر یادگیری هوش مصنوعی
-    </p>
+    </div>
 
-    <a href="#" class="btn">
-      🚀 ورود به دوره
-    </a>
+    <div class="user-box">
+
+      <div class="user-title">
+        خوش اومدی 👋🏻
+      </div>
+
+      <div id="userName">
+        در حال دریافت اطلاعات...
+      </div>
+
+      <div class="status">
+        اتصال به ایتا برقرار است ✅
+      </div>
+
+    </div>
 
   </div>
+
+  <script>
+    const webApp = window.Eitaa.WebApp;
+
+    // آماده‌سازی Mini App
+    webApp.ready();
+    webApp.expand();
+
+    // دریافت اطلاعات کاربر
+    const user = webApp.initDataUnsafe?.user;
+
+    const userNameElement = document.getElementById("userName");
+
+    if (user) {
+      const firstName = user.first_name || "";
+      const lastName = user.last_name || "";
+
+      const fullName = `${firstName} ${lastName}`.trim();
+
+      userNameElement.textContent =
+        fullName || "کاربر باهوش";
+
+      console.log("اطلاعات کاربر ایتا:", user);
+
+    } else {
+      userNameElement.textContent =
+        "کاربر ایتا شناسایی نشد";
+    }
+  </script>
 
 </body>
 </html>
