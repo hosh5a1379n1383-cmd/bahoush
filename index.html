@@ -12,13 +12,49 @@
 <body>
 
   <div style="text-align:center; padding:50px 20px; font-family:Tahoma;">
+
     <h1>باهوش 🤖</h1>
-    <p id="status">در حال بررسی...</p>
+
+    <p id="status">
+      در حال بررسی ارتباط با ایتا...
+    </p>
+
   </div>
 
   <script>
-    document.getElementById("status").textContent =
-      "صفحه Mini App با موفقیت اجرا شد ✅";
+
+    const status = document.getElementById("status");
+
+    try {
+
+      const webApp = window.Eitaa.WebApp;
+
+      webApp.ready();
+      webApp.expand();
+
+      const initData = webApp.initData;
+
+      if (initData) {
+
+        status.textContent =
+          "ارتباط با ایتا برقرار است ✅";
+
+      } else {
+
+        status.textContent =
+          "Mini App اجرا شد، اما initData دریافت نشد ❌";
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      status.textContent =
+        "خطا در اجرای Eitaa WebApp ❌";
+
+    }
+
   </script>
 
 </body>
