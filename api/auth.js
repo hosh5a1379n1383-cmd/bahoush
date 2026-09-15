@@ -36,12 +36,7 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // بررسی اعتبار اطلاعات ایتا
-    // =========================
-
     const params = new URLSearchParams(initData);
-
     const receivedHash = params.get("hash");
 
     if (!receivedHash) {
@@ -75,10 +70,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // بررسی تاریخ ورود
-    // =========================
-
     const authDate = Number(params.get("auth_date"));
 
     if (!authDate) {
@@ -97,10 +88,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // دریافت اطلاعات کاربر
-    // =========================
-
     const userData = params.get("user");
 
     if (!userData) {
@@ -112,10 +99,37 @@ module.exports = async (req, res) => {
 
     const user = JSON.parse(userData);
 
-    // =========================
-    // بررسی هنرجو در Supabase
-    // =========================
+    // بررسی ادمین بودن کاربر
+    const adminUrl =
+      `${supabaseUrl}/rest/v1/admins` +
+      `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
+      `&is_active=eq.true` +
+      `&select=id,eitaa_user_id,is_active`;
 
+    const adminResponse = await fetch(adminUrl, {
+      method: "GET",
+      headers: {
+        "apikey": supabaseSecretKey,
+        "Authorization": `Bearer ${supabaseSecretKey}`
+      }
+    });
+
+    if (!adminResponse.ok) {
+      console.error(
+        "Supabase Admin Error:",
+        await adminResponse.text()
+      );
+
+      return res.status(500).json({
+        ok: false,
+        error: "خطا در بررسی دسترسی ادمین"
+      });
+    }
+
+    const admins = await adminResponse.json();
+    const isAdmin = admins.length > 0;
+
+    // بررسی هنرجو بودن کاربر
     const studentUrl =
       `${supabaseUrl}/rest/v1/students` +
       `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
@@ -131,7 +145,7 @@ module.exports = async (req, res) => {
 
     if (!studentResponse.ok) {
       console.error(
-        "Supabase Error:",
+        "Supabase Student Error:",
         await studentResponse.text()
       );
 
@@ -142,18 +156,15 @@ module.exports = async (req, res) => {
     }
 
     const students = await studentResponse.json();
-
     const student = students[0] || null;
 
-    // =========================
-    // پاسخ نهایی
-    // =========================
-
-    if (!student) {
+    // اگر نه ادمین است و نه هنرجوی ثبت‌شده
+    if (!student && !isAdmin) {
       return res.status(200).json({
         ok: true,
         registered: false,
         hasAccess: false,
+        isAdmin: false,
         user: {
           id: user.id,
           first_name: user.first_name || "",
@@ -165,13 +176,16 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({
       ok: true,
-      registered: true,
-      hasAccess: student.is_active && student.has_access,
+      registered: !!student,
+      hasAccess: student
+        ? !!(student.is_active && student.has_access)
+        : false,
+      isAdmin: isAdmin,
       user: {
         id: user.id,
-        first_name: student.first_name || user.first_name || "",
-        last_name: student.last_name || user.last_name || "",
-        username: student.username || user.username || ""
+        first_name: student?.first_name || user.first_name || "",
+        last_name: student?.last_name || user.last_name || "",
+        username: student?.username || user.username || ""
       }
     });
 
