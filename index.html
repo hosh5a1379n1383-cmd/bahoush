@@ -10,307 +10,100 @@
   <title>باهوش</title>
 
   <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
     html,
     body {
       margin: 0;
       padding: 0;
-      min-height: 100%;
-      background: #070816;
-      color: #ffffff;
+      background: #ffffff !important;
+      color: #222222 !important;
       font-family: Tahoma, Arial, sans-serif;
     }
 
     body {
       min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* نورهای پس‌زمینه */
-
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.35;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    body::before {
-      background: #6c3cff;
-      top: -80px;
-      right: -80px;
-    }
-
-    body::after {
-      background: #00bfff;
-      bottom: -100px;
-      left: -80px;
     }
 
     .container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 28px 16px 40px;
+      padding: 35px 18px;
     }
 
-    /* هدر */
-
-    .header {
+    h1 {
       text-align: center;
-      margin-bottom: 25px;
+      color: #222222;
+      margin-bottom: 15px;
     }
-
-    .logo {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 14px;
-      border-radius: 24px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 38px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(121, 65, 255, 0.95),
-          rgba(0, 191, 255, 0.9)
-        );
-
-      box-shadow:
-        0 0 25px rgba(102, 68, 255, 0.55),
-        0 0 55px rgba(0, 191, 255, 0.18);
-    }
-
-    .brand {
-      font-size: 28px;
-      font-weight: 900;
-      margin: 0;
-    }
-
-    .subtitle {
-      margin: 8px 0 0;
-      color: #a9abc4;
-      font-size: 13px;
-    }
-
-    /* وضعیت */
 
     #status {
       text-align: center;
-      color: #b9bbd1;
-      font-size: 13px;
-      margin: 0 0 20px;
+      color: #555555;
+      font-size: 15px;
+      margin-bottom: 25px;
     }
 
-    /* کارت کاربر */
+    #userInfo {
+      margin-top: 25px;
+    }
 
-    .user-card {
-      position: relative;
-      overflow: hidden;
-
+    .info-box {
+      max-width: 420px;
+      margin: 0 auto 25px;
       padding: 20px;
-      margin-bottom: 28px;
-
-      border-radius: 22px;
-
-      background: rgba(255, 255, 255, 0.055);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      background: #f7f7f7;
+      border: 1px solid #eeeeee;
+      color: #222222;
+      line-height: 1.9;
     }
 
-    .user-name {
+    .lessons-title {
+      max-width: 420px;
+      margin: 0 auto 12px;
       font-size: 19px;
       font-weight: bold;
-      margin-bottom: 12px;
     }
-
-    .user-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      padding: 9px 0;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-
-      font-size: 13px;
-      color: #b8bad0;
-    }
-
-    .user-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .user-row strong {
-      color: #ffffff;
-    }
-
-    /* عنوان آموزش‌ها */
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      font-size: 19px;
-      font-weight: 900;
-
-      margin-bottom: 14px;
-    }
-
-    .section-title span {
-      color: #9b7cff;
-    }
-
-    /* کارت آموزش */
 
     .lesson {
-      position: relative;
-      overflow: hidden;
-
-      margin-bottom: 14px;
-      padding: 19px;
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.075),
-          rgba(255, 255, 255, 0.035)
-        );
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-
-      box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.20);
-
-      transition: transform 0.2s ease;
-    }
-
-    .lesson:active {
-      transform: scale(0.98);
+      max-width: 420px;
+      margin: 0 auto 12px;
+      padding: 18px;
+      border-radius: 16px;
+      background: #f7f7f7;
+      border: 1px solid #eeeeee;
     }
 
     .lesson-number {
-      display: inline-block;
-
-      padding: 5px 10px;
-      margin-bottom: 10px;
-
-      border-radius: 10px;
-
-      color: #bcaaff;
-      background: rgba(132, 92, 255, 0.12);
-
-      font-size: 11px;
-      font-weight: bold;
+      font-size: 13px;
+      color: #777777;
+      margin-bottom: 6px;
     }
 
     .lesson-title {
-      font-size: 18px;
-      font-weight: 900;
+      font-size: 17px;
+      font-weight: bold;
       margin-bottom: 8px;
     }
 
     .lesson-description {
-      color: #aeb0c5;
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    /* دکمه */
-
-    .lesson-button {
-      width: 100%;
-      margin-top: 16px;
-
-      padding: 13px 16px;
-
-      border: none;
-      border-radius: 14px;
-
-      color: #ffffff;
       font-size: 14px;
-      font-weight: bold;
-
-      background:
-        linear-gradient(
-          135deg,
-          #7047ff,
-          #00aeea
-        );
-
-      box-shadow:
-        0 7px 22px rgba(90, 75, 255, 0.28);
-
-      cursor: pointer;
+      color: #666666;
+      line-height: 1.8;
     }
-
-    /* حالت بدون آموزش */
 
     .empty {
-      padding: 25px 15px;
+      max-width: 420px;
+      margin: 0 auto;
       text-align: center;
-
-      color: #85879d;
-      font-size: 13px;
-
-      border-radius: 20px;
-
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: #777777;
+      padding: 20px;
     }
-
   </style>
-
 </head>
 
 <body>
 
   <div class="container">
 
-    <div class="header">
-
-      <div class="logo">
-        🤖
-      </div>
-
-      <h1 class="brand">
-        باهوش
-      </h1>
-
-      <p class="subtitle">
-        مسیر حرفه‌ای یادگیری هوش مصنوعی
-      </p>
-
-    </div>
+    <h1>باهوش 🤖</h1>
 
     <p id="status">
       در حال بررسی اطلاعات شما...
@@ -329,178 +122,113 @@
     webApp.ready();
     webApp.expand();
 
-    const status =
-      document.getElementById("status");
-
-    const userInfo =
-      document.getElementById("userInfo");
-
-    const lessonsContainer =
-      document.getElementById("lessons");
-
+    const status = document.getElementById("status");
+    const userInfo = document.getElementById("userInfo");
+    const lessonsContainer = document.getElementById("lessons");
 
     async function authenticate() {
 
       try {
 
         if (!webApp.initData) {
-          throw new Error(
-            "اطلاعات ورود ایتا دریافت نشد"
-          );
+          throw new Error("اطلاعات ورود ایتا دریافت نشد");
         }
 
+        const response = await fetch("/api/auth", {
+          method: "POST",
 
-        const response = await fetch(
-          "/api/auth",
-          {
-            method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-            headers: {
-              "Content-Type": "application/json"
-            },
+          body: JSON.stringify({
+            initData: webApp.initData
+          })
+        });
 
-            body: JSON.stringify({
-              initData: webApp.initData
-            })
-          }
-        );
-
-
-        const result =
-          await response.json();
-
+        const result = await response.json();
 
         if (!response.ok || !result.ok) {
-
-          throw new Error(
-            result.error || "خطای سرور"
-          );
-
+          throw new Error(result.error || "خطای سرور");
         }
 
-
-        const user =
-          result.user || {};
-
+        const user = result.user || {};
 
         const fullName =
-          `${user.first_name || ""} ${user.last_name || ""}`
-            .trim();
-
+          `${user.first_name || ""} ${user.last_name || ""}`.trim();
 
         userInfo.innerHTML = `
+          <div class="info-box">
 
-          <div class="user-card">
+            <p>👤 ${fullName || "کاربر"}</p>
 
-            <div class="user-name">
-              👋 ${fullName || "کاربر"}
-            </div>
+            <p>🆔 شناسه ایتا: ${user.id}</p>
 
-            <div class="user-row">
-              <span>شناسه ایتا</span>
-              <strong>${user.id}</strong>
-            </div>
+            <p>
+              👑 ادمین:
+              ${result.isAdmin ? "بله ✅" : "خیر"}
+            </p>
 
-            <div class="user-row">
-              <span>وضعیت ادمین</span>
-              <strong>
-                ${result.isAdmin ? "ادمین 👑" : "کاربر"}
-              </strong>
-            </div>
+            <p>
+              📝 ثبت‌نام:
+              ${result.registered ? "بله ✅" : "خیر"}
+            </p>
 
-            <div class="user-row">
-              <span>ثبت‌نام</span>
-              <strong>
-                ${result.registered ? "تکمیل شده ✅" : "انجام نشده"}
-              </strong>
-            </div>
-
-            <div class="user-row">
-              <span>دسترسی دوره</span>
-              <strong>
-                ${result.hasAccess ? "فعال ✅" : "غیرفعال 🔒"}
-              </strong>
-            </div>
+            <p>
+              🔐 دسترسی دوره:
+              ${result.hasAccess ? "فعال ✅" : "غیرفعال ❌"}
+            </p>
 
           </div>
-
         `;
 
-
-        const lessons =
-          result.lessons || [];
-
+        // نمایش آموزش‌ها
+        const lessons = result.lessons || [];
 
         if (lessons.length === 0) {
 
           lessonsContainer.innerHTML = `
-
-            <div class="section-title">
-              <span>✦</span>
-              آموزش‌های دوره
+            <div class="lessons-title">
+              📚 آموزش‌های دوره
             </div>
 
             <div class="empty">
               هنوز آموزشی منتشر نشده است.
             </div>
-
           `;
 
         } else {
 
           let lessonsHTML = `
-
-            <div class="section-title">
-              <span>✦</span>
-              آموزش‌های دوره
+            <div class="lessons-title">
+              📚 آموزش‌های دوره
             </div>
-
           `;
 
+          lessons.forEach((lesson, index) => {
 
-          lessons.forEach(
-            (lesson, index) => {
+            lessonsHTML += `
+              <div class="lesson">
 
-              lessonsHTML += `
-
-                <div class="lesson">
-
-                  <div class="lesson-number">
-                    آموزش ${index + 1}
-                  </div>
-
-                  <div class="lesson-title">
-                    ${lesson.title || "بدون عنوان"}
-                  </div>
-
-                  <div class="lesson-description">
-                    ${
-                      lesson.description ||
-                      "توضیحی برای این آموزش ثبت نشده است."
-                    }
-                  </div>
-
-                  <button
-                    class="lesson-button"
-                    type="button"
-                    onclick="openLesson(${lesson.id})"
-                  >
-                    ▶️ ورود به آموزش
-                  </button>
-
+                <div class="lesson-number">
+                  آموزش ${index + 1}
                 </div>
 
-              `;
+                <div class="lesson-title">
+                  ${lesson.title || "بدون عنوان"}
+                </div>
 
-            }
-          );
+                <div class="lesson-description">
+                  ${lesson.description || "توضیحی برای این آموزش ثبت نشده است."}
+                </div>
 
+              </div>
+            `;
 
-          lessonsContainer.innerHTML =
-            lessonsHTML;
+          });
 
+          lessonsContainer.innerHTML = lessonsHTML;
         }
-
 
         if (result.isAdmin) {
 
@@ -524,30 +252,16 @@
 
         }
 
-
       } catch (error) {
 
         console.error(error);
 
         status.textContent =
-          error.message ||
-          "ارتباط با سرور برقرار نشد ❌";
+          error.message || "ارتباط با سرور برقرار نشد ❌";
 
       }
 
     }
-
-
-    function openLesson(lessonId) {
-
-      alert(
-        "ورود به آموزش شماره " +
-        lessonId +
-        " — این بخش در مرحله بعد فعال می‌شود."
-      );
-
-    }
-
 
     authenticate();
 
