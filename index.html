@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
   <title>دوره باهوش</title>
 
@@ -22,12 +22,12 @@
     }
 
     body {
-      font-family: Tahoma, Arial, sans-serif;
+      font-family: Tahoma,Arial,sans-serif;
       background:
         radial-gradient(
           circle at top right,
-          #24105c 0%,
-          #0b0920 35%,
+          #281064 0%,
+          #0b0920 36%,
           #050511 75%,
           #020208 100%
         );
@@ -41,14 +41,14 @@
     body::before {
       content: "";
       position: fixed;
-      width: 300px;
-      height: 300px;
-      top: -120px;
-      right: -100px;
+      width: 330px;
+      height: 330px;
+      top: -150px;
+      right: -120px;
       background:
         radial-gradient(
           circle,
-          rgba(162, 89, 255, 0.35),
+          rgba(164,82,255,.38),
           transparent 70%
         );
       filter: blur(20px);
@@ -59,17 +59,17 @@
     body::after {
       content: "";
       position: fixed;
-      width: 250px;
-      height: 250px;
-      bottom: -120px;
-      left: -100px;
+      width: 280px;
+      height: 280px;
+      bottom: -150px;
+      left: -120px;
       background:
         radial-gradient(
           circle,
-          rgba(0, 229, 255, 0.20),
+          rgba(0,229,255,.18),
           transparent 70%
         );
-      filter: blur(20px);
+      filter: blur(25px);
       pointer-events: none;
       z-index: 0;
     }
@@ -78,7 +78,7 @@
       width: 100%;
       max-width: 760px;
       margin: auto;
-      padding: 16px 14px 50px;
+      padding: 16px 14px 55px;
       position: relative;
       z-index: 1;
     }
@@ -87,45 +87,69 @@
       background:
         linear-gradient(
           145deg,
-          rgba(28, 22, 62, 0.92),
-          rgba(10, 9, 27, 0.96)
+          rgba(30,23,67,.92),
+          rgba(8,8,25,.96)
         );
-      border: 1px solid rgba(177, 104, 255, 0.22);
-      border-radius: 22px;
+      border: 1px solid rgba(181,104,255,.23);
+      border-radius: 23px;
       padding: 20px;
       margin-bottom: 16px;
       box-shadow:
-        0 0 30px rgba(112, 52, 255, 0.08);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+        0 0 35px rgba(110,48,255,.09);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      animation: cardIn .55s ease both;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .header {
       text-align: center;
       padding: 28px 18px 24px;
-      border: 1px solid rgba(184, 105, 255, 0.35);
+      border-color: rgba(184,105,255,.35);
       box-shadow:
-        0 0 35px rgba(136, 72, 255, 0.15);
+        0 0 38px rgba(136,72,255,.16);
     }
 
     .logo {
-      width: 82px;
-      height: 82px;
+      width: 84px;
+      height: 84px;
       margin: 0 auto 15px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 25px;
-      font-size: 42px;
+      border-radius: 26px;
+      font-size: 43px;
       background:
         linear-gradient(
           135deg,
-          rgba(157, 78, 255, 0.25),
-          rgba(0, 229, 255, 0.12)
+          rgba(157,78,255,.27),
+          rgba(0,229,255,.12)
         );
-      border: 1px solid rgba(190, 120, 255, 0.5);
+      border: 1px solid rgba(190,120,255,.5);
       box-shadow:
-        0 0 25px rgba(155, 75, 255, 0.28);
+        0 0 28px rgba(155,75,255,.28);
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%,100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
     }
 
     h1 {
@@ -135,7 +159,7 @@
         linear-gradient(
           90deg,
           #fff,
-          #b97aff,
+          #bf82ff,
           #65eaff
         );
       -webkit-background-clip: text;
@@ -169,11 +193,11 @@
       width: 38px;
       height: 38px;
       margin: 0 auto 15px;
-      border: 3px solid rgba(255,255,255,0.12);
+      border: 3px solid rgba(255,255,255,.12);
       border-top-color: #b36cff;
       border-right-color: #00e5ff;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin .8s linear infinite;
     }
 
     @keyframes spin {
@@ -184,8 +208,8 @@
 
     .error {
       color: #ff9dba;
-      background: rgba(255, 45, 100, 0.09);
-      border: 1px solid rgba(255, 70, 120, 0.25);
+      background: rgba(255,45,100,.09);
+      border: 1px solid rgba(255,70,120,.25);
       border-radius: 15px;
       padding: 15px;
       line-height: 1.9;
@@ -196,17 +220,19 @@
     }
 
     .user-box {
-      background: rgba(111, 69, 196, 0.10);
-      border: 1px solid rgba(157, 104, 255, 0.18);
+      background: rgba(111,69,196,.10);
+      border: 1px solid rgba(157,104,255,.18);
       border-radius: 15px;
       padding: 15px;
       line-height: 2;
       color: #ddd7eb;
     }
-        .section-title {
+
+    .section-title {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 10px;
       margin-bottom: 16px;
     }
 
@@ -215,44 +241,57 @@
     }
 
     .badge {
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 20px;
       font-size: 11px;
-      background: rgba(0, 229, 255, 0.08);
+      white-space: nowrap;
+      background: rgba(0,229,255,.08);
       color: #72efff;
-      border: 1px solid rgba(0, 229, 255, 0.2);
+      border: 1px solid rgba(0,229,255,.2);
     }
 
     .lesson {
-      position: relative;
       display: flex;
       align-items: center;
       gap: 13px;
       padding: 16px;
       margin-bottom: 12px;
-      border-radius: 18px;
+      border-radius: 19px;
       background:
         linear-gradient(
           135deg,
-          rgba(30, 24, 66, 0.95),
-          rgba(13, 11, 34, 0.98)
+          rgba(31,24,68,.96),
+          rgba(12,10,32,.98)
         );
-      border: 1px solid rgba(167, 96, 255, 0.18);
+      border: 1px solid rgba(167,96,255,.18);
       transition:
-        transform 0.2s,
-        border-color 0.2s,
-        box-shadow 0.2s;
+        transform .2s,
+        border-color .2s,
+        box-shadow .2s;
       cursor: pointer;
+      animation: lessonIn .45s ease both;
+    }
+
+    @keyframes lessonIn {
+      from {
+        opacity: 0;
+        transform: translateX(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .lesson:active {
-      transform: scale(0.985);
+      transform: scale(.985);
     }
 
     .lesson:hover {
-      border-color: rgba(174, 99, 255, 0.48);
+      border-color: rgba(174,99,255,.48);
       box-shadow:
-        0 0 25px rgba(138, 67, 255, 0.12);
+        0 0 25px rgba(138,67,255,.13);
     }
 
     .lesson-number {
@@ -265,15 +304,14 @@
       background:
         linear-gradient(
           135deg,
-          rgba(162, 77, 255, 0.30),
-          rgba(0, 221, 255, 0.10)
+          rgba(162,77,255,.30),
+          rgba(0,221,255,.10)
         );
-      border: 1px solid rgba(179, 103, 255, 0.3);
+      border: 1px solid rgba(179,103,255,.3);
       color: #dcb9ff;
       font-size: 14px;
     }
-
-    .lesson-info {
+        .lesson-info {
       flex: 1;
       min-width: 0;
     }
@@ -299,65 +337,134 @@
     }
 
     .arrow {
-      width: 36px;
-      height: 36px;
+      width: 37px;
+      height: 37px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: rgba(0, 229, 255, 0.07);
-      border: 1px solid rgba(0, 229, 255, 0.18);
+      background: rgba(0,229,255,.07);
+      border: 1px solid rgba(0,229,255,.18);
       color: #6fefff;
-      font-size: 18px;
+      font-size: 17px;
       flex-shrink: 0;
     }
 
+    .detail-section {
+      animation: detailIn .45s ease both;
+    }
+
+    @keyframes detailIn {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .detail-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
       margin-bottom: 20px;
     }
 
     .back-button {
-      width: 43px;
+      width: fit-content;
+      min-width: 105px;
       height: 43px;
-      flex-shrink: 0;
-      border-radius: 14px;
-      display: flex;
+      padding: 0 17px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 7px;
+      border-radius: 14px;
       cursor: pointer;
-      color: #fff;
-      background: rgba(160, 88, 255, 0.12);
-      border: 1px solid rgba(175, 100, 255, 0.25);
-      font-size: 20px;
+      color: #e9ddff;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(155,78,255,.16),
+          rgba(0,229,255,.07)
+        );
+      border: 1px solid rgba(176,105,255,.28);
+      box-shadow:
+        0 0 18px rgba(136,72,255,.09);
+      font-size: 13px;
+      transition:
+        transform .2s,
+        box-shadow .2s,
+        border-color .2s;
     }
 
-    .detail-title {
-      flex: 1;
-      min-width: 0;
+    .back-button:active {
+      transform: scale(.96);
     }
 
-    .detail-title h2 {
-      margin: 0 0 4px;
-      font-size: 19px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .back-button:hover {
+      border-color: rgba(0,229,255,.42);
+      box-shadow:
+        0 0 22px rgba(0,229,255,.10);
     }
 
-    .detail-title span {
-      color: #8f8aa2;
+    .detail-title-box {
+      margin-top: 17px;
+      padding: 17px;
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(157,78,255,.12),
+          rgba(0,229,255,.045)
+        );
+      border: 1px solid rgba(177,102,255,.17);
+    }
+
+    .detail-title-box h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+      line-height: 1.7;
+    }
+
+    .detail-number {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
       font-size: 11px;
+      color: #77efff;
+      background: rgba(0,229,255,.07);
+      border: 1px solid rgba(0,229,255,.17);
+    }
+
+    .detail-description {
+      margin-top: 13px;
+      color: #aaa4bb;
+      line-height: 1.9;
+      font-size: 13px;
     }
 
     .content-box {
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(174, 102, 255, 0.20);
-      background: #05050d;
-      margin-top: 14px;
+      border: 1px solid rgba(174,102,255,.23);
+      background: #03030a;
+      margin-top: 17px;
+      box-shadow:
+        0 0 28px rgba(117,56,255,.10);
+      animation: contentIn .55s ease both;
+    }
+
+    @keyframes contentIn {
+      from {
+        opacity: 0;
+        transform: scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     video {
@@ -393,7 +500,8 @@
       padding: 20px;
       font-size: 15px;
     }
-        .admin-title {
+
+    .admin-title {
       color: #d7a4ff;
     }
 
@@ -411,8 +519,8 @@
       width: 100%;
       padding: 13px;
       border-radius: 12px;
-      border: 1px solid rgba(171, 110, 255, 0.20);
-      background: rgba(4, 4, 15, 0.65);
+      border: 1px solid rgba(171,110,255,.20);
+      background: rgba(4,4,15,.65);
       color: white;
       font-family: inherit;
       font-size: 14px;
@@ -422,9 +530,9 @@
     input:focus,
     textarea:focus,
     select:focus {
-      border-color: rgba(0, 229, 255, 0.5);
+      border-color: rgba(0,229,255,.5);
       box-shadow:
-        0 0 15px rgba(0, 229, 255, 0.07);
+        0 0 15px rgba(0,229,255,.07);
     }
 
     select option {
@@ -456,11 +564,11 @@
           #00bfe8
         );
       box-shadow:
-        0 0 22px rgba(126, 65, 255, 0.22);
+        0 0 22px rgba(126,65,255,.22);
     }
 
     button:disabled {
-      opacity: 0.55;
+      opacity: .55;
     }
 
     .hidden {
@@ -487,7 +595,6 @@
     }
 
   </style>
-
 </head>
 
 <body>
@@ -496,9 +603,7 @@
 
     <div class="card header">
 
-      <div class="logo">
-        🤖
-      </div>
+      <div class="logo">🤖</div>
 
       <h1>
         دوره باهوش
@@ -514,11 +619,8 @@
       id="status"
       class="card status"
     >
-
       <div class="loader"></div>
-
       در حال بررسی اطلاعات شما...
-
     </div>
 
     <div
@@ -569,7 +671,7 @@
       </div>
             <div
         id="detailSection"
-        class="card hidden"
+        class="card detail-section hidden"
       >
 
         <div class="detail-header">
@@ -578,27 +680,31 @@
             id="backButton"
             class="back-button"
           >
-            ◀️
+            <span>←</span>
+            <span>بازگشت</span>
           </div>
 
-          <div class="detail-title">
+          <div class="detail-title-box">
 
             <h2 id="detailTitle">
               آموزش
             </h2>
 
-            <span id="detailNumber">
+            <span
+              id="detailNumber"
+              class="detail-number"
+            >
               آموزش
             </span>
+
+            <div
+              id="detailDescription"
+              class="detail-description"
+            ></div>
 
           </div>
 
         </div>
-
-        <div
-          id="detailDescription"
-          class="small"
-        ></div>
 
         <div
           id="detailContent"
@@ -744,6 +850,7 @@
     let initData = "";
     let currentUser = null;
     let currentLessons = [];
+    let supabaseClient = null;
 
     function setupEitaa() {
 
@@ -963,8 +1070,7 @@
           </p>
 
           <strong>
-            آیدی ثبت‌نام:
-            o0JABBAR0o
+            آیدی ثبت‌نام: o0JABBAR0o
           </strong>
 
         `;
@@ -979,16 +1085,12 @@
       ) {
 
         document
-          .getElementById(
-            "lessonsSection"
-          )
+          .getElementById("lessonsSection")
           .classList
           .remove("hidden");
 
         document
-          .getElementById(
-            "lessonCount"
-          )
+          .getElementById("lessonCount")
           .innerText =
           `${toPersianNumber(
             currentLessons.length
@@ -1003,32 +1105,24 @@
       ) {
 
         document
-          .getElementById(
-            "lessonsSection"
-          )
+          .getElementById("lessonsSection")
           .classList
           .remove("hidden");
 
         document
-          .getElementById(
-            "lessonsList"
-          )
+          .getElementById("lessonsList")
           .innerHTML = `
-
             <div class="empty">
               هنوز آموزشی اضافه نشده است.
             </div>
-
-        `;
+          `;
 
       }
 
       if (data.isAdmin) {
 
         document
-          .getElementById(
-            "adminPanel"
-          )
+          .getElementById("adminPanel")
           .classList
           .remove("hidden");
 
@@ -1045,7 +1139,7 @@
       list.innerHTML = "";
 
       lessons.forEach(
-        (lesson, index) => {
+        (lesson,index) => {
 
           const div =
             document.createElement(
@@ -1054,6 +1148,9 @@
 
           div.className =
             "lesson";
+
+          div.style.animationDelay =
+            `${index * 0.05}s`;
 
           div.innerHTML = `
 
@@ -1065,7 +1162,8 @@
 
               <div class="lesson-title">
                 ${escapeHtml(
-                  lesson.title || "بدون عنوان"
+                  lesson.title ||
+                  "بدون عنوان"
                 )}
               </div>
 
@@ -1079,7 +1177,7 @@
             </div>
 
             <div class="arrow">
-              ◀️
+              ◀
             </div>
 
           `;
@@ -1117,31 +1215,58 @@
         .classList
         .add("hidden");
 
-      document
-        .getElementById("detailSection")
-        .classList
-        .remove("hidden");
+      const detail =
+        document.getElementById(
+          "detailSection"
+        );
+
+      detail.classList.remove(
+        "hidden"
+      );
+
+      detail.classList.remove(
+        "detail-section"
+      );
+
+      void detail.offsetWidth;
+
+      detail.classList.add(
+        "detail-section"
+      );
 
       document
         .getElementById("detailTitle")
         .innerText =
-        lesson.title || "آموزش";
+        lesson.title ||
+        "آموزش";
 
       document
         .getElementById("detailNumber")
         .innerText =
-        `آموزش ${toPersianNumber(index + 1)}`;
+        `آموزش ${toPersianNumber(
+          index + 1
+        )}`;
 
       document
         .getElementById("detailDescription")
         .innerText =
-        lesson.description || "";
+        lesson.description ||
+        "";
 
-      renderLessonContent(lesson);
+      renderLessonContent(
+        lesson
+      );
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
-    function renderLessonContent(lesson) {
+    function renderLessonContent(
+      lesson
+    ) {
 
       const box =
         document.getElementById(
@@ -1154,7 +1279,8 @@
         lesson.content_url;
 
       if (
-        lesson.content_type === "video" &&
+        lesson.content_type ===
+          "video" &&
         url
       ) {
 
@@ -1179,7 +1305,8 @@
         `;
 
       } else if (
-        lesson.content_type === "audio" &&
+        lesson.content_type ===
+          "audio" &&
         url
       ) {
 
@@ -1200,7 +1327,8 @@
         `;
 
       } else if (
-        lesson.content_type === "image" &&
+        lesson.content_type ===
+          "image" &&
         url
       ) {
 
@@ -1216,7 +1344,8 @@
         `;
 
       } else if (
-        lesson.content_type === "file" &&
+        lesson.content_type ===
+          "file" &&
         url
       ) {
 
@@ -1230,13 +1359,16 @@
         `;
 
       } else if (
-        lesson.content_type === "text"
+        lesson.content_type ===
+          "text"
       ) {
 
         box.innerHTML = `
 
           <div class="text-content">
-            ${escapeHtml(url || "")}
+            ${escapeHtml(
+              url || ""
+            )}
           </div>
 
         `;
@@ -1288,13 +1420,19 @@
         "click",
         function () {
 
-          document
-            .getElementById("detailSection")
-            .classList
-            .add("hidden");
+          const detail =
+            document.getElementById(
+              "detailSection"
+            );
+
+          detail.classList.add(
+            "hidden"
+          );
 
           document
-            .getElementById("lessonsSection")
+            .getElementById(
+              "lessonsSection"
+            )
             .classList
             .remove("hidden");
 
@@ -1304,11 +1442,18 @@
           ) {
 
             document
-              .getElementById("adminPanel")
+              .getElementById(
+                "adminPanel"
+              )
               .classList
               .remove("hidden");
 
           }
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
 
         }
       );
@@ -1323,10 +1468,14 @@
             this.value;
 
           const fileBox =
-            document.getElementById("fileBox");
+            document.getElementById(
+              "fileBox"
+            );
 
           const textBox =
-            document.getElementById("textBox");
+            document.getElementById(
+              "textBox"
+            );
 
           if (
             type === "text"
@@ -1355,6 +1504,84 @@
         }
       );
 
+    async function loadSupabase() {
+
+      if (
+        supabaseClient
+      ) {
+
+        return supabaseClient;
+
+      }
+
+      const response =
+        await fetch(
+          "/api/config"
+        );
+
+      const data =
+        await response.json();
+
+      if (
+        !response.ok ||
+        !data.ok
+      ) {
+
+        throw new Error(
+          "تنظیمات Supabase دریافت نشد."
+        );
+
+      }
+
+      if (
+        !window.supabase
+      ) {
+
+        await new Promise(
+          function (
+            resolve,
+            reject
+          ) {
+
+            const script =
+              document.createElement(
+                "script"
+              );
+
+            script.src =
+              "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+            script.onload =
+              resolve;
+
+            script.onerror =
+              function () {
+                reject(
+                  new Error(
+                    "کتابخانه آپلود بارگذاری نشد."
+                  )
+                );
+              };
+
+            document.head.appendChild(
+              script
+            );
+
+          }
+        );
+
+      }
+
+      supabaseClient =
+        window.supabase.createClient(
+          data.supabaseUrl,
+          data.supabasePublishableKey
+        );
+
+      return supabaseClient;
+
+    }
+
     document
       .getElementById("lessonForm")
       .addEventListener(
@@ -1380,9 +1607,11 @@
 
           try {
 
-            button.disabled = true;
+            button.disabled =
+              true;
 
-            message.innerHTML = "";
+            message.innerHTML =
+              "";
 
             progress.innerText =
               "در حال شروع...";
@@ -1409,7 +1638,8 @@
                 .getElementById("publishAt")
                 .value;
 
-            let contentUrl = null;
+            let contentUrl =
+              null;
 
             if (!title) {
 
@@ -1420,12 +1650,15 @@
             }
 
             if (
-              contentType === "text"
+              contentType ===
+              "text"
             ) {
 
               contentUrl =
                 document
-                  .getElementById("textContent")
+                  .getElementById(
+                    "textContent"
+                  )
                   .value
                   .trim();
 
@@ -1441,7 +1674,9 @@
 
               const file =
                 document
-                  .getElementById("file")
+                  .getElementById(
+                    "file"
+                  )
                   .files[0];
 
               if (!file) {
@@ -1505,51 +1740,44 @@
                   "خطا در دریافت لینک آپلود."
                 );
 
-              }
+                    }
+                            progress.innerText =
+                "در حال آماده‌سازی آپلود...";
+
+              const client =
+                await loadSupabase();
 
               progress.innerText =
                 "در حال آپلود فایل...";
 
-              const supabaseUrl =
-                await getSupabaseUrl();
-
-              const uploadUrl =
-                `${supabaseUrl}/storage/v1/object/upload/sign/course-videos/${encodeURIComponent(
-                  uploadData.path
-                )}?token=${encodeURIComponent(
-                  uploadData.token
-                )}`;
-
-              const fileResponse =
-                await fetch(
-                  uploadUrl,
-                  {
-                    method: "PUT",
-
-                    headers: {
-                      "Content-Type":
+              const uploadResult =
+                await client.storage
+                  .from(
+                    "course-videos"
+                  )
+                  .uploadToSignedUrl(
+                    uploadData.path,
+                    uploadData.token,
+                    file,
+                    {
+                      contentType:
                         file.type ||
                         "application/octet-stream"
-                    },
-
-                    body: file
-                  }
-                );
+                    }
+                  );
 
               if (
-                !fileResponse.ok
+                uploadResult.error
               ) {
 
-                const errorText =
-                  await fileResponse.text();
-
                 console.error(
-                  "Upload Error:",
-                  errorText
+                  "Supabase Upload Error:",
+                  uploadResult.error
                 );
 
                 throw new Error(
-                  "آپلود فایل انجام نشد. دوباره امتحان کنید."
+                  "آپلود فایل انجام نشد: " +
+                  uploadResult.error.message
                 );
 
               }
@@ -1578,6 +1806,7 @@
 
                   body:
                     JSON.stringify({
+
                       initData:
                         initData,
 
@@ -1599,6 +1828,7 @@
                               publishAt
                             ).toISOString()
                           : null
+
                     })
                 }
               );
@@ -1619,24 +1849,33 @@
             }
 
             message.innerHTML = `
+
               <div class="success">
                 ✅ آموزش با موفقیت اضافه شد.
               </div>
+
             `;
 
-            progress.innerText = "";
+            progress.innerText =
+              "";
 
             document
-              .getElementById("lessonForm")
+              .getElementById(
+                "lessonForm"
+              )
               .reset();
 
             document
-              .getElementById("textBox")
+              .getElementById(
+                "textBox"
+              )
               .classList
               .add("hidden");
 
             document
-              .getElementById("fileBox")
+              .getElementById(
+                "fileBox"
+              )
               .classList
               .remove("hidden");
 
@@ -1652,62 +1891,28 @@
               error
             );
 
-            progress.innerText = "";
+            progress.innerText =
+              "";
 
             message.innerHTML = `
+
               <div class="error">
                 ❌ ${escapeHtml(
                   error.message
                 )}
               </div>
+
             `;
 
           } finally {
 
-            button.disabled = false;
+            button.disabled =
+              false;
 
           }
 
         }
       );
-
-    let supabaseUrlCache = null;
-
-    async function getSupabaseUrl() {
-
-      if (
-        supabaseUrlCache
-      ) {
-
-        return supabaseUrlCache;
-
-      }
-
-      const response =
-        await fetch(
-          "/api/config"
-        );
-
-      const data =
-        await response.json();
-
-      if (
-        !response.ok ||
-        !data.ok
-      ) {
-
-        throw new Error(
-          "تنظیمات Supabase دریافت نشد."
-        );
-
-      }
-
-      supabaseUrlCache =
-        data.supabaseUrl;
-
-      return supabaseUrlCache;
-
-    }
 
     document.addEventListener(
       "contextmenu",
@@ -1769,21 +1974,42 @@
     function escapeHtml(value) {
 
       return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 
-    function escapeAttribute(value) {
+    function escapeAttribute(
+      value
+    ) {
 
-      return escapeHtml(value);
+      return escapeHtml(
+        value
+      );
 
     }
 
-    function toPersianNumber(value) {
+    function toPersianNumber(
+      value
+    ) {
 
       return String(value)
         .replace(
