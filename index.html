@@ -2,10 +2,17 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <title>باهوش</title>
 
@@ -13,6 +20,9 @@
 
     * {
       box-sizing: border-box;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
     }
 
     html,
@@ -54,6 +64,20 @@
       background: #00bfff;
       bottom: -100px;
       left: -80px;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    input,
+    textarea,
+    select {
+      -webkit-user-select: text;
+      user-select: text;
     }
 
     .container {
@@ -111,25 +135,38 @@
       color: #b9bbd1;
       font-size: 13px;
       margin: 0 0 20px;
+      line-height: 1.8;
     }
 
-    .user-card {
+    .user-card,
+    .admin-card,
+    .lesson,
+    .lesson-detail {
+
       position: relative;
       overflow: hidden;
 
-      padding: 20px;
-      margin-bottom: 28px;
-
       border-radius: 22px;
 
-      background: rgba(255, 255, 255, 0.055);
-      border: 1px solid rgba(255, 255, 255, 0.09);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.075),
+          rgba(255, 255, 255, 0.035)
+        );
+
+      border: 1px solid rgba(255, 255, 255, 0.10);
 
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
 
       box-shadow:
         0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .user-card {
+      padding: 20px;
+      margin-bottom: 28px;
     }
 
     .user-name {
@@ -176,31 +213,13 @@
     }
 
     .lesson {
-      position: relative;
-      overflow: hidden;
-
       margin-bottom: 14px;
       padding: 19px;
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.075),
-          rgba(255, 255, 255, 0.035)
-        );
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-
-      box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.20);
     }
 
-    .lesson-number {
+    .lesson-number,
+    .detail-number {
+
       display: inline-block;
 
       padding: 5px 10px;
@@ -227,8 +246,11 @@
       line-height: 1.9;
     }
 
-    .lesson-button {
+    .lesson-button,
+    .admin-submit {
+
       width: 100%;
+
       margin-top: 16px;
 
       padding: 13px 16px;
@@ -253,11 +275,178 @@
       cursor: pointer;
     }
 
+    .admin-card {
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .admin-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 10px;
+
+      background: rgba(255, 190, 60, 0.12);
+      color: #ffd36b;
+
+      font-size: 11px;
+      font-weight: bold;
+
+      margin-bottom: 12px;
+    }
+
+    .admin-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .admin-subtitle {
+      color: #9fa1b8;
+      font-size: 12px;
+      line-height: 1.9;
+      margin-bottom: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 7px;
+
+      color: #c9cbe0;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+
+      width: 100%;
+
+      padding: 13px 14px;
+
+      border-radius: 13px;
+
+      border: 1px solid rgba(255, 255, 255, 0.10);
+
+      outline: none;
+
+      color: #ffffff;
+
+      background: rgba(0, 0, 0, 0.22);
+
+      font-size: 13px;
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.9;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      border-color: rgba(125, 88, 255, 0.65);
+    }
+
+    .form-select option {
+      background: #111326;
+      color: #ffffff;
+    }
+
+    .file-box {
+      padding: 14px;
+
+      border-radius: 14px;
+
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .file-input {
+      width: 100%;
+      color: #bfc1d5;
+      font-size: 12px;
+    }
+
+    .file-info {
+      margin-top: 8px;
+      color: #85879d;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .progress-box {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .progress-text {
+      color: #bfc1d5;
+      font-size: 11px;
+      margin-bottom: 7px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 7px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #7047ff,
+          #00aeea
+        );
+    }
+
+    .admin-message {
+      display: none;
+
+      margin-top: 14px;
+      padding: 12px;
+
+      border-radius: 13px;
+
+      font-size: 12px;
+      line-height: 1.8;
+
+      text-align: center;
+    }
+
+    .admin-message.success {
+      display: block;
+      color: #8df0ba;
+      background: rgba(35, 190, 110, 0.10);
+      border: 1px solid rgba(35, 190, 110, 0.16);
+    }
+
+    .admin-message.error {
+      display: block;
+      color: #ff9f9f;
+      background: rgba(255, 70, 70, 0.10);
+      border: 1px solid rgba(255, 70, 70, 0.16);
+    }
+
     .lesson-page {
       display: none;
     }
 
     .back-button {
+
       width: 100%;
       margin-bottom: 18px;
 
@@ -277,45 +466,12 @@
 
     .lesson-detail {
       padding: 22px;
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.075),
-          rgba(255, 255, 255, 0.035)
-        );
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.25);
-    }
-
-    .detail-number {
-      display: inline-block;
-
-      padding: 6px 11px;
-      margin-bottom: 12px;
-
-      border-radius: 10px;
-
-      color: #bcaaff;
-      background: rgba(132, 92, 255, 0.12);
-
-      font-size: 11px;
-      font-weight: bold;
     }
 
     .detail-title {
       font-size: 23px;
       font-weight: 900;
       line-height: 1.6;
-
       margin-bottom: 15px;
     }
 
@@ -325,15 +481,10 @@
       line-height: 2;
     }
 
-    /* پلیر ویدئو */
-
-    .video-box {
+    .content-box {
       margin-top: 22px;
-
       overflow: hidden;
-
       border-radius: 18px;
-
       background: #000;
 
       border: 1px solid rgba(255, 255, 255, 0.10);
@@ -342,53 +493,80 @@
         0 10px 35px rgba(0, 0, 0, 0.35);
     }
 
-    .video-box video {
+    .content-box video,
+    .content-box audio,
+    .content-box img {
+
       display: block;
-
       width: 100%;
-      height: auto;
+      max-width: 100%;
+    }
 
+    .content-box video {
       background: #000;
     }
 
-    .video-title {
-      margin: 20px 0 0;
-
-      color: #aeb0c5;
-
-      font-size: 12px;
-      text-align: center;
+    .content-box audio {
+      padding: 12px;
     }
 
-    .empty-video {
-      padding: 35px 18px;
+    .content-box img {
+      height: auto;
+    }
 
+    .text-content {
+      margin-top: 22px;
+      padding: 20px;
+
+      border-radius: 18px;
+
+      color: #d7d8e6;
+
+      background:
+        rgba(255, 255, 255, 0.045);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+      font-size: 14px;
+      line-height: 2.2;
+
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .content-caption {
+      margin: 14px 0 0;
+
+      color: #9294aa;
+
+      font-size: 11px;
       text-align: center;
-
-      color: #85879d;
-
-      font-size: 13px;
-      line-height: 1.9;
+      line-height: 1.8;
     }
 
     .empty {
       padding: 25px 15px;
       text-align: center;
-
       color: #85879d;
       font-size: 13px;
-
       border-radius: 20px;
-
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .hidden {
+      display: none !important;
     }
 
   </style>
 
 </head>
 
-<body>
+<body
+  oncontextmenu="return false"
+  onselectstart="return false"
+>
 
   <div class="container">
 
@@ -416,12 +594,19 @@
 
       <div id="userInfo"></div>
 
+      <div
+        id="adminPanel"
+        class="hidden"
+      ></div>
+
       <div id="lessons"></div>
 
     </div>
 
-
-    <div id="lessonPage" class="lesson-page">
+    <div
+      id="lessonPage"
+      class="lesson-page"
+    >
 
       <button
         class="back-button"
@@ -433,13 +618,22 @@
 
       <div class="lesson-detail">
 
-        <div id="detailNumber" class="detail-number"></div>
+        <div
+          id="detailNumber"
+          class="detail-number"
+        ></div>
 
-        <div id="detailTitle" class="detail-title"></div>
+        <div
+          id="detailTitle"
+          class="detail-title"
+        ></div>
 
-        <div id="detailDescription" class="detail-description"></div>
+        <div
+          id="detailDescription"
+          class="detail-description"
+        ></div>
 
-        <div id="videoContainer"></div>
+        <div id="contentContainer"></div>
 
       </div>
 
@@ -450,7 +644,8 @@
 
   <script>
 
-    const webApp = window.Eitaa.WebApp;
+    const webApp =
+      window.Eitaa.WebApp;
 
     webApp.ready();
     webApp.expand();
@@ -464,6 +659,9 @@
 
     const lessonsContainer =
       document.getElementById("lessons");
+
+    const adminPanel =
+      document.getElementById("adminPanel");
 
     const mainPage =
       document.getElementById("mainPage");
@@ -480,41 +678,83 @@
     const detailDescription =
       document.getElementById("detailDescription");
 
-    const videoContainer =
-      document.getElementById("videoContainer");
+    const contentContainer =
+      document.getElementById("contentContainer");
 
 
     let allLessons = [];
+    let currentUser = null;
+    let isAdmin = false;
 
+
+    // =========================
+    // راه‌اندازی Supabase
+    // =========================
+
+    let supabaseClient = null;
+
+
+    async function setupSupabase() {
+
+      const response =
+        await fetch("/api/config");
+
+      const result =
+        await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(
+          result.error ||
+          "خطا در دریافت تنظیمات"
+        );
+      }
+
+      supabaseClient =
+        window.supabase.createClient(
+          result.supabaseUrl,
+          result.supabasePublishableKey,
+          {
+            auth: {
+              persistSession: false,
+              autoRefreshToken: false
+            }
+          }
+        );
+    }
+
+
+    // =========================
+    // ورود
+    // =========================
 
     async function authenticate() {
 
       try {
 
         if (!webApp.initData) {
-
           throw new Error(
             "اطلاعات ورود ایتا دریافت نشد"
           );
-
         }
 
 
+        await setupSupabase();
+
+
         const response =
-          await fetch(
-            "/api/auth",
-            {
-              method: "POST",
+          await fetch("/api/auth", {
 
-              headers: {
-                "Content-Type": "application/json"
-              },
+            method: "POST",
 
-              body: JSON.stringify({
-                initData: webApp.initData
-              })
-            }
-          );
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              initData: webApp.initData
+            })
+
+          });
 
 
         const result =
@@ -524,18 +764,22 @@
         if (!response.ok || !result.ok) {
 
           throw new Error(
-            result.error || "خطای سرور"
+            result.error ||
+            "خطای سرور"
           );
 
         }
 
 
-        const user =
+        currentUser =
           result.user || {};
+
+        isAdmin =
+          !!result.isAdmin;
 
 
         const fullName =
-          `${user.first_name || ""} ${user.last_name || ""}`
+          `${currentUser.first_name || ""} ${currentUser.last_name || ""}`
             .trim();
 
 
@@ -544,33 +788,71 @@
           <div class="user-card">
 
             <div class="user-name">
-              👋 ${fullName || "کاربر"}
+              👋 ${escapeHtml(
+                fullName || "کاربر"
+              )}
             </div>
 
             <div class="user-row">
-              <span>شناسه ایتا</span>
-              <strong>${user.id}</strong>
-            </div>
+              <span>
+                شناسه ایتا
+              </span>
 
-            <div class="user-row">
-              <span>وضعیت ادمین</span>
               <strong>
-                ${result.isAdmin ? "ادمین 👑" : "کاربر"}
+                ${escapeHtml(
+                  String(currentUser.id || "")
+                )}
               </strong>
             </div>
 
             <div class="user-row">
-              <span>ثبت‌نام</span>
+
+              <span>
+                وضعیت
+              </span>
+
               <strong>
-                ${result.registered ? "تکمیل شده ✅" : "انجام نشده"}
+                ${
+                  result.isAdmin
+                    ? "ادمین 👑"
+                    : result.hasAccess
+                      ? "هنرجوی فعال ✅"
+                      : "بدون دسترسی 🔒"
+                }
               </strong>
+
             </div>
 
             <div class="user-row">
-              <span>دسترسی دوره</span>
+
+              <span>
+                ثبت‌نام
+              </span>
+
               <strong>
-                ${result.hasAccess ? "فعال ✅" : "غیرفعال 🔒"}
+                ${
+                  result.registered
+                    ? "تکمیل شده ✅"
+                    : "انجام نشده"
+                }
               </strong>
+
+            </div>
+
+            <div class="user-row">
+
+              <span>
+                دسترسی دوره
+              </span>
+
+              <strong>
+                ${
+                  result.hasAccess || result.isAdmin
+                    ? "فعال ✅"
+                    : "غیرفعال 🔒"
+                }
+              </strong>
+
             </div>
 
           </div>
@@ -582,10 +864,9 @@
           result.lessons || [];
 
 
-        renderLessons();
+        if (isAdmin) {
 
-
-        if (result.isAdmin) {
+          renderAdminPanel();
 
           status.textContent =
             "ورود موفق بود — پنل مدیریت آماده است 👑";
@@ -608,6 +889,9 @@
         }
 
 
+        renderLessons();
+
+
       } catch (error) {
 
         console.error(error);
@@ -621,204 +905,235 @@
     }
 
 
-    function renderLessons() {
+    // =========================
+    // پنل مدیریت
+    // =========================
 
-      if (allLessons.length === 0) {
+    function renderAdminPanel() {
 
-        lessonsContainer.innerHTML = `
+      adminPanel.classList.remove(
+        "hidden"
+      );
 
-          <div class="section-title">
-            <span>✦</span>
-            آموزش‌های دوره
+
+      adminPanel.innerHTML = `
+
+        <div class="admin-card">
+
+          <div class="admin-badge">
+            👑 پنل مدیریت
           </div>
 
-          <div class="empty">
-            هنوز آموزشی منتشر نشده است.
+          <div class="admin-title">
+            افزودن آموزش جدید
           </div>
 
-        `;
+          <div class="admin-subtitle">
+            آموزش جدید را از همین‌جا اضافه کن.
+            شماره آموزش به‌صورت خودکار تعیین می‌شود.
+          </div>
 
-        return;
-      }
+
+          <div class="form-group">
+
+            <label class="form-label">
+              عنوان آموزش
+            </label>
+
+            <input
+              id="lessonTitleInput"
+              class="form-input"
+              type="text"
+              placeholder="مثلاً آموزش ساخت تصویر با هوش مصنوعی"
+            >
+
+          </div>
 
 
-      let lessonsHTML = `
+          <div class="form-group">
 
-        <div class="section-title">
-          <span>✦</span>
-          آموزش‌های دوره
+            <label class="form-label">
+              توضیحات آموزش
+            </label>
+
+            <textarea
+              id="lessonDescriptionInput"
+              class="form-textarea"
+              placeholder="توضیحات کوتاه آموزش..."
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label class="form-label">
+              نوع محتوا
+            </label>
+
+            <select
+              id="contentTypeInput"
+              class="form-select"
+              onchange="changeContentType()"
+            >
+
+              <option value="video">
+                🎬 ویدئو
+              </option>
+
+              <option value="audio">
+                🎧 صوت
+              </option>
+
+              <option value="image">
+                🖼️ تصویر
+              </option>
+
+              <option value="file">
+                📎 فایل
+              </option>
+
+              <option value="text">
+                📝 متن
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div
+            id="fileArea"
+            class="form-group"
+          >
+
+            <label class="form-label">
+              فایل محتوا
+            </label>
+
+            <div class="file-box">
+
+              <input
+                id="lessonFileInput"
+                class="file-input"
+                type="file"
+              >
+
+              <div
+                id="fileInfo"
+                class="file-info"
+              >
+                حداکثر حجم فعلی فایل: ۵۰ مگابایت
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="textArea"
+            class="form-group hidden"
+          >
+
+            <label class="form-label">
+              متن آموزش
+            </label>
+
+            <textarea
+              id="lessonTextInput"
+              class="form-textarea"
+              placeholder="متن آموزش را اینجا وارد کنید..."
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label class="form-label">
+              زمان انتشار
+            </label>
+
+            <input
+              id="publishAtInput"
+              class="form-input"
+              type="datetime-local"
+            >
+
+            <div class="file-info">
+              اگر خالی بگذاری، آموزش بلافاصله منتشر می‌شود.
+            </div>
+
+          </div>
+
+
+          <button
+            id="adminSubmitButton"
+            class="admin-submit"
+            type="button"
+            onclick="createLesson()"
+          >
+            ➕ افزودن آموزش
+          </button>
+
+
+          <div
+            id="uploadProgress"
+            class="progress-box"
+          >
+
+            <div
+              id="progressText"
+              class="progress-text"
+            >
+              در حال آماده‌سازی...
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                id="progressFill"
+                class="progress-fill"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="adminMessage"
+            class="admin-message"
+          ></div>
+
         </div>
 
       `;
 
 
-      allLessons.forEach(
-        (lesson, index) => {
+      const fileInput =
+        document.getElementById(
+          "lessonFileInput"
+        );
 
-          lessonsHTML += `
 
-            <div class="lesson">
-
-              <div class="lesson-number">
-                آموزش ${index + 1}
-              </div>
-
-              <div class="lesson-title">
-                ${lesson.title || "بدون عنوان"}
-              </div>
-
-              <div class="lesson-description">
-                ${
-                  lesson.description ||
-                  "توضیحی برای این آموزش ثبت نشده است."
-                }
-              </div>
-
-              <button
-                class="lesson-button"
-                type="button"
-                onclick="openLesson(${lesson.id})"
-              >
-                ▶️ ورود به آموزش
-              </button>
-
-            </div>
-
-          `;
-
-        }
+      fileInput.addEventListener(
+        "change",
+        updateFileInfo
       );
 
-
-      lessonsContainer.innerHTML =
-        lessonsHTML;
-
     }
 
 
-    function openLesson(lessonId) {
+    function changeContentType() {
 
-      const lesson =
-        allLessons.find(
-          item => Number(item.id) === Number(lessonId)
-        );
-
-
-      if (!lesson) {
-        return;
-      }
+      const type =
+        document.getElementById(
+          "contentTypeInput"
+        ).value;
 
 
-      const lessonIndex =
-        allLessons.findIndex(
-          item => Number(item.id) === Number(lessonId)
-        );
-
-
-      detailNumber.textContent =
-        `آموزش ${lessonIndex + 1}`;
-
-
-      detailTitle.textContent =
-        lesson.title || "بدون عنوان";
-
-
-      detailDescription.textContent =
-        lesson.description ||
-        "توضیحی برای این آموزش ثبت نشده است.";
-
-
-      /*
-       * نمایش ویدئو
-       */
-
-      if (
-        lesson.content_url &&
-        lesson.content_type === "video"
-      ) {
-
-        videoContainer.innerHTML = `
-
-          <div class="video-box">
-
-            <video
-              controls
-              playsinline
-              preload="metadata"
-            >
-              <source
-                src="${lesson.content_url}"
-                type="video/mp4"
-              >
-
-              مرورگر شما از پخش این ویدئو پشتیبانی نمی‌کند.
-
-            </video>
-
-          </div>
-
-          <div class="video-title">
-            🎬 ویدئوی آموزش
-          </div>
-
-        `;
-
-      } else {
-
-        videoContainer.innerHTML = `
-
-          <div class="empty-video">
-            🎬
-            <br>
-            ویدئوی این آموزش هنوز قرار نگرفته است.
-          </div>
-
-        `;
-
-      }
-
-
-      mainPage.style.display =
-        "none";
-
-
-      lessonPage.style.display =
-        "block";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    function closeLesson() {
-
-      lessonPage.style.display =
-        "none";
-
-
-      mainPage.style.display =
-        "block";
-
-
-      videoContainer.innerHTML = "";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    authenticate();
-
-  </script>
-
-</body>
-
-</html>
+      const fileArea =
+        document.getElementById(
+       
