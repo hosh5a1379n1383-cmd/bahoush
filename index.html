@@ -2,638 +2,353 @@
 <html lang="fa" dir="rtl">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <title>دوره باهوش</title>
 
   <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <title>باهوش</title>
-
   <style>
-
     * {
       box-sizing: border-box;
-      -webkit-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: #070816;
-      color: #ffffff;
       font-family: Tahoma, Arial, sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.35;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    body::before {
-      background: #6c3cff;
-      top: -80px;
-      right: -80px;
-    }
-
-    body::after {
-      background: #00bfff;
-      bottom: -100px;
-      left: -80px;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font-family: inherit;
-    }
-
-    input,
-    textarea,
-    select {
-      -webkit-user-select: text;
-      user-select: text;
+      background: #f5f7fb;
+      color: #222;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .container {
-      position: relative;
-      z-index: 1;
       width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 28px 16px 40px;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px 14px 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
     }
 
     .header {
       text-align: center;
-      margin-bottom: 25px;
+      padding: 25px 15px;
     }
 
     .logo {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 14px;
-      border-radius: 24px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 38px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(121, 65, 255, 0.95),
-          rgba(0, 191, 255, 0.9)
-        );
-
-      box-shadow:
-        0 0 25px rgba(102, 68, 255, 0.55),
-        0 0 55px rgba(0, 191, 255, 0.18);
+      font-size: 42px;
+      margin-bottom: 10px;
     }
 
-    .brand {
-      font-size: 28px;
-      font-weight: 900;
-      margin: 0;
+    h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
     }
 
-    .subtitle {
-      margin: 8px 0 0;
-      color: #a9abc4;
-      font-size: 13px;
+    h2 {
+      font-size: 20px;
+      margin-top: 0;
     }
 
-    #status {
+    p {
+      line-height: 1.9;
+      color: #555;
+    }
+
+    .status {
       text-align: center;
-      color: #b9bbd1;
-      font-size: 13px;
-      margin: 0 0 20px;
-      line-height: 1.8;
+      padding: 35px 15px;
+      font-size: 16px;
     }
 
-    .user-card,
-    .admin-card,
-    .lesson,
-    .lesson-detail {
-
-      position: relative;
-      overflow: hidden;
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.075),
-          rgba(255, 255, 255, 0.035)
-        );
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.25);
+    .error {
+      color: #c62828;
+      background: #ffebee;
+      border-radius: 12px;
+      padding: 15px;
+      line-height: 1.9;
     }
 
-    .user-card {
-      padding: 20px;
-      margin-bottom: 28px;
+    .success {
+      color: #2e7d32;
     }
 
-    .user-name {
-      font-size: 19px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .user-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      padding: 9px 0;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-
-      font-size: 13px;
-      color: #b8bad0;
-    }
-
-    .user-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .user-row strong {
-      color: #ffffff;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      font-size: 19px;
-      font-weight: 900;
-
-      margin-bottom: 14px;
-    }
-
-    .section-title span {
-      color: #9b7cff;
+    .user-box {
+      background: #f0f4ff;
+      border-radius: 14px;
+      padding: 15px;
+      line-height: 2;
     }
 
     .lesson {
-      margin-bottom: 14px;
-      padding: 19px;
-    }
-
-    .lesson-number,
-    .detail-number {
-
-      display: inline-block;
-
-      padding: 5px 10px;
-      margin-bottom: 10px;
-
-      border-radius: 10px;
-
-      color: #bcaaff;
-      background: rgba(132, 92, 255, 0.12);
-
-      font-size: 11px;
-      font-weight: bold;
+      border: 1px solid #eee;
+      border-radius: 15px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #fff;
     }
 
     .lesson-title {
       font-size: 18px;
-      font-weight: 900;
+      font-weight: bold;
       margin-bottom: 8px;
     }
 
     .lesson-description {
-      color: #aeb0c5;
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    .lesson-button,
-    .admin-submit {
-
-      width: 100%;
-
-      margin-top: 16px;
-
-      padding: 13px 16px;
-
-      border: none;
-      border-radius: 14px;
-
-      color: #ffffff;
       font-size: 14px;
-      font-weight: bold;
-
-      background:
-        linear-gradient(
-          135deg,
-          #7047ff,
-          #00aeea
-        );
-
-      box-shadow:
-        0 7px 22px rgba(90, 75, 255, 0.28);
-
-      cursor: pointer;
-    }
-
-    .admin-card {
-      padding: 20px;
-      margin-bottom: 28px;
-    }
-
-    .admin-badge {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 10px;
-
-      background: rgba(255, 190, 60, 0.12);
-      color: #ffd36b;
-
-      font-size: 11px;
-      font-weight: bold;
-
+      color: #666;
+      line-height: 1.8;
       margin-bottom: 12px;
     }
 
-    .admin-title {
-      font-size: 20px;
-      font-weight: 900;
+    .lesson-number {
+      display: inline-block;
+      background: #eef2ff;
+      border-radius: 8px;
+      padding: 4px 9px;
+      font-size: 12px;
       margin-bottom: 8px;
     }
 
-    .admin-subtitle {
-      color: #9fa1b8;
-      font-size: 12px;
-      line-height: 1.9;
-      margin-bottom: 18px;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 7px;
-
-      color: #c9cbe0;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .form-input,
-    .form-textarea,
-    .form-select {
-
+    video {
       width: 100%;
-
-      padding: 13px 14px;
-
-      border-radius: 13px;
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      outline: none;
-
-      color: #ffffff;
-
-      background: rgba(0, 0, 0, 0.22);
-
-      font-size: 13px;
-    }
-
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-      line-height: 1.9;
-    }
-
-    .form-input:focus,
-    .form-textarea:focus,
-    .form-select:focus {
-      border-color: rgba(125, 88, 255, 0.65);
-    }
-
-    .form-select option {
-      background: #111326;
-      color: #ffffff;
-    }
-
-    .file-box {
-      padding: 14px;
-
-      border-radius: 14px;
-
-      border: 1px dashed rgba(255, 255, 255, 0.16);
-
-      background: rgba(255, 255, 255, 0.025);
-    }
-
-    .file-input {
-      width: 100%;
-      color: #bfc1d5;
-      font-size: 12px;
-    }
-
-    .file-info {
-      margin-top: 8px;
-      color: #85879d;
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .progress-box {
-      display: none;
-      margin-top: 14px;
-    }
-
-    .progress-text {
-      color: #bfc1d5;
-      font-size: 11px;
-      margin-bottom: 7px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 7px;
-      overflow: hidden;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: 20px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #7047ff,
-          #00aeea
-        );
-    }
-
-    .admin-message {
-      display: none;
-
-      margin-top: 14px;
-      padding: 12px;
-
-      border-radius: 13px;
-
-      font-size: 12px;
-      line-height: 1.8;
-
-      text-align: center;
-    }
-
-    .admin-message.success {
-      display: block;
-      color: #8df0ba;
-      background: rgba(35, 190, 110, 0.10);
-      border: 1px solid rgba(35, 190, 110, 0.16);
-    }
-
-    .admin-message.error {
-      display: block;
-      color: #ff9f9f;
-      background: rgba(255, 70, 70, 0.10);
-      border: 1px solid rgba(255, 70, 70, 0.16);
-    }
-
-    .lesson-page {
-      display: none;
-    }
-
-    .back-button {
-
-      width: 100%;
-      margin-bottom: 18px;
-
-      padding: 12px 16px;
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 14px;
-
-      color: #d6d7e8;
-      background: rgba(255, 255, 255, 0.055);
-
-      font-size: 13px;
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-    .lesson-detail {
-      padding: 22px;
-    }
-
-    .detail-title {
-      font-size: 23px;
-      font-weight: 900;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-
-    .detail-description {
-      color: #b5b7ca;
-      font-size: 14px;
-      line-height: 2;
-    }
-
-    .content-box {
-      margin-top: 22px;
-      overflow: hidden;
-      border-radius: 18px;
-      background: #000;
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.35);
-    }
-
-    .content-box video,
-    .content-box audio,
-    .content-box img {
-
-      display: block;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .content-box video {
+      max-height: 420px;
+      border-radius: 12px;
       background: #000;
     }
 
-    .content-box audio {
-      padding: 12px;
+    audio {
+      width: 100%;
     }
 
-    .content-box img {
-      height: auto;
+    img.content-image {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    iframe {
+      width: 100%;
+      min-height: 500px;
+      border: 0;
+      border-radius: 12px;
     }
 
     .text-content {
-      margin-top: 22px;
-      padding: 20px;
-
-      border-radius: 18px;
-
-      color: #d7d8e6;
-
-      background:
-        rgba(255, 255, 255, 0.045);
-
-      border:
-        1px solid rgba(255, 255, 255, 0.08);
-
-      font-size: 14px;
-      line-height: 2.2;
-
       white-space: pre-wrap;
-      word-break: break-word;
+      line-height: 2;
+      background: #fafafa;
+      padding: 15px;
+      border-radius: 12px;
     }
 
-    .content-caption {
-      margin: 14px 0 0;
-
-      color: #9294aa;
-
-      font-size: 11px;
-      text-align: center;
-      line-height: 1.8;
+    .admin-title {
+      color: #7b1fa2;
     }
 
-    .empty {
-      padding: 25px 15px;
-      text-align: center;
-      color: #85879d;
-      font-size: 13px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+    label {
+      display: block;
+      margin: 14px 0 7px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 13px;
+      margin-top: 15px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #4f46e5;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: 0.6;
     }
 
     .hidden {
       display: none !important;
     }
 
+    .small {
+      font-size: 12px;
+      color: #777;
+    }
   </style>
-
 </head>
 
-<body
-  oncontextmenu="return false"
-  onselectstart="return false"
->
+<body>
 
   <div class="container">
 
-    <div id="mainPage">
+    <div class="card header">
+      <div class="logo">🤖</div>
+      <h1>دوره باهوش</h1>
+      <p>دوره آموزشی تولید محتوا با هوش مصنوعی</p>
+    </div>
 
-      <div class="header">
+    <div id="status" class="card status">
+      در حال بررسی اطلاعات شما...
+    </div>
 
-        <div class="logo">
-          🤖
-        </div>
+    <div id="app" class="hidden">
 
-        <h1 class="brand">
-          باهوش
-        </h1>
+      <div class="card">
+        <h2>👋 خوش آمدید</h2>
 
-        <p class="subtitle">
-          مسیر حرفه‌ای یادگیری هوش مصنوعی
-        </p>
+        <div id="userInfo" class="user-box"></div>
+      </div>
+
+      <div id="accessMessage" class="card hidden"></div>
+
+      <div id="lessonsSection" class="card hidden">
+
+        <h2>📚 آموزش‌های دوره</h2>
+
+        <div id="lessonsList"></div>
 
       </div>
 
-      <p id="status">
-        در حال بررسی اطلاعات شما...
-      </p>
+      <div id="adminPanel" class="card hidden">
 
-      <div id="userInfo"></div>
+        <h2 class="admin-title">⚙️ پنل مدیریت</h2>
 
-      <div
-        id="adminPanel"
-        class="hidden"
-      ></div>
+        <p>
+          از این بخش می‌توانید آموزش جدید اضافه کنید.
+        </p>
 
-      <div id="lessons"></div>
+        <form id="lessonForm">
 
-    </div>
+          <label>
+            عنوان آموزش
+          </label>
 
-    <div
-      id="lessonPage"
-      class="lesson-page"
-    >
+          <input
+            id="title"
+            type="text"
+            placeholder="مثلاً آموزش ساخت تصویر با هوش مصنوعی"
+            required
+          >
 
-      <button
-        class="back-button"
-        type="button"
-        onclick="closeLesson()"
-      >
-        ← بازگشت به آموزش‌ها
-      </button>
+          <label>
+            توضیحات
+          </label>
 
-      <div class="lesson-detail">
+          <textarea
+            id="description"
+            placeholder="توضیحات کوتاه درباره این آموزش"
+          ></textarea>
+
+          <label>
+            نوع محتوا
+          </label>
+
+          <select id="contentType">
+
+            <option value="video">
+              🎬 ویدئو
+            </option>
+
+            <option value="audio">
+              🎵 صوت
+            </option>
+
+            <option value="image">
+              🖼 تصویر
+            </option>
+
+            <option value="file">
+              📁 فایل
+            </option>
+
+            <option value="text">
+              📝 متن
+            </option>
+
+          </select>
+
+          <div id="fileBox">
+
+            <label>
+              فایل آموزش
+            </label>
+
+            <input
+              id="file"
+              type="file"
+            >
+
+            <p class="small">
+              حداکثر حجم فایل: ۵۰ مگابایت
+            </p>
+
+          </div>
+
+          <div id="textBox" class="hidden">
+
+            <label>
+              متن آموزش
+            </label>
+
+            <textarea
+              id="textContent"
+              placeholder="متن آموزش را اینجا وارد کنید"
+            ></textarea>
+
+          </div>
+
+          <label>
+            زمان انتشار
+          </label>
+
+          <input
+            id="publishAt"
+            type="datetime-local"
+          >
+
+          <button
+            id="submitButton"
+            type="submit"
+          >
+            ➕ افزودن آموزش
+          </button>
+
+        </form>
 
         <div
-          id="detailNumber"
-          class="detail-number"
+          id="adminMessage"
+          class="small"
+          style="margin-top:15px;"
         ></div>
-
-        <div
-          id="detailTitle"
-          class="detail-title"
-        ></div>
-
-        <div
-          id="detailDescription"
-          class="detail-description"
-        ></div>
-
-        <div id="contentContainer"></div>
 
       </div>
 
@@ -641,499 +356,886 @@
 
   </div>
 
-
   <script>
 
-    const webApp =
-      window.Eitaa.WebApp;
-
-    webApp.ready();
-    webApp.expand();
-
-
-    const status =
-      document.getElementById("status");
-
-    const userInfo =
-      document.getElementById("userInfo");
-
-    const lessonsContainer =
-      document.getElementById("lessons");
-
-    const adminPanel =
-      document.getElementById("adminPanel");
-
-    const mainPage =
-      document.getElementById("mainPage");
-
-    const lessonPage =
-      document.getElementById("lessonPage");
-
-    const detailNumber =
-      document.getElementById("detailNumber");
-
-    const detailTitle =
-      document.getElementById("detailTitle");
-
-    const detailDescription =
-      document.getElementById("detailDescription");
-
-    const contentContainer =
-      document.getElementById("contentContainer");
-
-
-    let allLessons = [];
+    let webApp = null;
+    let initData = "";
     let currentUser = null;
-    let isAdmin = false;
 
+    function setupEitaa() {
 
-    // =========================
-    // راه‌اندازی Supabase
-    // =========================
+      try {
 
-    let supabaseClient = null;
+        if (
+          window.Eitaa &&
+          window.Eitaa.WebApp
+        ) {
 
+          webApp =
+            window.Eitaa.WebApp;
 
-    async function setupSupabase() {
+          webApp.ready();
+          webApp.expand();
 
-      const response =
-        await fetch("/api/config");
+          initData =
+            webApp.initData || "";
 
-      const result =
-        await response.json();
+        }
 
-      if (!response.ok || !result.ok) {
-        throw new Error(
-          result.error ||
-          "خطا در دریافت تنظیمات"
+      } catch (error) {
+
+        console.error(
+          "Eitaa Error:",
+          error
         );
+
       }
 
-      supabaseClient =
-        window.supabase.createClient(
-          result.supabaseUrl,
-          result.supabasePublishableKey,
-          {
-            auth: {
-              persistSession: false,
-              autoRefreshToken: false
-            }
-          }
-        );
     }
 
+    function setStatus(message, isError = false) {
 
-    // =========================
-    // ورود
-    // =========================
+      const status =
+        document.getElementById("status");
+
+      status.innerHTML =
+        isError
+          ? `<div class="error">${message}</div>`
+          : message;
+
+    }
 
     async function authenticate() {
 
       try {
 
-        if (!webApp.initData) {
-          throw new Error(
-            "اطلاعات ورود ایتا دریافت نشد"
+        setupEitaa();
+
+        if (!initData) {
+
+          setStatus(
+            "اطلاعات ورود ایتا دریافت نشد.<br><br>" +
+            "لطفاً Mini App را مستقیماً از داخل ایتا باز کنید.",
+            true
           );
+
+          return;
+
         }
 
-
-        await setupSupabase();
-
+        setStatus(
+          "در حال بررسی اطلاعات شما... ⏳"
+        );
 
         const response =
-          await fetch("/api/auth", {
+          await fetch(
+            "/api/auth",
+            {
+              method: "POST",
 
-            method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
 
-            headers: {
-              "Content-Type": "application/json"
-            },
+              body: JSON.stringify({
+                initData:
+                  initData
+              })
+            }
+          );
 
-            body: JSON.stringify({
-              initData: webApp.initData
-            })
-
-          });
-
-
-        const result =
+        const data =
           await response.json();
 
-
-        if (!response.ok || !result.ok) {
+        if (!response.ok || !data.ok) {
 
           throw new Error(
-            result.error ||
-            "خطای سرور"
+            data.error ||
+            "احراز هویت ناموفق بود"
           );
 
         }
 
-
         currentUser =
-          result.user || {};
+          data;
 
-        isAdmin =
-          !!result.isAdmin;
-
-
-        const fullName =
-          `${currentUser.first_name || ""} ${currentUser.last_name || ""}`
-            .trim();
-
-
-        userInfo.innerHTML = `
-
-          <div class="user-card">
-
-            <div class="user-name">
-              👋 ${escapeHtml(
-                fullName || "کاربر"
-              )}
-            </div>
-
-            <div class="user-row">
-              <span>
-                شناسه ایتا
-              </span>
-
-              <strong>
-                ${escapeHtml(
-                  String(currentUser.id || "")
-                )}
-              </strong>
-            </div>
-
-            <div class="user-row">
-
-              <span>
-                وضعیت
-              </span>
-
-              <strong>
-                ${
-                  result.isAdmin
-                    ? "ادمین 👑"
-                    : result.hasAccess
-                      ? "هنرجوی فعال ✅"
-                      : "بدون دسترسی 🔒"
-                }
-              </strong>
-
-            </div>
-
-            <div class="user-row">
-
-              <span>
-                ثبت‌نام
-              </span>
-
-              <strong>
-                ${
-                  result.registered
-                    ? "تکمیل شده ✅"
-                    : "انجام نشده"
-                }
-              </strong>
-
-            </div>
-
-            <div class="user-row">
-
-              <span>
-                دسترسی دوره
-              </span>
-
-              <strong>
-                ${
-                  result.hasAccess || result.isAdmin
-                    ? "فعال ✅"
-                    : "غیرفعال 🔒"
-                }
-              </strong>
-
-            </div>
-
-          </div>
-
-        `;
-
-
-        allLessons =
-          result.lessons || [];
-
-
-        if (isAdmin) {
-
-          renderAdminPanel();
-
-          status.textContent =
-            "ورود موفق بود — پنل مدیریت آماده است 👑";
-
-        } else if (result.hasAccess) {
-
-          status.textContent =
-            "ورود موفق بود — خوش آمدید 🌱";
-
-        } else if (result.registered) {
-
-          status.textContent =
-            "ثبت‌نام شما انجام شده، اما دسترسی دوره فعال نیست.";
-
-        } else {
-
-          status.textContent =
-            "شما هنوز در دوره ثبت‌نام نکرده‌اید.";
-
-        }
-
-
-        renderLessons();
-
+        renderApp(data);
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "Authentication Error:",
+          error
+        );
 
-        status.textContent =
-          error.message ||
-          "ارتباط با سرور برقرار نشد ❌";
+        setStatus(
+          "خطا در ورود به دوره ❌<br><br>" +
+          `<span class="small">${error.message}</span>`,
+          true
+        );
 
       }
 
     }
 
+    function renderApp(data) {
 
-    // =========================
-    // پنل مدیریت
-    // =========================
+      document
+        .getElementById("status")
+        .classList
+        .add("hidden");
 
-    function renderAdminPanel() {
+      document
+        .getElementById("app")
+        .classList
+        .remove("hidden");
 
-      adminPanel.classList.remove(
-        "hidden"
-      );
+      const firstName =
+        data.user?.first_name || "";
 
+      const lastName =
+        data.user?.last_name || "";
 
-      adminPanel.innerHTML = `
+      const username =
+        data.user?.username || "";
 
-        <div class="admin-card">
+      let userHtml =
+        `<strong>نام:</strong> ${escapeHtml(
+          firstName + " " + lastName
+        )}`;
 
-          <div class="admin-badge">
-            👑 پنل مدیریت
-          </div>
+      if (username) {
 
-          <div class="admin-title">
-            افزودن آموزش جدید
-          </div>
+        userHtml +=
+          `<br><strong>نام کاربری:</strong> @${escapeHtml(
+            username
+          )}`;
 
-          <div class="admin-subtitle">
-            آموزش جدید را از همین‌جا اضافه کن.
-            شماره آموزش به‌صورت خودکار تعیین می‌شود.
-          </div>
+      }
 
+      if (data.isAdmin) {
 
-          <div class="form-group">
+        userHtml +=
+          `<br><strong>وضعیت:</strong> 👑 مدیر دوره`;
 
-            <label class="form-label">
-              عنوان آموزش
-            </label>
+      } else if (data.hasAccess) {
 
-            <input
-              id="lessonTitleInput"
-              class="form-input"
-              type="text"
-              placeholder="مثلاً آموزش ساخت تصویر با هوش مصنوعی"
-            >
+        userHtml +=
+          `<br><strong>وضعیت:</strong> ✅ دسترسی فعال`;
 
-          </div>
+      } else {
 
+        userHtml +=
+          `<br><strong>وضعیت:</strong> ❌ بدون دسترسی`;
 
-          <div class="form-group">
+      }
 
-            <label class="form-label">
-              توضیحات آموزش
-            </label>
+      document
+        .getElementById("userInfo")
+        .innerHTML =
+        userHtml;
 
-            <textarea
-              id="lessonDescriptionInput"
-              class="form-textarea"
-              placeholder="توضیحات کوتاه آموزش..."
-            ></textarea>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label class="form-label">
-              نوع محتوا
-            </label>
-
-            <select
-              id="contentTypeInput"
-              class="form-select"
-              onchange="changeContentType()"
-            >
-
-              <option value="video">
-                🎬 ویدئو
-              </option>
-
-              <option value="audio">
-                🎧 صوت
-              </option>
-
-              <option value="image">
-                🖼️ تصویر
-              </option>
-
-              <option value="file">
-                📎 فایل
-              </option>
-
-              <option value="text">
-                📝 متن
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div
-            id="fileArea"
-            class="form-group"
-          >
-
-            <label class="form-label">
-              فایل محتوا
-            </label>
-
-            <div class="file-box">
-
-              <input
-                id="lessonFileInput"
-                class="file-input"
-                type="file"
-              >
-
-              <div
-                id="fileInfo"
-                class="file-info"
-              >
-                حداکثر حجم فعلی فایل: ۵۰ مگابایت
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div
-            id="textArea"
-            class="form-group hidden"
-          >
-
-            <label class="form-label">
-              متن آموزش
-            </label>
-
-            <textarea
-              id="lessonTextInput"
-              class="form-textarea"
-              placeholder="متن آموزش را اینجا وارد کنید..."
-            ></textarea>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label class="form-label">
-              زمان انتشار
-            </label>
-
-            <input
-              id="publishAtInput"
-              class="form-input"
-              type="datetime-local"
-            >
-
-            <div class="file-info">
-              اگر خالی بگذاری، آموزش بلافاصله منتشر می‌شود.
-            </div>
-
-          </div>
-
-
-          <button
-            id="adminSubmitButton"
-            class="admin-submit"
-            type="button"
-            onclick="createLesson()"
-          >
-            ➕ افزودن آموزش
-          </button>
-
-
-          <div
-            id="uploadProgress"
-            class="progress-box"
-          >
-
-            <div
-              id="progressText"
-              class="progress-text"
-            >
-              در حال آماده‌سازی...
-            </div>
-
-            <div class="progress-bar">
-
-              <div
-                id="progressFill"
-                class="progress-fill"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div
-            id="adminMessage"
-            class="admin-message"
-          ></div>
-
-        </div>
-
-      `;
-
-
-      const fileInput =
+      const accessMessage =
         document.getElementById(
-          "lessonFileInput"
+          "accessMessage"
         );
 
+      if (
+        !data.isAdmin &&
+        !data.hasAccess
+      ) {
 
-      fileInput.addEventListener(
+        accessMessage
+          .classList
+          .remove("hidden");
+
+        accessMessage.innerHTML = `
+          <h2>🔒 دسترسی به دوره</h2>
+
+          <p>
+            حساب شما هنوز دسترسی فعال به آموزش‌های دوره ندارد.
+          </p>
+
+          <p>
+            برای ثبت‌نام و فعال‌سازی دسترسی،
+            با پشتیبانی دوره در ارتباط باشید.
+          </p>
+
+          <strong>
+            آیدی ثبت‌نام:
+            o0JABBAR0o
+          </strong>
+        `;
+
+      }
+
+      if (
+        data.lessons &&
+        data.lessons.length > 0
+      ) {
+
+        document
+          .getElementById("lessonsSection")
+          .classList
+          .remove("hidden");
+
+        renderLessons(
+          data.lessons
+        );
+
+      }
+
+      if (data.isAdmin) {
+
+        document
+          .getElementById("adminPanel")
+          .classList
+          .remove("hidden");
+
+      }
+
+    }
+
+    function renderLessons(lessons) {
+
+      const list =
+        document.getElementById(
+          "lessonsList"
+        );
+
+      list.innerHTML = "";
+
+      lessons.forEach(
+        (lesson, index) => {
+
+          const div =
+            document.createElement(
+              "div"
+            );
+
+          div.className =
+            "lesson";
+
+          const number =
+            index + 1;
+
+          let html = `
+
+            <div class="lesson-number">
+              آموزش ${number}
+            </div>
+
+            <div class="lesson-title">
+              ${escapeHtml(
+                lesson.title || ""
+              )}
+            </div>
+
+          `;
+
+          if (lesson.description) {
+
+            html += `
+              <div class="lesson-description">
+                ${escapeHtml(
+                  lesson.description
+                )}
+              </div>
+            `;
+
+          }
+
+          const url =
+            lesson.content_url;
+
+          if (
+            lesson.content_type ===
+            "video" &&
+            url
+          ) {
+
+            html += `
+              <video
+                controls
+                controlsList="nodownload noplaybackrate"
+                disablePictureInPicture
+                playsinline
+                oncontextmenu="return false;"
+              >
+                <source src="${escapeAttribute(
+                  url
+                )}">
+                مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
+              </video>
+            `;
+
+          }
+
+          else if (
+            lesson.content_type ===
+            "audio" &&
+            url
+          ) {
+
+            html += `
+              <audio
+                controls
+                controlsList="nodownload"
+                oncontextmenu="return false;"
+              >
+                <source src="${escapeAttribute(
+                  url
+                )}">
+              </audio>
+            `;
+
+          }
+
+          else if (
+            lesson.content_type ===
+            "image" &&
+            url
+          ) {
+
+            html += `
+              <img
+                class="content-image"
+                src="${escapeAttribute(
+                  url
+                )}"
+                draggable="false"
+                oncontextmenu="return false;"
+              >
+            `;
+
+          }
+
+          else if (
+            lesson.content_type ===
+            "file" &&
+            url
+          ) {
+
+            html += `
+              <iframe
+                src="${escapeAttribute(
+                  url
+                )}"
+                oncontextmenu="return false;"
+              ></iframe>
+            `;
+
+          }
+
+          else if (
+            lesson.content_type ===
+            "text"
+          ) {
+
+            html += `
+              <div class="text-content">
+                ${escapeHtml(
+                  url || ""
+                )}
+              </div>
+            `;
+
+          }
+
+          else if (url) {
+
+            html += `
+              <a
+                href="${escapeAttribute(
+                  url
+                )}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                مشاهده محتوا
+              </a>
+            `;
+
+          }
+
+          else {
+
+            html += `
+              <p>
+                محتوای این آموزش هنوز قرار نگرفته است.
+              </p>
+            `;
+
+          }
+
+          div.innerHTML =
+            html;
+
+          list.appendChild(
+            div
+          );
+
+        }
+      );
+
+    }
+        document
+      .getElementById("contentType")
+      .addEventListener(
         "change",
-        updateFileInfo
+        function () {
+
+          const type =
+            this.value;
+
+          const fileBox =
+            document.getElementById(
+              "fileBox"
+            );
+
+          const textBox =
+            document.getElementById(
+              "textBox"
+            );
+
+          if (type === "text") {
+
+            fileBox
+              .classList
+              .add("hidden");
+
+            textBox
+              .classList
+              .remove("hidden");
+
+          } else {
+
+            fileBox
+              .classList
+              .remove("hidden");
+
+            textBox
+              .classList
+              .add("hidden");
+
+          }
+
+        }
+      );
+
+    document
+      .getElementById("lessonForm")
+      .addEventListener(
+        "submit",
+        async function (event) {
+
+          event.preventDefault();
+
+          const button =
+            document.getElementById(
+              "submitButton"
+            );
+
+          const message =
+            document.getElementById(
+              "adminMessage"
+            );
+
+          try {
+
+            button.disabled =
+              true;
+
+            message.innerText =
+              "در حال ثبت آموزش...";
+
+            const title =
+              document
+                .getElementById("title")
+                .value
+                .trim();
+
+            const description =
+              document
+                .getElementById("description")
+                .value
+                .trim();
+
+            const contentType =
+              document
+                .getElementById("contentType")
+                .value;
+
+            const publishAt =
+              document
+                .getElementById("publishAt")
+                .value;
+
+            let contentUrl =
+              null;
+
+            if (
+              contentType ===
+              "text"
+            ) {
+
+              contentUrl =
+                document
+                  .getElementById(
+                    "textContent"
+                  )
+                  .value
+                  .trim();
+
+              if (!contentUrl) {
+
+                throw new Error(
+                  "متن آموزش را وارد کنید."
+                );
+
+              }
+
+            }
+
+            else {
+
+              const file =
+                document
+                  .getElementById(
+                    "file"
+                  )
+                  .files[0];
+
+              if (!file) {
+
+                throw new Error(
+                  "لطفاً فایل آموزش را انتخاب کنید."
+                );
+
+              }
+
+              if (
+                file.size >
+                50 * 1024 * 1024
+              ) {
+
+                throw new Error(
+                  "حجم فایل بیشتر از ۵۰ مگابایت است."
+                );
+
+              }
+
+              message.innerText =
+                "در حال آماده‌سازی آپلود...";
+
+              const uploadResponse =
+                await fetch(
+                  "/api/upload-url",
+                  {
+                    method: "POST",
+
+                    headers: {
+                      "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                      JSON.stringify({
+                        initData:
+                          initData,
+
+                        fileName:
+                          file.name,
+
+                        contentType:
+                          file.type ||
+                          "application/octet-stream"
+                      })
+                  }
+                );
+
+              const uploadData =
+                await uploadResponse.json();
+
+              if (
+                !uploadResponse.ok ||
+                !uploadData.ok
+              ) {
+
+                throw new Error(
+                  uploadData.error ||
+                  "خطا در دریافت لینک آپلود"
+                );
+
+              }
+
+              message.innerText =
+                "در حال آپلود فایل...";
+
+              const uploadUrl =
+                `${getSupabaseUrl()}/storage/v1/object/upload/sign/course-videos/${encodeURIComponent(
+                  uploadData.path
+                )}?token=${encodeURIComponent(
+                  uploadData.token
+                )}`;
+
+              const fileResponse =
+                await fetch(
+                  uploadUrl,
+                  {
+                    method: "PUT",
+
+                    headers: {
+                      "Content-Type":
+                        file.type ||
+                        "application/octet-stream"
+                    },
+
+                    body: file
+                  }
+                );
+
+              if (!fileResponse.ok) {
+
+                const text =
+                  await fileResponse.text();
+
+                console.error(
+                  "Upload Error:",
+                  text
+                );
+
+                throw new Error(
+                  "آپلود فایل ناموفق بود."
+                );
+
+              }
+
+              contentUrl =
+                uploadData.path;
+
+            }
+
+            message.innerText =
+              "در حال ثبت آموزش در دوره...";
+
+            const lessonResponse =
+              await fetch(
+                "/api/create-lesson",
+                {
+                  method: "POST",
+
+                  headers: {
+                    "Content-Type":
+                      "application/json"
+                  },
+
+                  body:
+                    JSON.stringify({
+                      initData:
+                        initData,
+
+                      title:
+                        title,
+
+                      description:
+                        description,
+
+                      contentType:
+                        contentType,
+
+                      contentUrl:
+                        contentUrl,
+
+                      publishAt:
+                        publishAt
+                          ? new Date(
+                              publishAt
+                            ).toISOString()
+                          : null
+                    })
+                }
+              );
+
+            const lessonData =
+              await lessonResponse.json();
+
+            if (
+              !lessonResponse.ok ||
+              !lessonData.ok
+            ) {
+
+              throw new Error(
+                lessonData.error ||
+                "خطا در ثبت آموزش"
+              );
+
+            }
+
+            message.innerHTML =
+              `<span class="success">
+                ✅ آموزش با موفقیت اضافه شد.
+              </span>`;
+
+            document
+              .getElementById(
+                "lessonForm"
+              )
+              .reset();
+
+            setTimeout(
+              authenticate,
+              800
+            );
+
+          } catch (error) {
+
+            console.error(
+              "Create Lesson Error:",
+              error
+            );
+
+            message.innerHTML =
+              `<span class="error">
+                ❌ ${escapeHtml(
+                  error.message
+                )}
+              </span>`;
+
+          } finally {
+
+            button.disabled =
+              false;
+
+          }
+
+        }
+      );
+
+    let supabaseUrlCache =
+      null;
+
+    async function getSupabaseUrl() {
+
+      if (
+        supabaseUrlCache
+      ) {
+
+        return supabaseUrlCache;
+
+      }
+
+      const response =
+        await fetch(
+          "/api/config"
+        );
+
+      const data =
+        await response.json();
+
+      if (
+        !response.ok ||
+        !data.ok
+      ) {
+
+        throw new Error(
+          "تنظیمات Supabase دریافت نشد."
+        );
+
+      }
+
+      supabaseUrlCache =
+        data.supabaseUrl;
+
+      return supabaseUrlCache;
+
+    }
+
+    document.addEventListener(
+      "contextmenu",
+      function (event) {
+
+        event.preventDefault();
+
+      }
+    );
+
+    document.addEventListener(
+      "dragstart",
+      function (event) {
+
+        event.preventDefault();
+
+      }
+    );
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.ctrlKey ||
+          event.metaKey
+        ) {
+
+          const key =
+            event.key.toLowerCase();
+
+          if (
+            key === "s" ||
+            key === "u" ||
+            key === "c" ||
+            key === "a"
+          ) {
+
+            event.preventDefault();
+
+          }
+
+        }
+
+      }
+    );
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+    function escapeAttribute(value) {
+
+      return escapeHtml(
+        value
       );
 
     }
 
+    authenticate();
 
-    function changeContentType() {
+  </script>
 
-      const type =
-        document.getElementById(
-          "contentTypeInput"
-        ).value;
+</body>
 
-
-      const fileArea =
-        document.getElementById(
-       
+</html>
