@@ -31,7 +31,12 @@ module.exports = async (req, res) => {
       });
     }
 
+    // =========================
+    // اعتبارسنجی اطلاعات ایتا
+    // =========================
+
     const params = new URLSearchParams(initData);
+
     const receivedHash = params.get("hash");
 
     if (!receivedHash) {
@@ -43,20 +48,23 @@ module.exports = async (req, res) => {
 
     params.delete("hash");
 
-    const dataCheckString = Array.from(params.entries())
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, value]) => `${key}=${value}`)
-      .join("\n");
+    const dataCheckString =
+      Array.from(params.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, value]) => `${key}=${value}`)
+        .join("\n");
 
-    const secretKey = crypto
-      .createHmac("sha256", "WebAppData")
-      .update(appToken)
-      .digest();
+    const secretKey =
+      crypto
+        .createHmac("sha256", "WebAppData")
+        .update(appToken)
+        .digest();
 
-    const calculatedHash = crypto
-      .createHmac("sha256", secretKey)
-      .update(dataCheckString)
-      .digest("hex");
+    const calculatedHash =
+      crypto
+        .createHmac("sha256", secretKey)
+        .update(dataCheckString)
+        .digest("hex");
 
     if (calculatedHash !== receivedHash) {
       return res.status(401).json({
@@ -64,6 +72,10 @@ module.exports = async (req, res) => {
         error: "اعتبارسنجی ایتا ناموفق بود"
       });
     }
+
+    // =========================
+    // بررسی تاریخ اعتبار
+    // =========================
 
     const authDate = Number(params.get("auth_date"));
 
@@ -74,7 +86,8 @@ module.exports = async (req, res) => {
       });
     }
 
-    const currentTime = Math.floor(Date.now() / 1000);
+    const currentTime =
+      Math.floor(Date.now() / 1000);
 
     if (currentTime - authDate > 86400) {
       return res.status(401).json({
@@ -82,6 +95,10 @@ module.exports = async (req, res) => {
         error: "اطلاعات ورود منقضی شده است"
       });
     }
+
+    // =========================
+    // اطلاعات کاربر
+    // =========================
 
     const userData = params.get("user");
 
@@ -94,100 +111,311 @@ module.exports = async (req, res) => {
 
     const user = JSON.parse(userData);
 
+    // =========================
+    // هدرهای Supabase
+    // =========================
+
     const headers = {
       "apikey": supabaseSecretKey,
       "Authorization": `Bearer ${supabaseSecretKey}`
     };
 
+    // =========================
     // بررسی ادمین
+    // =========================
+
     const adminUrl =
       `${supabaseUrl}/rest/v1/admins` +
       `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
       `&is_active=eq.true` +
       `&select=id`;
 
-    const adminResponse = await fetch(adminUrl, {
-      method: "GET",
-      headers
-    });
+    const adminResponse =
+      await fetch(adminUrl, {
+        method: "GET",
+        headers
+      });
 
     if (!adminResponse.ok) {
-      console.error("Admin Error:", await adminResponse.text());
+
+      console.error(
+        "Admin Error:",
+        await adminResponse.text()
+      );
 
       return res.status(500).json({
         ok: false,
         error: "خطا در بررسی ادمین"
       });
+
     }
 
-    const admins = await adminResponse.json();
-    const isAdmin = admins.length > 0;
+    const admins =
+      await adminResponse.json();
 
+    const isAdmin =
+      admins.length > 0;
+
+    // =========================
     // بررسی هنرجو
+    // =========================
+
     const studentUrl =
       `${supabaseUrl}/rest/v1/students` +
       `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
       `&select=id,eitaa_user_id,first_name,last_name,username,is_active,has_access`;
 
-    const studentResponse = await fetch(studentUrl, {
-      method: "GET",
-      headers
-    });
+    const studentResponse =
+      await fetch(studentUrl, {
+        method: "GET",
+        headers
+      });
 
     if (!studentResponse.ok) {
-      console.error("Student Error:", await studentResponse.text());
+
+      console.error(
+        "Student Error:",
+        await studentResponse.text()
+      );
 
       return res.status(500).json({
         ok: false,
         error: "خطا در بررسی اطلاعات هنرجو"
       });
+
     }
 
-    const students = await studentResponse.json();
-    const student = students[0] || null;
+    const students =
+      await studentResponse.json();
 
+    const student =
+      students[0] || null;
+
+    const hasAccess =
+      !!(
+        student &&
+        student.is_active &&
+        student.has_access
+      );
+
+    // =========================
     // دریافت آموزش‌ها
+    // =========================
+
     const lessonsUrl =
       `${supabaseUrl}/rest/v1/lessons` +
       `?is_active=eq.true` +
       `&select=id,title,description,sort_order,content_type,content_url,publish_at` +
       `&order=sort_order.asc`;
 
-    const lessonsResponse = await fetch(lessonsUrl, {
-      method: "GET",
-      headers
-    });
+    const lessonsResponse =
+      await fetch(lessonsUrl, {
+        method: "GET",
+        headers
+      });
 
     if (!lessonsResponse.ok) {
-      console.error("Lessons Error:", await lessonsResponse.text());
+
+      console.error(
+        "Lessons Error:",
+        await lessonsResponse.text()
+      );
 
       return res.status(500).json({
         ok: false,
         error: "خطا در دریافت آموزش‌ها"
       });
+
     }
 
-    const lessons = await lessonsResponse.json();
+    let lessons =
+      await lessonsResponse.json();
+
+    // =========================
+    // دسترسی به آموزش‌ها
+    // =========================
+    // فقط ادمین یا هنرجوی دارای دسترسی
+    // آموزش‌ها را دریافت می‌کند.
+
+    if (!isAdmin && !hasAccess) {
+      lessons = [];
+    }
+
+    // =========================
+    // بررسی زمان انتشار
+    // =========================
+
+    const now =
+      Date.now();
+
+    lessons =
+      lessons.filter((lesson) => {
+
+        if (isAdmin) {
+          return true;
+        }
+
+        if (!lesson.publish_at) {
+          return true;
+        }
+
+        const publishTime =
+          new Date(
+            lesson.publish_at
+          ).getTime();
+
+        return publishTime <= now;
+
+      });
+
+    // =========================
+    // ساخت لینک موقت برای فایل‌های خصوصی
+    // =========================
+
+    if (lessons.length > 0) {
+
+      const storageLessons =
+        lessons.filter((lesson) => {
+
+          return (
+            lesson.content_url &&
+            lesson.content_url.startsWith("lessons/")
+          );
+
+        });
+
+      if (storageLessons.length > 0) {
+
+        const paths =
+          storageLessons.map(
+            lesson => lesson.content_url
+          );
+
+        const signResponse =
+          await fetch(
+            `${supabaseUrl}/storage/v1/object/sign/course-videos`,
+            {
+              method: "POST",
+
+              headers: {
+                ...headers,
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                paths,
+                expiresIn: 86400
+              })
+            }
+          );
+
+        if (!signResponse.ok) {
+
+          console.error(
+            "Storage Sign Error:",
+            await signResponse.text()
+          );
+
+          return res.status(500).json({
+            ok: false,
+            error: "خطا در ساخت لینک فایل‌های دوره"
+          });
+
+        }
+
+        const signedResults =
+          await signResponse.json();
+
+        const signedMap =
+          new Map();
+
+        signedResults.forEach(
+          item => {
+
+            if (
+              item.path &&
+              item.signedURL
+            ) {
+
+              const fullUrl =
+                item.signedURL.startsWith("http")
+                  ? item.signedURL
+                  : `${supabaseUrl}/storage/v1${item.signedURL}`;
+
+              signedMap.set(
+                item.path,
+                fullUrl
+              );
+
+            }
+
+          }
+        );
+
+        lessons =
+          lessons.map(
+            lesson => {
+
+              if (
+                lesson.content_url &&
+                signedMap.has(
+                  lesson.content_url
+                )
+              ) {
+
+                return {
+                  ...lesson,
+                  content_url:
+                    signedMap.get(
+                      lesson.content_url
+                    )
+                };
+
+              }
+
+              return lesson;
+
+            }
+          );
+
+      }
+
+    }
+
+    // =========================
+    // پاسخ نهایی
+    // =========================
 
     return res.status(200).json({
 
       ok: true,
 
-      registered: !!student,
+      registered:
+        !!student,
 
-      hasAccess: !!(
-        student &&
-        student.is_active &&
-        student.has_access
-      ),
+      hasAccess,
 
       isAdmin,
 
       user: {
+
         id: user.id,
-        first_name: student?.first_name || user.first_name || "",
-        last_name: student?.last_name || user.last_name || "",
-        username: student?.username || user.username || ""
+
+        first_name:
+          student?.first_name ||
+          user.first_name ||
+          "",
+
+        last_name:
+          student?.last_name ||
+          user.last_name ||
+          "",
+
+        username:
+          student?.username ||
+          user.username ||
+          ""
+
       },
 
       lessons
@@ -196,7 +424,10 @@ module.exports = async (req, res) => {
 
   } catch (error) {
 
-    console.error("Auth Error:", error);
+    console.error(
+      "Auth Error:",
+      error
+    );
 
     return res.status(500).json({
       ok: false,
