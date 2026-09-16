@@ -996,7 +996,10 @@ loadUserData(data);
 
 }catch(error){
 
-console.error("Auth Error:",error);
+console.error(
+"Auth Error:",
+error
+);
 
 showMessage(
 "ارتباط با سرور برقرار نشد. لطفاً دوباره تلاش کنید.",
@@ -1055,7 +1058,9 @@ return;
 }
 
 uploadButton.disabled=true;
-uploadButton.textContent="در حال ثبت...";
+
+uploadButton.textContent=
+"در حال ثبت...";
 
 try{
 
@@ -1079,7 +1084,9 @@ uploadStatus.textContent=
 "در حال ساخت لینک آپلود...";
 
 var uploadResponse=
-await fetch("/api/upload-url",{
+await fetch(
+"/api/upload-url",
+{
 
 method:"POST",
 
@@ -1091,14 +1098,18 @@ headers:{
 body:JSON.stringify({
 
 initData:initData,
-fileName:file.name,
+
+fileName:
+file.name,
+
 contentType:
 file.type||
 "application/octet-stream"
 
 })
 
-});
+}
+);
 
 var uploadData=
 await uploadResponse.json();
@@ -1131,7 +1142,11 @@ return encodeURIComponent(part);
 var supabaseUploadUrl=
 "https://ywlqopsuscfzokeqpika.supabase.co"+
 "/storage/v1/object/upload/sign/course-videos/"+
-safePath;
+safePath+
+"?token="+
+encodeURIComponent(
+uploadData.token
+);
 
 var fileResponse=
 await fetch(
@@ -1141,9 +1156,6 @@ supabaseUploadUrl,
 method:"PUT",
 
 headers:{
-"x-signature":
-uploadData.token,
-
 "Content-Type":
 file.type||
 "application/octet-stream"
@@ -1193,9 +1205,13 @@ headers:{
 body:JSON.stringify({
 
 initData:initData,
+
 title:title,
+
 description:description,
+
 contentType:type,
+
 contentUrl:contentUrl,
 
 publishAt:
@@ -1240,13 +1256,18 @@ lessonData.lesson
 lessons.sort(
 function(a,b){
 
-return Number(a.sort_order||0)-
-Number(b.sort_order||0);
+return Number(
+a.sort_order||0
+)-
+Number(
+b.sort_order||0
+);
 
 }
 );
 
 renderLessons();
+  }
 
 }catch(error){
 
@@ -1262,6 +1283,7 @@ error.message||
 }finally{
 
 uploadButton.disabled=false;
+
 uploadButton.textContent=
 "افزودن آموزش";
 
@@ -1273,7 +1295,8 @@ uploadButton.addEventListener(
 "click",
 uploadLesson
 );
-  document.addEventListener(
+
+document.addEventListener(
 "contextmenu",
 function(event){
 event.preventDefault();
@@ -1325,4 +1348,5 @@ authenticate();
 </script>
 
 </body>
+
 </html>
