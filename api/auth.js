@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 
 module.exports = async (req, res) => {
+
   if (req.method !== "POST") {
     return res.status(405).json({
       ok: false,
@@ -9,6 +10,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+
     const { initData } = req.body || {};
 
     if (!initData) {
@@ -92,11 +94,12 @@ module.exports = async (req, res) => {
 
     const user = JSON.parse(userData);
 
-    const baseHeaders = {
+    const headers = {
       "apikey": supabaseSecretKey,
       "Authorization": `Bearer ${supabaseSecretKey}`
     };
 
+    // بررسی ادمین
     const adminUrl =
       `${supabaseUrl}/rest/v1/admins` +
       `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
@@ -105,21 +108,22 @@ module.exports = async (req, res) => {
 
     const adminResponse = await fetch(adminUrl, {
       method: "GET",
-      headers: baseHeaders
+      headers
     });
 
     if (!adminResponse.ok) {
-      console.error("Supabase Admin Error:", await adminResponse.text());
+      console.error("Admin Error:", await adminResponse.text());
 
       return res.status(500).json({
         ok: false,
-        error: "خطا در بررسی دسترسی ادمین"
+        error: "خطا در بررسی ادمین"
       });
     }
 
     const admins = await adminResponse.json();
     const isAdmin = admins.length > 0;
 
+    // بررسی هنرجو
     const studentUrl =
       `${supabaseUrl}/rest/v1/students` +
       `?eitaa_user_id=eq.${encodeURIComponent(user.id)}` +
@@ -127,11 +131,11 @@ module.exports = async (req, res) => {
 
     const studentResponse = await fetch(studentUrl, {
       method: "GET",
-      headers: baseHeaders
+      headers
     });
 
     if (!studentResponse.ok) {
-      console.error("Supabase Student Error:", await studentResponse.text());
+      console.error("Student Error:", await studentResponse.text());
 
       return res.status(500).json({
         ok: false,
@@ -142,7 +146,31 @@ module.exports = async (req, res) => {
     const students = await studentResponse.json();
     const student = students[0] || null;
 
+    // دریافت آموزش‌ها
+    const lessonsUrl =
+      `${supabaseUrl}/rest/v1/lessons` +
+      `?is_active=eq.true` +
+      `&select=id,title,description,sort_order,content_type,content_url,publish_at` +
+      `&order=sort_order.asc`;
+
+    const lessonsResponse = await fetch(lessonsUrl, {
+      method: "GET",
+      headers
+    });
+
+    if (!lessonsResponse.ok) {
+      console.error("Lessons Error:", await lessonsResponse.text());
+
+      return res.status(500).json({
+        ok: false,
+        error: "خطا در دریافت آموزش‌ها"
+      });
+    }
+
+    const lessons = await lessonsResponse.json();
+
     return res.status(200).json({
+
       ok: true,
 
       registered: !!student,
@@ -160,15 +188,20 @@ module.exports = async (req, res) => {
         first_name: student?.first_name || user.first_name || "",
         last_name: student?.last_name || user.last_name || "",
         username: student?.username || user.username || ""
-      }
+      },
+
+      lessons
+
     });
 
   } catch (error) {
+
     console.error("Auth Error:", error);
 
     return res.status(500).json({
       ok: false,
       error: "خطای داخلی سرور"
     });
+
   }
 };
