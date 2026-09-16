@@ -31,6 +31,8 @@
       position: relative;
     }
 
+    /* نورهای پس‌زمینه */
+
     body::before,
     body::after {
       content: "";
@@ -64,6 +66,8 @@
       margin: 0 auto;
       padding: 28px 16px 40px;
     }
+
+    /* هدر */
 
     .header {
       text-align: center;
@@ -106,12 +110,16 @@
       font-size: 13px;
     }
 
+    /* وضعیت */
+
     #status {
       text-align: center;
       color: #b9bbd1;
       font-size: 13px;
       margin: 0 0 20px;
     }
+
+    /* کارت کاربر */
 
     .user-card {
       position: relative;
@@ -160,6 +168,8 @@
       color: #ffffff;
     }
 
+    /* عنوان آموزش‌ها */
+
     .section-title {
       display: flex;
       align-items: center;
@@ -174,6 +184,8 @@
     .section-title span {
       color: #9b7cff;
     }
+
+    /* کارت آموزش */
 
     .lesson {
       position: relative;
@@ -198,6 +210,12 @@
 
       box-shadow:
         0 10px 35px rgba(0, 0, 0, 0.20);
+
+      transition: transform 0.2s ease;
+    }
+
+    .lesson:active {
+      transform: scale(0.98);
     }
 
     .lesson-number {
@@ -227,6 +245,8 @@
       line-height: 1.9;
     }
 
+    /* دکمه */
+
     .lesson-button {
       width: 100%;
       margin-top: 16px;
@@ -253,94 +273,7 @@
       cursor: pointer;
     }
 
-    .lesson-page {
-      display: none;
-    }
-
-    .back-button {
-      width: 100%;
-      margin-bottom: 18px;
-
-      padding: 12px 16px;
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 14px;
-
-      color: #d6d7e8;
-      background: rgba(255, 255, 255, 0.055);
-
-      font-size: 13px;
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-    .lesson-detail {
-      padding: 22px;
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.075),
-          rgba(255, 255, 255, 0.035)
-        );
-
-      border: 1px solid rgba(255, 255, 255, 0.10);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.25);
-    }
-
-    .detail-number {
-      display: inline-block;
-
-      padding: 6px 11px;
-      margin-bottom: 12px;
-
-      border-radius: 10px;
-
-      color: #bcaaff;
-      background: rgba(132, 92, 255, 0.12);
-
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .detail-title {
-      font-size: 23px;
-      font-weight: 900;
-      line-height: 1.6;
-
-      margin-bottom: 15px;
-    }
-
-    .detail-description {
-      color: #b5b7ca;
-      font-size: 14px;
-      line-height: 2;
-    }
-
-    .coming-soon {
-      margin-top: 22px;
-      padding: 18px;
-
-      text-align: center;
-
-      border-radius: 16px;
-
-      color: #aeb0c5;
-      background: rgba(0, 0, 0, 0.18);
-
-      border: 1px solid rgba(255, 255, 255, 0.06);
-
-      font-size: 13px;
-      line-height: 1.8;
-    }
+    /* حالت بدون آموزش */
 
     .empty {
       padding: 25px 15px;
@@ -363,65 +296,31 @@
 
   <div class="container">
 
-    <div id="mainPage">
+    <div class="header">
 
-      <div class="header">
-
-        <div class="logo">
-          🤖
-        </div>
-
-        <h1 class="brand">
-          باهوش
-        </h1>
-
-        <p class="subtitle">
-          مسیر حرفه‌ای یادگیری هوش مصنوعی
-        </p>
-
+      <div class="logo">
+        🤖
       </div>
 
-      <p id="status">
-        در حال بررسی اطلاعات شما...
+      <h1 class="brand">
+        باهوش
+      </h1>
+
+      <p class="subtitle">
+        مسیر حرفه‌ای یادگیری هوش مصنوعی
       </p>
 
-      <div id="userInfo"></div>
-
-      <div id="lessons"></div>
-
     </div>
 
+    <p id="status">
+      در حال بررسی اطلاعات شما...
+    </p>
 
-    <div id="lessonPage" class="lesson-page">
+    <div id="userInfo"></div>
 
-      <button
-        class="back-button"
-        type="button"
-        onclick="closeLesson()"
-      >
-        ← بازگشت به آموزش‌ها
-      </button>
-
-      <div class="lesson-detail">
-
-        <div id="detailNumber" class="detail-number"></div>
-
-        <div id="detailTitle" class="detail-title"></div>
-
-        <div id="detailDescription" class="detail-description"></div>
-
-        <div class="coming-soon">
-          🎬 محتوای این آموزش در مرحله بعد اینجا قرار می‌گیرد.
-          <br>
-          فعلاً فقط صفحه آموزش را آماده کرده‌ایم.
-        </div>
-
-      </div>
-
-    </div>
+    <div id="lessons"></div>
 
   </div>
-
 
   <script>
 
@@ -429,7 +328,6 @@
 
     webApp.ready();
     webApp.expand();
-
 
     const status =
       document.getElementById("status");
@@ -440,53 +338,32 @@
     const lessonsContainer =
       document.getElementById("lessons");
 
-    const mainPage =
-      document.getElementById("mainPage");
-
-    const lessonPage =
-      document.getElementById("lessonPage");
-
-    const detailNumber =
-      document.getElementById("detailNumber");
-
-    const detailTitle =
-      document.getElementById("detailTitle");
-
-    const detailDescription =
-      document.getElementById("detailDescription");
-
-
-    let allLessons = [];
-
 
     async function authenticate() {
 
       try {
 
         if (!webApp.initData) {
-
           throw new Error(
             "اطلاعات ورود ایتا دریافت نشد"
           );
-
         }
 
 
-        const response =
-          await fetch(
-            "/api/auth",
-            {
-              method: "POST",
+        const response = await fetch(
+          "/api/auth",
+          {
+            method: "POST",
 
-              headers: {
-                "Content-Type": "application/json"
-              },
+            headers: {
+              "Content-Type": "application/json"
+            },
 
-              body: JSON.stringify({
-                initData: webApp.initData
-              })
-            }
-          );
+            body: JSON.stringify({
+              initData: webApp.initData
+            })
+          }
+        );
 
 
         const result =
@@ -550,11 +427,79 @@
         `;
 
 
-        allLessons =
+        const lessons =
           result.lessons || [];
 
 
-        renderLessons();
+        if (lessons.length === 0) {
+
+          lessonsContainer.innerHTML = `
+
+            <div class="section-title">
+              <span>✦</span>
+              آموزش‌های دوره
+            </div>
+
+            <div class="empty">
+              هنوز آموزشی منتشر نشده است.
+            </div>
+
+          `;
+
+        } else {
+
+          let lessonsHTML = `
+
+            <div class="section-title">
+              <span>✦</span>
+              آموزش‌های دوره
+            </div>
+
+          `;
+
+
+          lessons.forEach(
+            (lesson, index) => {
+
+              lessonsHTML += `
+
+                <div class="lesson">
+
+                  <div class="lesson-number">
+                    آموزش ${index + 1}
+                  </div>
+
+                  <div class="lesson-title">
+                    ${lesson.title || "بدون عنوان"}
+                  </div>
+
+                  <div class="lesson-description">
+                    ${
+                      lesson.description ||
+                      "توضیحی برای این آموزش ثبت نشده است."
+                    }
+                  </div>
+
+                  <button
+                    class="lesson-button"
+                    type="button"
+                    onclick="openLesson(${lesson.id})"
+                  >
+                    ▶️ ورود به آموزش
+                  </button>
+
+                </div>
+
+              `;
+
+            }
+          );
+
+
+          lessonsContainer.innerHTML =
+            lessonsHTML;
+
+        }
 
 
         if (result.isAdmin) {
@@ -593,143 +538,13 @@
     }
 
 
-    function renderLessons() {
-
-      if (allLessons.length === 0) {
-
-        lessonsContainer.innerHTML = `
-
-          <div class="section-title">
-            <span>✦</span>
-            آموزش‌های دوره
-          </div>
-
-          <div class="empty">
-            هنوز آموزشی منتشر نشده است.
-          </div>
-
-        `;
-
-        return;
-      }
-
-
-      let lessonsHTML = `
-
-        <div class="section-title">
-          <span>✦</span>
-          آموزش‌های دوره
-        </div>
-
-      `;
-
-
-      allLessons.forEach(
-        (lesson, index) => {
-
-          lessonsHTML += `
-
-            <div class="lesson">
-
-              <div class="lesson-number">
-                آموزش ${index + 1}
-              </div>
-
-              <div class="lesson-title">
-                ${lesson.title || "بدون عنوان"}
-              </div>
-
-              <div class="lesson-description">
-                ${
-                  lesson.description ||
-                  "توضیحی برای این آموزش ثبت نشده است."
-                }
-              </div>
-
-              <button
-                class="lesson-button"
-                type="button"
-                onclick="openLesson(${lesson.id})"
-              >
-                ▶️ ورود به آموزش
-              </button>
-
-            </div>
-
-          `;
-
-        }
-      );
-
-
-      lessonsContainer.innerHTML =
-        lessonsHTML;
-
-    }
-
-
     function openLesson(lessonId) {
 
-      const lesson =
-        allLessons.find(
-          item => Number(item.id) === Number(lessonId)
-        );
-
-
-      if (!lesson) {
-        return;
-      }
-
-
-      const lessonIndex =
-        allLessons.findIndex(
-          item => Number(item.id) === Number(lessonId)
-        );
-
-
-      detailNumber.textContent =
-        `آموزش ${lessonIndex + 1}`;
-
-
-      detailTitle.textContent =
-        lesson.title || "بدون عنوان";
-
-
-      detailDescription.textContent =
-        lesson.description ||
-        "توضیحی برای این آموزش ثبت نشده است.";
-
-
-      mainPage.style.display =
-        "none";
-
-
-      lessonPage.style.display =
-        "block";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    function closeLesson() {
-
-      lessonPage.style.display =
-        "none";
-
-
-      mainPage.style.display =
-        "block";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      alert(
+        "ورود به آموزش شماره " +
+        lessonId +
+        " — این بخش در مرحله بعد فعال می‌شود."
+      );
 
     }
 
