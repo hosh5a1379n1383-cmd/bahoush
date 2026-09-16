@@ -325,21 +325,50 @@
       line-height: 2;
     }
 
-    .coming-soon {
+    /* پلیر ویدئو */
+
+    .video-box {
       margin-top: 22px;
-      padding: 18px;
+
+      overflow: hidden;
+
+      border-radius: 18px;
+
+      background: #000;
+
+      border: 1px solid rgba(255, 255, 255, 0.10);
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .video-box video {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      background: #000;
+    }
+
+    .video-title {
+      margin: 20px 0 0;
+
+      color: #aeb0c5;
+
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .empty-video {
+      padding: 35px 18px;
 
       text-align: center;
 
-      border-radius: 16px;
-
-      color: #aeb0c5;
-      background: rgba(0, 0, 0, 0.18);
-
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #85879d;
 
       font-size: 13px;
-      line-height: 1.8;
+      line-height: 1.9;
     }
 
     .empty {
@@ -410,11 +439,7 @@
 
         <div id="detailDescription" class="detail-description"></div>
 
-        <div class="coming-soon">
-          🎬 محتوای این آموزش در مرحله بعد اینجا قرار می‌گیرد.
-          <br>
-          فعلاً فقط صفحه آموزش را آماده کرده‌ایم.
-        </div>
+        <div id="videoContainer"></div>
 
       </div>
 
@@ -454,6 +479,9 @@
 
     const detailDescription =
       document.getElementById("detailDescription");
+
+    const videoContainer =
+      document.getElementById("videoContainer");
 
 
     let allLessons = [];
@@ -700,6 +728,56 @@
         "توضیحی برای این آموزش ثبت نشده است.";
 
 
+      /*
+       * نمایش ویدئو
+       */
+
+      if (
+        lesson.content_url &&
+        lesson.content_type === "video"
+      ) {
+
+        videoContainer.innerHTML = `
+
+          <div class="video-box">
+
+            <video
+              controls
+              playsinline
+              preload="metadata"
+            >
+              <source
+                src="${lesson.content_url}"
+                type="video/mp4"
+              >
+
+              مرورگر شما از پخش این ویدئو پشتیبانی نمی‌کند.
+
+            </video>
+
+          </div>
+
+          <div class="video-title">
+            🎬 ویدئوی آموزش
+          </div>
+
+        `;
+
+      } else {
+
+        videoContainer.innerHTML = `
+
+          <div class="empty-video">
+            🎬
+            <br>
+            ویدئوی این آموزش هنوز قرار نگرفته است.
+          </div>
+
+        `;
+
+      }
+
+
       mainPage.style.display =
         "none";
 
@@ -724,6 +802,9 @@
 
       mainPage.style.display =
         "block";
+
+
+      videoContainer.innerHTML = "";
 
 
       window.scrollTo({
