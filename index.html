@@ -2,13 +2,29 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#080b16">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
 <title>باهوش | دوره هوش مصنوعی</title>
 
 <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
 
 <style>
+:root{
+  --bg:#070b16;
+  --bg2:#0d1222;
+  --card:rgba(20,27,48,.82);
+  --card2:rgba(27,35,61,.9);
+  --border:rgba(255,255,255,.08);
+  --text:#f7f8ff;
+  --muted:#929ab4;
+  --primary:#7c5cff;
+  --primary2:#5b8cff;
+  --cyan:#25d9ff;
+  --green:#25d49a;
+  --danger:#ff5f78;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -17,332 +33,309 @@
 html,body{
   margin:0;
   padding:0;
+  width:100%;
   min-height:100%;
-  background:#080b16;
-  color:#fff;
-  font-family:Tahoma,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 85% 0%,rgba(124,92,255,.20),transparent 32%),
+    radial-gradient(circle at 10% 20%,rgba(37,217,255,.08),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:
+    Tahoma,
+    Arial,
+    sans-serif;
 }
 
 body{
+  min-height:100vh;
   overflow-x:hidden;
-  user-select:none;
-  -webkit-user-select:none;
 }
 
-input,textarea,select{
-  user-select:text;
-  -webkit-user-select:text;
+button,
+input,
+textarea,
+select{
+  font:inherit;
 }
 
 button{
-  font-family:inherit;
   border:0;
-}
-
-.hidden{
-  display:none!important;
+  cursor:pointer;
 }
 
 .app{
   width:100%;
-  max-width:680px;
+  max-width:620px;
+  min-height:100vh;
   margin:auto;
-  padding:16px 14px 40px;
+  padding-bottom:35px;
 }
 
-#loading{
+.top-glow{
   position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at 90% 10%,#30256b55,transparent 35%),
-    #080b16;
-}
-
-.loading-box{
-  text-align:center;
-  width:90%;
-  max-width:360px;
-}
-
-.logo{
-  width:78px;
-  height:78px;
-  margin:auto;
-  border-radius:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:900;
-  background:linear-gradient(135deg,#8064ff,#438fff);
-  box-shadow:0 18px 55px #604cff44;
-}
-
-.loading-title{
-  margin-top:17px;
-  font-size:23px;
-  font-weight:900;
-}
-
-.loading-text{
-  margin-top:8px;
-  color:#929bb0;
-  font-size:12px;
-}
-
-.spinner{
-  width:35px;
-  height:35px;
-  margin:22px auto 0;
-  border:3px solid #ffffff12;
-  border-top-color:#8064ff;
+  width:280px;
+  height:280px;
   border-radius:50%;
-  animation:spin .8s linear infinite;
+  background:rgba(124,92,255,.10);
+  filter:blur(70px);
+  top:-100px;
+  right:-80px;
+  pointer-events:none;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
+.container{
+  padding:18px 16px 0;
 }
 
-#error{
-  position:fixed;
-  inset:0;
-  z-index:9998;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:#080b16;
-}
-
-.error-box{
-  width:100%;
-  max-width:400px;
-  text-align:center;
-  padding:25px;
-  border-radius:23px;
-  background:#ffffff06;
-  border:1px solid #ffffff10;
-}
-
-.error-icon{
-  font-size:42px;
-}
-
-.error-title{
-  margin-top:12px;
-  font-size:19px;
-  font-weight:900;
-}
-
-#errorText{
-  margin:10px 0 18px;
-  color:#9ba4b8;
-  font-size:12px;
-  line-height:2;
-}
-
-.primary{
-  width:100%;
-  padding:13px;
-  border-radius:14px;
-  color:white;
-  font-weight:800;
-  background:linear-gradient(135deg,#8064ff,#438fff);
-}
+/* HEADER */
 
 .header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:15px;
+  margin-bottom:20px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:11px;
 }
 
-.brand-logo{
-  width:44px;
-  height:44px;
-  border-radius:14px;
+.logo{
+  width:45px;
+  height:45px;
+  border-radius:15px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:16px;
-  font-weight:900;
-  background:linear-gradient(135deg,#8064ff,#438fff);
+  font-size:23px;
+  background:
+    linear-gradient(145deg,#8b6cff,#4b7cff);
+  box-shadow:
+    0 10px 30px rgba(108,84,255,.35);
 }
 
-.brand-title{
-  font-size:15px;
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+
+.brand-name{
+  font-size:17px;
   font-weight:900;
 }
 
 .brand-sub{
-  margin-top:3px;
-  color:#7f899e;
-  font-size:9px;
+  color:var(--muted);
+  font-size:10px;
 }
 
-.online{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#35d07f;
-  box-shadow:0 0 12px #35d07f99;
+.header-btn{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  color:white;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
 }
+
+/* HERO */
 
 .hero{
   position:relative;
   overflow:hidden;
-  padding:22px 19px;
-  border-radius:24px;
-  margin-bottom:13px;
+  border-radius:27px;
+  padding:24px 20px;
+  margin-bottom:16px;
   background:
-    radial-gradient(circle at 100% 0%,#8064ff45,transparent 42%),
-    linear-gradient(135deg,#171c31,#101526);
-  border:1px solid #ffffff0d;
+    linear-gradient(
+      135deg,
+      rgba(124,92,255,.95),
+      rgba(68,105,255,.88)
+    );
+  box-shadow:var(--shadow);
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:rgba(255,255,255,.10);
+  left:-70px;
+  top:-75px;
+}
+
+.hero:after{
+  content:"✦";
+  position:absolute;
+  font-size:110px;
+  opacity:.08;
+  left:10px;
+  bottom:-40px;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
 }
 
 .hero-badge{
-  display:inline-block;
-  padding:6px 9px;
-  border-radius:9px;
-  background:#ffffff0b;
-  color:#aaa0ff;
-  font-size:9px;
-  font-weight:800;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 11px;
+  border-radius:30px;
+  background:rgba(255,255,255,.13);
+  font-size:10px;
+  margin-bottom:13px;
 }
 
-.hero h1{
-  margin:11px 0 7px;
-  font-size:24px;
-  line-height:1.5;
+.hero-title{
+  margin:0 0 9px;
+  font-size:27px;
+  line-height:1.35;
+  font-weight:900;
 }
 
-.hero h1 span{
-  color:#9e91ff;
-}
-
-.hero p{
+.hero-description{
   margin:0;
-  color:#9ca5b9;
-  font-size:11px;
-  line-height:2;
+  max-width:430px;
+  color:rgba(255,255,255,.80);
+  line-height:1.8;
+  font-size:12px;
 }
 
-.user-card{
+.hero-user{
+  margin-top:19px;
   display:flex;
   align-items:center;
-  gap:11px;
-  padding:13px;
-  border-radius:18px;
-  background:#ffffff06;
-  border:1px solid #ffffff0b;
+  gap:10px;
 }
 
 .avatar{
-  width:49px;
-  height:49px;
-  flex-shrink:0;
+  width:39px;
+  height:39px;
+  border-radius:13px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:16px;
+  background:rgba(255,255,255,.16);
   font-weight:900;
-  background:linear-gradient(135deg,#8064ff,#438fff);
 }
 
 .user-info{
-  min-width:0;
-  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
 }
 
 .user-name{
   font-size:13px;
-  font-weight:900;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.user-id{
-  margin-top:5px;
-  color:#788298;
-  font-size:9px;
-}
-
-.badge{
-  padding:6px 8px;
-  border-radius:9px;
-  background:#8064ff18;
-  color:#a99fff;
-  font-size:9px;
   font-weight:800;
 }
 
-.section{
-  margin-top:22px;
+.user-status{
+  font-size:9px;
+  color:rgba(255,255,255,.65);
 }
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:21px;
+}
+
+.stat{
+  padding:15px 10px;
+  text-align:center;
+  border-radius:18px;
+  background:var(--card);
+  border:1px solid var(--border);
+  backdrop-filter:blur(16px);
+}
+
+.stat-icon{
+  font-size:18px;
+  margin-bottom:7px;
+}
+
+.stat-number{
+  font-size:17px;
+  font-weight:900;
+}
+
+.stat-label{
+  margin-top:4px;
+  font-size:9px;
+  color:var(--muted);
+}
+
+/* SECTION */
 
 .section-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:0 2px 10px;
+  margin:24px 2px 12px;
 }
 
 .section-title{
-  font-size:15px;
+  font-size:17px;
   font-weight:900;
 }
 
-.section-count{
-  color:#778197;
+.section-caption{
+  color:var(--muted);
   font-size:9px;
 }
+
+/* LESSONS */
 
 .lessons{
   display:flex;
   flex-direction:column;
-  gap:9px;
+  gap:10px;
 }
 
 .lesson{
+  position:relative;
   display:flex;
   align-items:center;
-  gap:11px;
-  padding:13px;
-  border-radius:17px;
-  background:#ffffff05;
-  border:1px solid #ffffff09;
-  transition:.18s;
+  gap:12px;
+  padding:14px;
+  border-radius:20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:.2s;
+  overflow:hidden;
 }
 
 .lesson:active{
-  transform:scale(.98);
-  background:#ffffff0a;
+  transform:scale(.985);
 }
 
 .lesson-number{
-  width:42px;
-  height:42px;
-  flex-shrink:0;
+  width:45px;
+  height:45px;
+  flex:none;
+  border-radius:15px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:13px;
-  color:#aaa0ff;
-  font-size:12px;
+  background:
+    linear-gradient(145deg,
+      rgba(124,92,255,.24),
+      rgba(91,140,255,.12));
+  color:#a996ff;
+  font-size:14px;
   font-weight:900;
-  background:#8064ff15;
 }
 
 .lesson-info{
@@ -351,288 +344,463 @@ button{
 }
 
 .lesson-title{
-  font-size:12px;
+  font-size:13px;
   font-weight:800;
+  margin-bottom:5px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
 .lesson-desc{
-  margin-top:5px;
-  color:#778197;
+  color:var(--muted);
   font-size:9px;
-  line-height:1.8;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-
-.lesson-arrow{
-  color:#778197;
-  font-size:15px;
-}
-
-.empty{
-  padding:28px 15px;
-  border-radius:18px;
-  text-align:center;
-  background:#ffffff05;
-  border:1px dashed #ffffff12;
-}
-
-.empty-icon{
-  font-size:30px;
-}
-
-.empty-title{
-  margin-top:9px;
-  font-size:13px;
-  font-weight:800;
-}
-
-.empty-text{
-  margin-top:6px;
-  color:#778197;
-  font-size:10px;
-  line-height:1.9;
-}
-  <style>
-.admin{
-  margin-top:25px;
-  padding:17px;
-  border-radius:21px;
-  background:linear-gradient(145deg,#8064ff12,#438fff06);
-  border:1px solid #8064ff1c;
-}
-
-.admin-title{
-  font-size:14px;
-  font-weight:900;
-  margin-bottom:14px;
-}
-
-.field{
-  margin-bottom:10px;
-}
-
-.label{
-  display:block;
-  margin-bottom:6px;
-  color:#8e97aa;
-  font-size:9px;
-}
-
-.field input,
-.field textarea,
-.field select{
-  width:100%;
-  padding:12px;
-  outline:none;
-  border:1px solid #ffffff0d;
-  border-radius:12px;
-  color:white;
-  background:#00000022;
-  font-size:11px;
-}
-
-.field textarea{
-  min-height:80px;
-  resize:vertical;
-}
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus{
-  border-color:#8064ff77;
-}
-
-.file-box{
-  padding:13px;
-  border-radius:13px;
-  text-align:center;
-  background:#0000001c;
-  border:1px dashed #ffffff16;
-}
-
-.file-name{
-  margin-top:7px;
-  color:#778197;
-  font-size:9px;
-  word-break:break-word;
-}
-
-.admin-message{
-  margin-top:9px;
-  color:#8d96aa;
-  font-size:9px;
-  line-height:1.8;
-}
-
-#modal{
-  position:fixed;
-  inset:0;
-  z-index:9000;
-  padding:15px;
-  overflow-y:auto;
-  background:#03050ce8;
-  backdrop-filter:blur(10px);
-}
-
-.modal-box{
-  width:100%;
-  max-width:680px;
-  margin:auto;
-  overflow:hidden;
-  border-radius:23px;
-  background:#101526;
-  border:1px solid #ffffff0d;
-}
-
-.modal-head{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:14px;
-  border-bottom:1px solid #ffffff0a;
-}
-
-.close{
-  width:37px;
-  height:37px;
-  flex-shrink:0;
-  border-radius:11px;
-  color:white;
-  background:#ffffff09;
-  font-size:19px;
-}
-
-.modal-title{
-  min-width:0;
-  font-size:14px;
-  font-weight:900;
+  line-height:1.7;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-.modal-body{
-  padding:15px;
+.lesson-arrow{
+  color:#737c99;
+  font-size:18px;
 }
 
-.content video,
-.content audio,
-.content img{
-  display:block;
-  width:100%;
-  max-width:100%;
-  border-radius:15px;
+.lesson.done .lesson-number{
+  background:rgba(37,212,154,.13);
+  color:var(--green);
 }
 
-.content video{
+.lesson.locked{
+  opacity:.55;
+}
+
+.lesson.locked .lesson-number{
+  filter:grayscale(1);
+}
+
+/* EMPTY */
+
+.empty{
+  padding:35px 20px;
+  text-align:center;
+  border-radius:22px;
+  background:var(--card);
+  border:1px solid var(--border);
+}
+
+.empty-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.empty-title{
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.empty-text{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.8;
+}
+
+/* LOADING */
+
+.loading{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:14px;
+}
+
+.loader{
+  width:45px;
+  height:45px;
+  border:3px solid rgba(255,255,255,.08);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+.loading-text{
+  color:var(--muted);
+  font-size:12px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+  <style>
+/* LESSON PAGE */
+
+.lesson-page{
+  display:none;
+  animation:pageIn .35s ease;
+}
+
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.back-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.back-btn{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  color:white;
+  border:1px solid var(--border);
+  font-size:18px;
+}
+
+.back-title{
+  font-size:16px;
+  font-weight:900;
+}
+
+.lesson-hero{
+  border-radius:24px;
+  padding:20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(124,92,255,.20),
+      rgba(37,217,255,.07)
+    );
+  border:1px solid var(--border);
+  margin-bottom:14px;
+}
+
+.lesson-hero-number{
+  color:#9c8cff;
+  font-size:10px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.lesson-hero-title{
+  margin:0;
+  font-size:22px;
+  line-height:1.5;
+  font-weight:900;
+}
+
+.lesson-hero-description{
+  margin:9px 0 0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+}
+
+.content-box{
+  border-radius:22px;
+  overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--border);
+  margin-bottom:14px;
+}
+
+.video-wrap{
+  position:relative;
   background:#000;
 }
 
-.content audio{
-  margin-top:5px;
+.video-wrap video{
+  width:100%;
+  display:block;
+  max-height:390px;
+  background:#000;
 }
 
-.text-content{
-  padding:16px;
-  border-radius:15px;
-  background:#ffffff06;
-  color:#d4d9e3;
-  font-size:12px;
-  line-height:2.2;
-  white-space:pre-wrap;
+.audio-box{
+  padding:25px 17px;
 }
 
-.file-content{
-  padding:25px 15px;
-  text-align:center;
-  border-radius:15px;
-  background:#ffffff06;
+.audio-box audio{
+  width:100%;
+}
+
+.image-box img{
+  width:100%;
+  display:block;
+}
+
+.file-box{
+  padding:20px;
 }
 
 .file-icon{
   font-size:40px;
+  margin-bottom:10px;
 }
 
-.file-text{
-  margin-top:8px;
-  color:#919aaf;
-  font-size:10px;
-  line-height:1.9;
+.file-name{
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:12px;
+  word-break:break-word;
 }
 
-.description{
-  margin-top:13px;
-  color:#8d96aa;
+.file-button{
+  width:100%;
+  padding:13px;
+  border-radius:14px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  font-weight:800;
+}
+
+.text-content{
+  padding:20px;
+  font-size:13px;
+  line-height:2.1;
+  color:#dfe3f2;
+  white-space:pre-wrap;
+}
+
+.complete-btn{
+  width:100%;
+  padding:15px;
+  border-radius:17px;
+  color:white;
+  background:
+    linear-gradient(135deg,
+      var(--primary),
+      var(--primary2));
+  font-weight:900;
+  box-shadow:0 12px 30px rgba(91,92,255,.22);
+}
+
+.complete-btn.completed{
+  background:rgba(37,212,154,.13);
+  color:var(--green);
+  box-shadow:none;
+  border:1px solid rgba(37,212,154,.18);
+}
+
+/* ADMIN */
+
+.admin-page{
+  display:none;
+  animation:pageIn .35s ease;
+}
+
+.admin-card{
+  border-radius:23px;
+  padding:18px;
+  background:var(--card);
+  border:1px solid var(--border);
+  margin-bottom:12px;
+}
+
+.admin-title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.admin-subtitle{
   font-size:10px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.form-group{
+  margin-bottom:13px;
+}
+
+.form-label{
+  display:block;
+  margin:0 0 7px 2px;
+  font-size:10px;
+  color:#b8bfd3;
+}
+
+.form-input,
+.form-select,
+.form-textarea{
+  width:100%;
+  border:1px solid var(--border);
+  outline:none;
+  border-radius:14px;
+  padding:12px 13px;
+  background:rgba(255,255,255,.045);
+  color:white;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder{
+  color:#626b84;
+}
+
+.form-textarea{
+  min-height:90px;
+  resize:vertical;
+  line-height:1.8;
+}
+
+.form-select option{
+  background:#11172a;
+  color:#fff;
+}
+
+.admin-submit{
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  color:white;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+.file-input{
+  width:100%;
+  padding:13px;
+  border-radius:14px;
+  border:1px dashed rgba(124,92,255,.4);
+  background:rgba(124,92,255,.06);
+  color:var(--muted);
+}
+
+.upload-status{
+  margin-top:9px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.7;
+}
+
+/* NAV */
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  width:calc(100% - 28px);
+  max-width:590px;
+  padding:8px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  border-radius:22px;
+  background:rgba(13,18,34,.88);
+  border:1px solid var(--border);
+  backdrop-filter:blur(22px);
+  box-shadow:0 15px 45px rgba(0,0,0,.4);
+  z-index:50;
+}
+
+.nav-btn{
+  padding:9px 5px;
+  border-radius:16px;
+  background:transparent;
+  color:#727b96;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  font-size:9px;
+}
+
+.nav-btn span:first-child{
+  font-size:19px;
+}
+
+.nav-btn.active{
+  color:#fff;
+  background:rgba(124,92,255,.15);
+}
+
+.admin-nav{
+  display:none;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  transform:translate(-50%,20px);
+  width:calc(100% - 35px);
+  max-width:550px;
+  padding:13px 15px;
+  border-radius:16px;
+  background:#171e33;
+  border:1px solid var(--border);
+  color:#fff;
+  font-size:11px;
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:100;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* ERROR */
+
+.error-page{
+  display:none;
+  min-height:100vh;
+  padding:30px 20px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.error-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.error-title{
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.error-text{
+  color:var(--muted);
+  font-size:11px;
   line-height:2;
 }
 
-.progress{
-  margin-top:17px;
-}
+/* DESKTOP */
 
-.progress-head{
-  display:flex;
-  justify-content:space-between;
-  color:#7e879b;
-  font-size:9px;
-  margin-bottom:6px;
-}
-
-.progress-bar{
-  height:6px;
-  overflow:hidden;
-  border-radius:20px;
-  background:#ffffff0a;
-}
-
-.progress-fill{
-  width:0%;
-  height:100%;
-  border-radius:20px;
-  background:linear-gradient(90deg,#8064ff,#438fff);
-}
-
-#toast{
-  position:fixed;
-  left:13px;
-  right:13px;
-  bottom:16px;
-  z-index:10000;
-  max-width:520px;
-  margin:auto;
-  padding:12px;
-  border-radius:13px;
-  text-align:center;
-  color:white;
-  font-size:10px;
-  line-height:1.8;
-  background:#1a2032f5;
-  border:1px solid #ffffff10;
-  box-shadow:0 15px 40px #0008;
-  transform:translateY(120px);
-  opacity:0;
-  transition:.25s;
-}
-
-#toast.show{
-  transform:translateY(0);
-  opacity:1;
-}
-
-@media(min-width:600px){
-  .app{
-    padding-top:25px;
+@media(min-width:700px){
+  .container{
+    padding-left:20px;
+    padding-right:20px;
   }
 
-  .hero h1{
-    font-size:28px;
+  .hero-title{
+    font-size:31px;
+  }
+
+  .lesson-title{
+    font-size:14px;
   }
 }
 </style>
@@ -640,339 +808,373 @@ button{
 
 <body>
 
-<div id="loading">
-  <div class="loading-box">
-    <div class="logo">AI</div>
-    <div class="loading-title">باهوش</div>
-    <div class="loading-text">
-      در حال بررسی اطلاعات شما...
-    </div>
-    <div class="spinner"></div>
-  </div>
+<div class="top-glow"></div>
+
+<div id="loading" class="loading">
+  <div class="loader"></div>
+  <div class="loading-text">در حال ورود به باهوش...</div>
 </div>
 
-<div id="error" class="hidden">
-  <div class="error-box">
+<div id="errorPage" class="error-page">
+  <div>
     <div class="error-icon">⚠️</div>
     <div class="error-title">ورود انجام نشد</div>
-    <div id="errorText"></div>
-    <button class="primary" onclick="location.reload()">
-      تلاش دوباره
-    </button>
+    <div id="errorText" class="error-text">
+      لطفاً دوباره وارد برنامه شوید.
+    </div>
   </div>
 </div>
 
-<main id="app" class="app hidden">
+<div id="app" class="app" style="display:none">
 
-  <header class="header">
+  <main id="homePage" class="container">
 
-    <div class="brand">
+    <header class="header">
 
-      <div class="brand-logo">
-        AI
-      </div>
+      <div class="brand">
+        <div class="logo">🤖</div>
 
-      <div>
-        <div class="brand-title">
-          باهوش
-        </div>
-
-        <div class="brand-sub">
-          دوره جامع تولید محتوا با هوش مصنوعی
+        <div class="brand-text">
+          <div class="brand-name">باهوش</div>
+          <div class="brand-sub">
+            دوره جامع هوش مصنوعی
+          </div>
         </div>
       </div>
 
-    </div>
+      <button class="header-btn" onclick="showProfile()">
+        👤
+      </button>
 
-    <div class="online"></div>
+    </header>
 
-  </header>
+    <section class="hero">
 
+      <div class="hero-content">
 
-  <section class="hero">
+        <div class="hero-badge">
+          ✦ مسیر حرفه‌ای هوش مصنوعی
+        </div>
 
-    <div class="hero-badge">
-      ✦ دوره آموزشی باهوش
-    </div>
+        <h1 class="hero-title">
+          خوش اومدی به<br>
+          دنیای باهوش 🤖
+        </h1>
 
-    <h1>
-      یادگیری هوش مصنوعی،
-      <span>ساده و کاربردی</span>
-    </h1>
+        <p class="hero-description">
+          اینجا قراره قدم‌به‌قدم یاد بگیری
+          چطور با ابزارهای هوش مصنوعی
+          حرفه‌ای‌تر تولید محتوا کنی.
+        </p>
 
-    <p>
-      آموزش‌ها را قدم‌به‌قدم ببینید،
-      تمرین کنید و مهارت‌های تولید محتوا
-      با هوش مصنوعی را یاد بگیرید.
-    </p>
+        <div class="hero-user">
 
-  </section>
+          <div id="userAvatar" class="avatar">
+            👤
+          </div>
 
+          <div class="user-info">
+            <div id="userName" class="user-name">
+              هنرجوی باهوش
+            </div>
 
-  <section class="user-card">
+            <div id="userStatus" class="user-status">
+              آماده شروع یادگیری
+            </div>
+          </div>
 
-    <div id="avatar" class="avatar">
-      —
-    </div>
+        </div>
 
-    <div class="user-info">
-
-      <div id="userName" class="user-name">
-        کاربر
       </div>
 
-      <div id="userId" class="user-id">
-        شناسه ایتا: —
+    </section>
+
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-icon">📚</div>
+        <div id="lessonCount" class="stat-number">۰</div>
+        <div class="stat-label">درس‌ها</div>
       </div>
 
-    </div>
+      <div class="stat">
+        <div class="stat-icon">✅</div>
+        <div id="completedCount" class="stat-number">۰</div>
+        <div class="stat-label">تکمیل‌شده</div>
+      </div>
 
-    <div id="adminBadge" class="badge hidden">
-      مدیر
-    </div>
+      <div class="stat">
+        <div class="stat-icon">🔥</div>
+        <div id="progressPercent" class="stat-number">۰٪</div>
+        <div class="stat-label">پیشرفت</div>
+      </div>
 
-  </section>
-
-
-  <section class="section">
+    </section>
 
     <div class="section-head">
-
       <div class="section-title">
-        آموزش‌های دوره
+        مسیر یادگیری
       </div>
 
-      <div id="lessonCount" class="section-count">
-        ۰ آموزش
+      <div class="section-caption">
+        درس به درس جلو برو
       </div>
-
     </div>
 
     <div id="lessons" class="lessons"></div>
 
-  </section>
+  </main>
 
+  <main id="lessonPage" class="container lesson-page">
 
-  <section id="admin" class="admin hidden">
+    <div class="back-row">
 
-    <div class="admin-title">
-      🛠️ پنل مدیریت
-    </div>
-
-    <div class="field">
-
-      <label class="label">
-        عنوان آموزش
-      </label>
-
-      <input
-        id="title"
-        type="text"
-        placeholder="عنوان آموزش"
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label class="label">
-        توضیحات
-      </label>
-
-      <textarea
-        id="descriptionInput"
-        placeholder="توضیح کوتاه آموزش"
-      ></textarea>
-
-    </div>
-
-    <div class="field">
-
-      <label class="label">
-        نوع محتوا
-      </label>
-
-      <select id="type">
-
-        <option value="video">
-          ویدئو
-        </option>
-
-        <option value="audio">
-          صوت
-        </option>
-
-        <option value="image">
-          تصویر
-        </option>
-
-        <option value="file">
-          فایل
-        </option>
-
-        <option value="text">
-          متن
-        </option>
-
-      </select>
-
-    </div>
-
-    <div id="textField" class="field hidden">
-
-      <label class="label">
-        متن آموزش
-      </label>
-
-      <textarea
-        id="textContent"
-        placeholder="متن آموزش را وارد کنید..."
-      ></textarea>
-
-    </div>
-
-    <div id="fileField" class="field">
-
-      <label class="label">
-        فایل آموزش
-      </label>
-
-      <div class="file-box">
-
-        <input id="file" type="file">
-
-        <div id="fileName" class="file-name">
-          فایلی انتخاب نشده است
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="field">
-
-      <label class="label">
-        زمان انتشار
-      </label>
-
-      <input id="publishAt" type="datetime-local">
-
-    </div>
-
-    <button
-      id="createBtn"
-      class="primary"
-      type="button"
-    >
-      افزودن آموزش
-    </button>
-
-    <div id="adminMessage" class="admin-message"></div>
-
-  </section>
-
-</main>
-
-
-<div id="modal" class="hidden">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-
-      <button
-        id="closeModal"
-        class="close"
-        type="button"
-      >
-        ×
+      <button class="back-btn" onclick="showHome()">
+        → 
       </button>
 
-      <div id="modalTitle" class="modal-title">
-        آموزش
+      <div class="back-title">
+        محتوای درس
       </div>
 
     </div>
 
-    <div class="modal-body">
+    <div class="lesson-hero">
 
-      <div id="content" class="content"></div>
+      <div id="lessonNumber" class="lesson-hero-number">
+        درس ۱
+      </div>
 
-      <div id="modalDescription" class="description"></div>
+      <h1 id="lessonTitle" class="lesson-hero-title">
+        عنوان درس
+      </h1>
 
-      <div class="progress">
+      <p id="lessonDescription"
+         class="lesson-hero-description">
+      </p>
 
-        <div class="progress-head">
+    </div>
 
-          <span>
-            پیشرفت آموزش
-          </span>
+    <div id="lessonContent"></div>
 
-          <span id="progressText">
-            ۰٪
-          </span>
+    <button id="completeBtn"
+            class="complete-btn"
+            onclick="completeCurrentLesson()">
+      ✓ تکمیل این درس
+    </button>
 
-        </div>
+  </main>
 
-        <div class="progress-bar">
+  <main id="adminPage" class="container admin-page">
 
-          <div
-            id="progressFill"
-            class="progress-fill"
-          ></div>
+    <div class="back-row">
 
-        </div>
+      <button class="back-btn" onclick="showHome()">
+        →
+      </button>
 
+      <div class="back-title">
+        مدیریت دوره
       </div>
 
     </div>
 
-  </div>
+    <section class="admin-card">
+
+      <div class="admin-title">
+        افزودن درس جدید
+      </div>
+
+      <div class="admin-subtitle">
+        درس جدید را ثبت کن تا بدون تغییر کد
+        به دوره اضافه شود.
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">
+          عنوان درس
+        </label>
+
+        <input
+          id="lessonTitleInput"
+          class="form-input"
+          type="text"
+          placeholder="مثلاً آموزش ساخت تصویر با AI"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">
+          توضیحات
+        </label>
+
+        <textarea
+          id="lessonDescriptionInput"
+          class="form-textarea"
+          placeholder="توضیح کوتاه درباره این درس..."
+        ></textarea>
+
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">
+          نوع محتوا
+        </label>
+
+        <select
+          id="contentTypeInput"
+          class="form-select"
+          onchange="changeContentType()"
+        >
+          <option value="video">🎬 ویدئو</option>
+          <option value="audio">🎧 صوت</option>
+          <option value="image">🖼 تصویر</option>
+          <option value="file">📁 فایل</option>
+          <option value="text">📝 متن</option>
+        </select>
+
+      </div>
+
+      <div id="fileField" class="form-group">
+
+        <label class="form-label">
+          فایل محتوا
+        </label>
+
+        <input
+          id="contentFile"
+          class="file-input"
+          type="file"
+        >
+
+        <div id="uploadStatus"
+             class="upload-status">
+        </div>
+
+      </div>
+
+      <div id="textField"
+           class="form-group"
+           style="display:none">
+
+        <label class="form-label">
+          متن درس
+        </label>
+
+        <textarea
+          id="contentText"
+          class="form-textarea"
+          placeholder="متن محتوای درس..."
+          style="min-height:150px"
+        ></textarea>
+
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">
+          زمان انتشار
+        </label>
+
+        <input
+          id="publishAt"
+          class="form-input"
+          type="datetime-local"
+        >
+
+      </div>
+
+      <button
+        class="admin-submit"
+        onclick="createLesson()"
+      >
+        + افزودن درس
+      </button>
+
+    </section>
+
+  </main>
 
 </div>
 
+<nav id="bottomNav" class="bottom-nav">
 
-<div id="toast"></div>
+  <button
+    id="homeNav"
+    class="nav-btn active"
+    onclick="showHome()"
+  >
+    <span>⌂</span>
+    <span>خانه</span>
+  </button>
+
+  <button
+    class="nav-btn"
+    onclick="scrollToLessons()"
+  >
+    <span>📚</span>
+    <span>درس‌ها</span>
+  </button>
+
+  <button
+    id="adminNav"
+    class="nav-btn admin-nav"
+    onclick="showAdmin()"
+  >
+    <span>⚙️</span>
+    <span>مدیریت</span>
+  </button>
+
+</nav>
+
+<div id="toast" class="toast"></div>
 <script>
-"use strict";
 
-var webApp = null;
-var initData = "";
-var currentUser = null;
-var currentLessons = [];
-var isAdmin = false;
-var currentLesson = null;
-var toastTimer = null;
+let webApp = null;
+let initData = "";
+let currentUser = null;
+let currentLessons = [];
+let currentLesson = null;
+let isAdmin = false;
 
+const completedLessons =
+  JSON.parse(
+    localStorage.getItem("bahoush_completed") || "[]"
+  );
 
 function $(id){
   return document.getElementById(id);
 }
 
+function showToast(message){
 
-function toast(message){
+  const toast = $("toast");
 
-  var el = $("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
 
-  el.textContent = message;
-
-  el.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(function(){
-    el.classList.remove("show");
+  setTimeout(()=>{
+    toast.classList.remove("show");
   },3000);
 }
 
+function faNumber(value){
 
-function escapeHtml(value){
+  return String(value)
+    .replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+}
 
-  if(value === null || value === undefined){
+function escapeHtml(text){
+
+  if(text === null || text === undefined){
     return "";
   }
 
-  return String(value)
+  return String(text)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -980,48 +1182,23 @@ function escapeHtml(value){
     .replace(/'/g,"&#039;");
 }
 
+function getInitials(user){
 
-function faNumber(value){
+  const first =
+    user?.first_name ||
+    "";
 
-  return String(value)
-    .replace(/\d/g,function(d){
-      return "۰۱۲۳۴۵۶۷۸۹"[d];
-    });
+  const last =
+    user?.last_name ||
+    "";
+
+  return (
+    (first.charAt(0) || "") +
+    (last.charAt(0) || "")
+  ) || "👤";
 }
 
-
-function initials(user){
-
-  if(!user){
-    return "؟";
-  }
-
-  var a = user.first_name || "";
-  var b = user.last_name || "";
-
-  var result =
-    a.charAt(0) +
-    b.charAt(0);
-
-  return result || "👤";
-}
-
-
-function showError(message){
-
-  $("loading").classList.add("hidden");
-
-  $("app").classList.add("hidden");
-
-  $("error").classList.remove("hidden");
-
-  $("errorText").textContent =
-    message ||
-    "خطایی در ورود به برنامه رخ داد.";
-}
-
-
-function initialize(){
+function setupEitaa(){
 
   try{
 
@@ -1034,112 +1211,70 @@ function initialize(){
         window.Eitaa.WebApp;
 
       webApp.ready();
-
       webApp.expand();
 
       initData =
         webApp.initData || "";
 
+      return true;
     }
 
   }catch(error){
 
-    console.error(
-      "Eitaa error:",
-      error
-    );
+    console.error(error);
 
   }
 
-  if(!initData){
-
-    showError(
-      "لطفاً برنامه را از داخل ایتا باز کنید."
-    );
-
-    return;
-  }
-
-  authenticate();
+  return false;
 }
-
 
 async function authenticate(){
 
-  try{
+  if(!initData){
 
-    var response =
-      await fetch(
-        "/api/auth",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            initData:initData
-          })
-        }
-      );
-
-    var data =
-      await response.json();
-
-    if(
-      !response.ok ||
-      !data.ok
-    ){
-
-      throw new Error(
-        data.error ||
-        "احراز هویت انجام نشد."
-      );
-
-    }
-
-    currentUser =
-      data.user || null;
-
-    isAdmin =
-      data.isAdmin === true;
-
-    currentLessons =
-      Array.isArray(data.lessons)
-        ? data.lessons
-        : [];
-
-    renderUser();
-
-    renderLessons();
-
-    renderAdmin();
-
-    $("loading")
-      .classList
-      .add("hidden");
-
-    $("app")
-      .classList
-      .remove("hidden");
-
-  }catch(error){
-
-    console.error(
-      "Auth error:",
-      error
-    );
-
-    showError(
-      error.message ||
-      "خطا در ارتباط با سرور."
+    throw new Error(
+      "اطلاعات ورود ایتا دریافت نشد."
     );
 
   }
-}
 
+  const response =
+    await fetch("/api/auth",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":
+          "application/json"
+      },
+
+      body:JSON.stringify({
+        initData:initData
+      })
+
+    });
+
+  let data;
+
+  try{
+    data = await response.json();
+  }catch{
+    throw new Error(
+      "پاسخ سرور قابل دریافت نیست."
+    );
+  }
+
+  if(!response.ok || !data.ok){
+
+    throw new Error(
+      data?.error ||
+      "احراز هویت انجام نشد."
+    );
+
+  }
+
+  return data;
+}
 
 function renderUser(){
 
@@ -1147,7 +1282,7 @@ function renderUser(){
     return;
   }
 
-  var name =
+  const fullName =
     [
       currentUser.first_name,
       currentUser.last_name
@@ -1155,55 +1290,61 @@ function renderUser(){
     .filter(Boolean)
     .join(" ");
 
-  if(!name){
-
-    name =
-      currentUser.username
-        ? "@" + currentUser.username
-        : "کاربر ایتا";
-
-  }
-
   $("userName").textContent =
-    name;
+    fullName ||
+    currentUser.username ||
+    "هنرجوی باهوش";
 
-  $("userId").textContent =
-    "شناسه ایتا: " +
-    faNumber(
-      currentUser.id || "—"
-    );
+  $("userAvatar").textContent =
+    getInitials(currentUser);
 
-  $("avatar").textContent =
-    initials(currentUser);
-
-  if(isAdmin){
-
-    $("adminBadge")
-      .classList
-      .remove("hidden");
-
-  }
+  $("userStatus").textContent =
+    isAdmin
+      ? "مدیر دوره"
+      : "هنرجوی دوره باهوش";
 
 }
 
+function renderStats(){
+
+  const total =
+    currentLessons.length;
+
+  const completed =
+    currentLessons.filter(
+      lesson =>
+        completedLessons.includes(
+          String(lesson.id)
+        )
+    ).length;
+
+  const percent =
+    total
+      ? Math.round(
+          completed / total * 100
+        )
+      : 0;
+
+  $("lessonCount").textContent =
+    faNumber(total);
+
+  $("completedCount").textContent =
+    faNumber(completed);
+
+  $("progressPercent").textContent =
+    faNumber(percent) + "٪";
+
+}
 
 function renderLessons(){
 
-  var container =
-    $("lessons");
+  const box = $("lessons");
 
-  container.innerHTML = "";
-
-  $("lessonCount").textContent =
-    faNumber(
-      currentLessons.length
-    ) +
-    " آموزش";
-
+  box.innerHTML = "";
 
   if(!currentLessons.length){
 
-    container.innerHTML = `
+    box.innerHTML = `
       <div class="empty">
 
         <div class="empty-icon">
@@ -1211,514 +1352,503 @@ function renderLessons(){
         </div>
 
         <div class="empty-title">
-          هنوز آموزشی منتشر نشده
+          هنوز درسی منتشر نشده
         </div>
 
         <div class="empty-text">
-          به‌محض انتشار آموزش جدید،
-          اینجا نمایش داده می‌شود.
+          به‌زودی اولین آموزش‌های دوره
+          باهوش در این بخش قرار می‌گیرند.
         </div>
 
       </div>
     `;
 
+    renderStats();
     return;
   }
 
-
   currentLessons.forEach(
-    function(lesson,index){
+    (lesson,index)=>{
 
-      var item =
+      const completed =
+        completedLessons.includes(
+          String(lesson.id)
+        );
+
+      const item =
         document.createElement("div");
 
       item.className =
-        "lesson";
+        "lesson" +
+        (completed ? " done" : "");
+
+      item.onclick = () =>
+        openLesson(lesson);
 
       item.innerHTML = `
 
         <div class="lesson-number">
-          ${faNumber(index + 1)}
+          ${
+            completed
+              ? "✓"
+              : faNumber(index + 1)
+          }
         </div>
 
         <div class="lesson-info">
 
           <div class="lesson-title">
-            ${escapeHtml(lesson.title)}
+            ${escapeHtml(
+              lesson.title ||
+              "بدون عنوان"
+            )}
           </div>
 
           <div class="lesson-desc">
-            ${
-              escapeHtml(
-                lesson.description ||
-                "برای مشاهده آموزش وارد شوید."
-              )
-            }
+            ${escapeHtml(
+              lesson.description ||
+              "برای مشاهده محتوای درس وارد شوید."
+            )}
           </div>
 
         </div>
 
         <div class="lesson-arrow">
-          ←
+          ‹
         </div>
 
       `;
 
-      item.addEventListener(
-        "click",
-        function(){
-          openLesson(lesson);
-        }
-      );
-
-      container.appendChild(item);
+      box.appendChild(item);
 
     }
   );
 
+  renderStats();
 }
 
+function showHome(){
 
-function renderAdmin(){
+  $("homePage").style.display =
+    "block";
 
-  if(isAdmin){
+  $("lessonPage").style.display =
+    "none";
 
-    $("admin")
-      .classList
-      .remove("hidden");
+  $("adminPage").style.display =
+    "none";
 
-  }else{
+  $("homeNav").classList.add("active");
 
-    $("admin")
-      .classList
-      .add("hidden");
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
+}
+
+function showAdmin(){
+
+  if(!isAdmin){
+
+    showToast(
+      "دسترسی مدیریت برای شما فعال نیست."
+    );
+
+    return;
   }
 
+  $("homePage").style.display =
+    "none";
+
+  $("lessonPage").style.display =
+    "none";
+
+  $("adminPage").style.display =
+    "block";
+
+  $("homeNav").classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
 }
 
+function scrollToLessons(){
+
+  showHome();
+
+  setTimeout(()=>{
+
+    $("lessons").scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  },100);
+
+}
+
+function showProfile(){
+
+  if(!currentUser){
+    return;
+  }
+
+  const name =
+    [
+      currentUser.first_name,
+      currentUser.last_name
+    ]
+    .filter(Boolean)
+    .join(" ") ||
+    "هنرجوی باهوش";
+
+  const username =
+    currentUser.username
+      ? "@" + currentUser.username
+      : "بدون نام کاربری";
+
+  showToast(
+    name + " • " + username
+  );
+
+}
+  <script>
 
 function openLesson(lesson){
 
-  currentLesson =
-    lesson;
+  currentLesson = lesson;
 
-  $("modalTitle").textContent =
-    lesson.title || "آموزش";
+  $("homePage").style.display =
+    "none";
 
-  $("modalDescription").textContent =
-    lesson.description || "";
+  $("adminPage").style.display =
+    "none";
 
-  $("modal")
-    .classList
-    .remove("hidden");
+  $("lessonPage").style.display =
+    "block";
 
-  renderContent(lesson);
-
-  setProgress(0);
-}
-
-
-function closeLesson(){
-
-  $("modal")
-    .classList
-    .add("hidden");
-
-  $("content").innerHTML = "";
-
-  currentLesson = null;
-
-}
-
-
-function setProgress(percent){
-
-  var value =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        Number(percent) || 0
-      )
+  $("lessonNumber").textContent =
+    "درس " +
+    faNumber(
+      currentLessons.indexOf(lesson) + 1
     );
 
-  $("progressFill").style.width =
-    value + "%";
+  $("lessonTitle").textContent =
+    lesson.title || "بدون عنوان";
 
-  $("progressText").textContent =
-    faNumber(
-      Math.round(value)
-    ) + "٪";
+  $("lessonDescription").textContent =
+    lesson.description || "";
+
+  renderLessonContent(lesson);
+
+  updateCompleteButton();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
+function renderLessonContent(lesson){
 
-function renderContent(lesson){
+  const box =
+    $("lessonContent");
 
-  var area =
-    $("content");
+  box.innerHTML = "";
 
-  area.innerHTML = "";
+  const type =
+    lesson.content_type ||
+    "video";
 
-  var type =
-    String(
-      lesson.content_type || ""
-    ).toLowerCase();
-
-  var url =
-    lesson.content_url || "";
-
+  const url =
+    lesson.content_url ||
+    "";
 
   if(type === "video"){
 
-    if(!url){
+    box.innerHTML = `
 
-      area.innerHTML = `
-        <div class="empty">
-          ویدئوی این آموزش هنوز قرار نگرفته است.
+      <div class="content-box">
+
+        <div class="video-wrap">
+
+          <video
+            src="${escapeHtml(url)}"
+            controls
+            controlsList="nodownload"
+            playsinline
+            preload="metadata"
+          ></video>
+
         </div>
-      `;
 
-      return;
-    }
+      </div>
 
-    var video =
-      document.createElement("video");
-
-    video.src = url;
-
-    video.controls = true;
-
-    video.playsInline = true;
-
-    video.preload = "metadata";
-
-    video.setAttribute(
-      "controlsList",
-      "nodownload noplaybackrate"
-    );
-
-    video.setAttribute(
-      "disablePictureInPicture",
-      "true"
-    );
-
-    video.addEventListener(
-      "contextmenu",
-      function(e){
-        e.preventDefault();
-      }
-    );
-
-    video.addEventListener(
-      "timeupdate",
-      function(){
-
-        if(
-          video.duration &&
-          isFinite(video.duration)
-        ){
-
-          setProgress(
-            video.currentTime /
-            video.duration *
-            100
-          );
-
-        }
-
-      }
-    );
-
-    video.addEventListener(
-      "ended",
-      function(){
-        setProgress(100);
-      }
-    );
-
-    area.appendChild(video);
+    `;
 
     return;
   }
-
 
   if(type === "audio"){
 
-    if(!url){
+    box.innerHTML = `
 
-      area.innerHTML = `
-        <div class="empty">
-          فایل صوتی موجود نیست.
+      <div class="content-box">
+
+        <div class="audio-box">
+
+          <div style="
+            font-size:32px;
+            margin-bottom:15px;
+            text-align:center;
+          ">
+            🎧
+          </div>
+
+          <audio
+            src="${escapeHtml(url)}"
+            controls
+          ></audio>
+
         </div>
-      `;
 
-      return;
-    }
+      </div>
 
-    var audio =
-      document.createElement("audio");
-
-    audio.src = url;
-
-    audio.controls = true;
-
-    audio.preload = "metadata";
-
-    audio.addEventListener(
-      "timeupdate",
-      function(){
-
-        if(
-          audio.duration &&
-          isFinite(audio.duration)
-        ){
-
-          setProgress(
-            audio.currentTime /
-            audio.duration *
-            100
-          );
-
-        }
-
-      }
-    );
-
-    audio.addEventListener(
-      "ended",
-      function(){
-        setProgress(100);
-      }
-    );
-
-    area.appendChild(audio);
-
-    return;
-  }
-    if(type === "image"){
-
-    if(!url){
-
-      area.innerHTML = `
-        <div class="empty">
-          تصویر این آموزش موجود نیست.
-        </div>
-      `;
-
-      return;
-    }
-
-    var image =
-      document.createElement("img");
-
-    image.src = url;
-
-    image.alt =
-      lesson.title || "تصویر آموزش";
-
-    image.draggable = false;
-
-    image.addEventListener(
-      "contextmenu",
-      function(e){
-        e.preventDefault();
-      }
-    );
-
-    area.appendChild(image);
-
-    setProgress(100);
+    `;
 
     return;
   }
 
+  if(type === "image"){
 
-  if(type === "text"){
+    box.innerHTML = `
 
-    var text =
-      lesson.content_text ||
-      lesson.content_url ||
-      "";
+      <div class="content-box image-box">
 
-    var textBox =
-      document.createElement("div");
+        <img
+          src="${escapeHtml(url)}"
+          alt="محتوای درس"
+          draggable="false"
+        >
 
-    textBox.className =
-      "text-content";
+      </div>
 
-    textBox.textContent =
-      text;
-
-    area.appendChild(textBox);
-
-    setProgress(100);
+    `;
 
     return;
   }
-
 
   if(type === "file"){
 
-    area.innerHTML = `
+    box.innerHTML = `
 
-      <div class="file-content">
+      <div class="content-box">
 
-        <div class="file-icon">
-          📁
+        <div class="file-box">
+
+          <div class="file-icon">
+            📁
+          </div>
+
+          <div class="file-name">
+            فایل آموزشی درس
+          </div>
+
+          <button
+            class="file-button"
+            onclick="openFile('${escapeHtml(url)}')"
+          >
+            مشاهده فایل
+          </button>
+
         </div>
-
-        <div class="file-text">
-          فایل آموزشی آماده مشاهده است.
-        </div>
-
-        ${
-          url
-            ? `
-              <button
-                id="fileOpenButton"
-                class="primary"
-                style="margin-top:15px"
-              >
-                مشاهده فایل
-              </button>
-            `
-            : ""
-        }
 
       </div>
 
     `;
 
-    if(url){
-
-      $("fileOpenButton")
-        .addEventListener(
-          "click",
-          function(){
-
-            if(webApp && webApp.openLink){
-
-              webApp.openLink(url);
-
-            }else{
-
-              window.open(
-                url,
-                "_blank"
-              );
-
-            }
-
-          }
-        );
-
-    }
-
-    setProgress(100);
-
     return;
   }
 
+  if(type === "text"){
 
-  if(url){
+    const text =
+      lesson.content_text ||
+      lesson.description ||
+      "محتوایی برای این درس ثبت نشده است.";
 
-    var linkBox =
-      document.createElement("div");
+    box.innerHTML = `
 
-    linkBox.className =
-      "file-content";
+      <div class="content-box">
 
-    linkBox.innerHTML = `
-      <div class="file-icon">
-        🔗
+        <div class="text-content">
+          ${escapeHtml(text)}
+        </div>
+
       </div>
 
-      <div class="file-text">
-        محتوای این آموزش آماده مشاهده است.
-      </div>
-
-      <button
-        id="genericOpen"
-        class="primary"
-        style="margin-top:15px"
-      >
-        باز کردن محتوا
-      </button>
     `;
 
-    area.appendChild(linkBox);
-
-    $("genericOpen")
-      .addEventListener(
-        "click",
-        function(){
-
-          if(webApp && webApp.openLink){
-
-            webApp.openLink(url);
-
-          }else{
-
-            window.open(
-              url,
-              "_blank"
-            );
-
-          }
-
-        }
-      );
-
-    setProgress(100);
-
     return;
   }
 
+  box.innerHTML = `
 
-  area.innerHTML = `
     <div class="empty">
-      محتوای این آموزش هنوز اضافه نشده است.
+
+      <div class="empty-icon">
+        📦
+      </div>
+
+      <div class="empty-title">
+        محتوای درس آماده نیست
+      </div>
+
+      <div class="empty-text">
+        نوع محتوای این درس هنوز پشتیبانی نشده است.
+      </div>
+
     </div>
+
   `;
 
 }
 
+function openFile(url){
 
-function updateContentFields(){
+  if(!url){
+    showToast("فایل موجود نیست.");
+    return;
+  }
 
-  var type =
-    $("type").value;
+  if(webApp && webApp.openLink){
 
-  if(type === "text"){
-
-    $("textField")
-      .classList
-      .remove("hidden");
-
-    $("fileField")
-      .classList
-      .add("hidden");
+    webApp.openLink(url);
 
   }else{
 
-    $("textField")
-      .classList
-      .add("hidden");
-
-    $("fileField")
-      .classList
-      .remove("hidden");
+    window.open(
+      url,
+      "_blank"
+    );
 
   }
 
 }
 
+function updateCompleteButton(){
 
-async function getUploadUrl(file){
+  if(!currentLesson){
+    return;
+  }
 
-  var response =
+  const completed =
+    completedLessons.includes(
+      String(currentLesson.id)
+    );
+
+  const btn =
+    $("completeBtn");
+
+  if(completed){
+
+    btn.textContent =
+      "✓ این درس تکمیل شده";
+
+    btn.classList.add(
+      "completed"
+    );
+
+  }else{
+
+    btn.textContent =
+      "✓ تکمیل این درس";
+
+    btn.classList.remove(
+      "completed"
+    );
+
+  }
+
+}
+
+function completeCurrentLesson(){
+
+  if(!currentLesson){
+    return;
+  }
+
+  const id =
+    String(currentLesson.id);
+
+  if(!completedLessons.includes(id)){
+
+    completedLessons.push(id);
+
+    localStorage.setItem(
+      "bahoush_completed",
+      JSON.stringify(
+        completedLessons
+      )
+    );
+
+    showToast(
+      "آفرین! درس با موفقیت تکمیل شد 🎉"
+    );
+
+  }
+
+  updateCompleteButton();
+
+  renderStats();
+
+}
+
+function changeContentType(){
+
+  const type =
+    $("contentTypeInput").value;
+
+  if(type === "text"){
+
+    $("fileField").style.display =
+      "none";
+
+    $("textField").style.display =
+      "block";
+
+  }else{
+
+    $("fileField").style.display =
+      "block";
+
+    $("textField").style.display =
+      "none";
+
+  }
+
+}
+
+async function uploadFile(){
+
+  const file =
+    $("contentFile").files[0];
+
+  if(!file){
+    throw new Error(
+      "لطفاً فایل محتوا را انتخاب کنید."
+    );
+  }
+
+  $("uploadStatus").textContent =
+    "در حال آماده‌سازی آپلود...";
+
+  const response =
     await fetch(
       "/api/upload-url",
       {
@@ -1743,48 +1873,22 @@ async function getUploadUrl(file){
       }
     );
 
-  var data =
+  const data =
     await response.json();
 
-  if(
-    !response.ok ||
-    !data.ok
-  ){
+  if(!response.ok || !data.ok){
 
     throw new Error(
-      data.error ||
-      "ساخت لینک آپلود انجام نشد."
+      data?.error ||
+      "ساخت لینک آپلود ناموفق بود."
     );
 
   }
 
-  return data;
-}
-
-
-async function uploadFile(file){
-
-  var data =
-    await getUploadUrl(file);
-
-
-  if(
-    !data.token ||
-    !data.path
-  ){
-
-    throw new Error(
-      "اطلاعات آپلود ناقص است."
-    );
-
-  }
-
-
-  var supabaseUrl =
+  const supabaseUrl =
     "https://ywlqopsuscfzokeqpika.supabase.co";
 
-
-  var uploadUrl =
+  const uploadUrl =
     supabaseUrl +
     "/storage/v1/object/upload/sign/" +
     "course-videos/" +
@@ -1794,8 +1898,10 @@ async function uploadFile(file){
       data.token
     );
 
+  $("uploadStatus").textContent =
+    "در حال آپلود فایل...";
 
-  var response =
+  const uploadResponse =
     await fetch(
       uploadUrl,
       {
@@ -1811,15 +1917,10 @@ async function uploadFile(file){
       }
     );
 
+  if(!uploadResponse.ok){
 
-  if(!response.ok){
-
-    var errorText = "";
-
-    try{
-      errorText =
-        await response.text();
-    }catch(e){}
+    const errorText =
+      await uploadResponse.text();
 
     console.error(
       "Upload error:",
@@ -1832,123 +1933,71 @@ async function uploadFile(file){
 
   }
 
+  $("uploadStatus").textContent =
+    "آپلود با موفقیت انجام شد ✓";
 
   return data.path;
-}
 
+}
 
 async function createLesson(){
 
-  if(!isAdmin){
+  try{
 
-    toast(
-      "شما دسترسی مدیریت ندارید."
-    );
-
-    return;
-  }
-
-
-  var title =
-    $("title").value.trim();
-
-  var description =
-    $("descriptionInput")
-      .value
-      .trim();
-
-  var type =
-    $("type").value;
-
-  var publishAt =
-    $("publishAt").value;
-
-
-  if(!title){
-
-    toast(
-      "عنوان آموزش را وارد کنید."
-    );
-
-    return;
-  }
-
-
-  if(type === "text"){
-
-    var text =
-      $("textContent")
+    const title =
+      $("lessonTitleInput")
         .value
         .trim();
 
-    if(!text){
+    const description =
+      $("lessonDescriptionInput")
+        .value
+        .trim();
 
-      toast(
-        "متن آموزش را وارد کنید."
+    const type =
+      $("contentTypeInput")
+        .value;
+
+    const publishAt =
+      $("publishAt")
+        .value;
+
+    if(!title){
+
+      showToast(
+        "عنوان درس را وارد کنید."
       );
 
       return;
     }
 
-  }else{
-
-    var file =
-      $("file").files[0];
-
-    if(!file){
-
-      toast(
-        "فایل آموزش را انتخاب کنید."
-      );
-
-      return;
-    }
-
-  }
-
-
-  var button =
-    $("createBtn");
-
-  button.disabled = true;
-
-  button.textContent =
-    "در حال آماده‌سازی...";
-
-
-  try{
-
-    var contentUrl = "";
-
-    var contentText = "";
-
+    let contentUrl = "";
+    let contentText = "";
 
     if(type === "text"){
 
       contentText =
-        $("textContent")
+        $("contentText")
           .value
           .trim();
 
+      if(!contentText){
+
+        showToast(
+          "متن درس را وارد کنید."
+        );
+
+        return;
+      }
+
     }else{
 
-      button.textContent =
-        "در حال آپلود فایل...";
-
-      var file =
-        $("file").files[0];
-
       contentUrl =
-        await uploadFile(file);
+        await uploadFile();
 
     }
 
-
-    button.textContent =
-      "در حال ساخت آموزش...";
-
-
-    var response =
+    const response =
       await fetch(
         "/api/create-lesson",
         {
@@ -1984,203 +2033,290 @@ async function createLesson(){
         }
       );
 
-
-    var data =
+    const data =
       await response.json();
 
-
-    if(
-      !response.ok ||
-      !data.ok
-    ){
+    if(!response.ok || !data.ok){
 
       throw new Error(
-        data.error ||
-        "ساخت آموزش انجام نشد."
+        data?.error ||
+        "ثبت درس انجام نشد."
       );
 
     }
 
-
-    toast(
-      "آموزش با موفقیت اضافه شد."
+    showToast(
+      "درس با موفقیت اضافه شد ✓"
     );
 
-
-    $("title").value = "";
-
-    $("descriptionInput").value = "";
-
-    $("textContent").value = "";
-
+    $("lessonTitleInput").value = "";
+    $("lessonDescriptionInput").value = "";
+    $("contentText").value = "";
+    $("contentFile").value = "";
     $("publishAt").value = "";
+    $("uploadStatus").textContent = "";
 
-    $("file").value = "";
+    await reloadLessons();
 
-    $("fileName").textContent =
-      "فایلی انتخاب نشده است";
-
-
-    await authenticate();
-
+    showHome();
 
   }catch(error){
 
-    console.error(
-      "Create lesson error:",
-      error
-    );
+    console.error(error);
 
-    toast(
+    showToast(
       error.message ||
-      "خطا در ساخت آموزش."
+      "خطایی رخ داد."
     );
-
-  }finally{
-
-    button.disabled = false;
-
-    button.textContent =
-      "افزودن آموزش";
 
   }
 
-      }
-  function preventCopy(){
+  }
+  <script>
 
-  document.addEventListener(
-    "contextmenu",
-    function(e){
+async function reloadLessons(){
 
-      if(
-        e.target.tagName === "INPUT" ||
-        e.target.tagName === "TEXTAREA"
-      ){
-        return;
-      }
+  try{
 
-      e.preventDefault();
+    const data =
+      await authenticate();
 
-    }
-  );
+    currentUser =
+      data.user || null;
 
+    currentLessons =
+      Array.isArray(data.lessons)
+        ? data.lessons
+        : [];
 
-  document.addEventListener(
-    "dragstart",
-    function(e){
+    isAdmin =
+      Boolean(data.isAdmin);
 
-      if(
-        e.target.tagName === "IMG" ||
-        e.target.tagName === "VIDEO"
-      ){
+    renderUser();
+    renderLessons();
 
-        e.preventDefault();
+    if(isAdmin){
 
-      }
+      $("adminNav").style.display =
+        "flex";
 
     }
-  );
 
+  }catch(error){
 
-  document.addEventListener(
-    "keydown",
-    function(e){
+    console.error(error);
 
-      var key =
-        String(
-          e.key || ""
-        ).toLowerCase();
+    throw error;
 
-      if(
-        (e.ctrlKey || e.metaKey) &&
-        (
-          key === "s" ||
-          key === "u" ||
-          key === "c" ||
-          key === "a" ||
-          key === "p"
-        )
-      ){
-
-        e.preventDefault();
-
-      }
-
-    }
-  );
+  }
 
 }
 
+function showError(message){
 
-function setupEvents(){
+  $("loading").style.display =
+    "none";
 
-  $("closeModal")
-    .addEventListener(
-      "click",
-      closeLesson
-    );
+  $("app").style.display =
+    "none";
 
+  $("errorPage").style.display =
+    "flex";
 
-  $("modal")
-    .addEventListener(
-      "click",
-      function(e){
+  $("errorText").textContent =
+    message ||
+    "لطفاً دوباره وارد برنامه شوید.";
 
-        if(e.target === $("modal")){
+}
 
-          closeLesson();
+function startApp(){
+
+  try{
+
+    setupEitaa();
+
+    if(!initData){
+
+      showError(
+        "لطفاً این برنامه را از داخل ایتا باز کنید."
+      );
+
+      return;
+
+    }
+
+    authenticate()
+      .then(data=>{
+
+        currentUser =
+          data.user || null;
+
+        currentLessons =
+          Array.isArray(data.lessons)
+            ? data.lessons
+            : [];
+
+        isAdmin =
+          Boolean(data.isAdmin);
+
+        renderUser();
+        renderLessons();
+
+        if(isAdmin){
+
+          $("adminNav").style.display =
+            "flex";
 
         }
 
-      }
+        $("loading").style.display =
+          "none";
+
+        $("app").style.display =
+          "block";
+
+      })
+      .catch(error=>{
+
+        console.error(error);
+
+        showError(
+          error.message ||
+          "احراز هویت انجام نشد."
+        );
+
+      });
+
+  }catch(error){
+
+    console.error(error);
+
+    showError(
+      "خطایی در اجرای برنامه رخ داد."
     );
 
-
-  $("type")
-    .addEventListener(
-      "change",
-      updateContentFields
-    );
-
-
-  $("file")
-    .addEventListener(
-      "change",
-      function(){
-
-        var file =
-          $("file").files[0];
-
-        $("fileName").textContent =
-          file
-            ? file.name
-            : "فایلی انتخاب نشده است";
-
-      }
-    );
-
-
-  $("createBtn")
-    .addEventListener(
-      "click",
-      createLesson
-    );
+  }
 
 }
 
+/* جلوگیری از منوی راست‌کلیک */
 
-function appStart(){
+document.addEventListener(
+  "contextmenu",
+  function(event){
+    event.preventDefault();
+  }
+);
 
-  preventCopy();
+/* جلوگیری از انتخاب متن */
 
-  setupEvents();
+document.addEventListener(
+  "selectstart",
+  function(event){
 
-  updateContentFields();
+    const tag =
+      event.target.tagName;
 
-  initialize();
+    if(
+      tag !== "INPUT" &&
+      tag !== "TEXTAREA"
+    ){
+      event.preventDefault();
+    }
 
-}
+  }
+);
 
+/* جلوگیری از کشیدن تصاویر */
+
+document.addEventListener(
+  "dragstart",
+  function(event){
+
+    if(
+      event.target.tagName === "IMG" ||
+      event.target.tagName === "VIDEO"
+    ){
+      event.preventDefault();
+    }
+
+  }
+);
+
+/* جلوگیری از چند میانبر معمول */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      (event.ctrlKey ||
+       event.metaKey) &&
+      [
+        "s",
+        "u",
+        "p",
+        "c",
+        "a"
+      ].includes(
+        event.key.toLowerCase()
+      )
+    ){
+
+      event.preventDefault();
+
+    }
+
+  }
+);
+
+/* جلوگیری از لمس طولانی روی تصاویر */
+
+document.addEventListener(
+  "touchstart",
+  function(event){
+
+    if(
+      event.target.tagName === "IMG"
+    ){
+
+      event.preventDefault();
+
+    }
+
+  },
+  {
+    passive:false
+  }
+);
+  /* آماده‌سازی ایتا */
+
+(function(){
+
+  try{
+
+    if(
+      window.Eitaa &&
+      window.Eitaa.WebApp
+    ){
+
+      window.Eitaa.WebApp.ready();
+      window.Eitaa.WebApp.expand();
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Eitaa WebApp:",
+      error
+    );
+
+  }
+
+})();
+
+/* شروع برنامه */
 
 if(
   document.readyState ===
@@ -2189,14 +2325,16 @@ if(
 
   document.addEventListener(
     "DOMContentLoaded",
-    appStart
+    startApp
   );
 
 }else{
 
-  appStart();
+  startApp();
 
 }
+
 </script>
+
 </body>
 </html>
